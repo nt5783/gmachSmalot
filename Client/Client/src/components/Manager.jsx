@@ -6,15 +6,14 @@ import { useForm } from "react-hook-form";
 
 const colors = ['white', 'beige', 'black', 'colorful', 'brown', 'pink', 'blue', 'lightBlue', 'green', 'purple', 'silver']
 const lengths = ['maxi', 'midi', 'short']
+const seasons = ['summer', 'winter', 'yearRound']
 const sizeBaby = ['3m', '6m', '9m', '12m', '18m', '24m']
 const sizeGirl = ['2']
 const sizeWoman = ['32', '34']
 
 function Manager() {
     const [additional, setAdditional] = useState('')
-    // const [otherColor, setOtherColor] = useState(false)
     const { register, handleSubmit } = useForm();
-
 
     <select name="cars" id="cars">
         <option value="volvo">Volvo</option>
@@ -30,7 +29,15 @@ function Manager() {
     }
 
     const handleChange = (event) => {
-
+        event.preventDefault()
+        switch (event.target.value) {
+        case "other":{
+            setAdditional("addColor")
+            break;
+        }
+        default:
+            return
+        }
     }
 
 
@@ -41,14 +48,17 @@ function Manager() {
         {(additional == "add" || additional == "addColor" )&& <form onSubmit={handleSubmit((data => addGownFunc(data)))}>
             <label>Model:<input className='number_without' type="number" name="model" required {...register("model")} /></label><br />
             <label>Color:
-                <select name="color" onChange={handleChange} required {...register("color")}>
-                    {colors.map((color, i) => <option value={color}>{color}</option>)}
-                    <option value="else">else</option>
-                </select></label><br />
-                {additional == "addColor" && <div><label>new color:<input id='newColor' type="text" name="newColor" required {...register("newColor")} /></label><br /></div>}
-            <label>Size:<input className='number_without' type="number" name="size" required {...register("size")} /></label><br />
-            <label>Length:<input type="text" name="length" required {...register("length")} /></label><br />
-            <label>Season:<input type="text" name="season" required {...register("season")} /></label><br />
+                <select name="color" required {...register("color", { onChange: (e) => handleChange(e)})}>
+                    {colors.map((color, i) => <option key={i} value={color}>{color}</option>)}
+                    <option value="other">other</option>
+                </select></label>
+                {additional == "addColor" && <label>new color:<input id='newColor' type="text" defaultValue="yyy"  required {...register("color")} /></label>}
+            <br /><label>Size:<select name="length" required {...register("length")}>
+                {lengths.map((length, i) => <option key={i} value={length}>{length}</option>)}</select></label><br />
+            <label>Length:<select name="length" required {...register("length")}>
+                {lengths.map((length, i) => <option key={i} value={length}>{length}</option>)}</select></label><br />
+            <label>Season:<select name="season" required {...register("season")}>
+                {seasons.map((season, i) => <option key={i} value={season}>{season}</option>)}</select></label><br />
             <label>Amount:<input id='amount' type="number" min="1" name="amount" required {...register("amount")} /></label><br />
             <input type="submit" value="Submit" /><br />
         </form>}
