@@ -52,9 +52,12 @@ function Manager() {
                     {colors.map((color, i) => <option key={i} value={color}>{color}</option>)}
                     <option value="other">other</option>
                 </select></label>
-                {additional == "addColor" && <label>new color:<input id='newColor' type="text" defaultValue="yyy"  required {...register("color")} /></label>}
-            <br /><label>Size:<select name="length" required {...register("length")}>
-                {lengths.map((length, i) => <option key={i} value={length}>{length}</option>)}</select></label><br />
+                {additional == "addColor" && <label>new color:<input id='newColor' type="text" defaultValue=""  required {...register("color")} /></label>}
+            <br /><label>Size:<select name="size" required {...register("length")}>
+                {sizeBaby.map((size, i) => <option key={i} value={size}>{size}</option>)}
+                {sizeGirl.map((size, i) => <option key={i} value={size}>{size}</option>)}
+                {sizeWoman.map((size, i) => <option key={i} value={size}>{size}</option>)}
+                </select></label><br />
             <label>Length:<select name="length" required {...register("length")}>
                 {lengths.map((length, i) => <option key={i} value={length}>{length}</option>)}</select></label><br />
             <label>Season:<select name="season" required {...register("season")}>
