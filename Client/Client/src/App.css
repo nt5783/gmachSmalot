@@ -1,0 +1,33 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+nav {
+  background-color: rgb(224, 214, 239);
+  padding: 15px;
+  display: flex;
+  /* justify-content: space-around; */
+  justify-content: center;
+  /* justify-content: space-between; */
+  margin: 80px 0px;
+}
+
+/* .number_without, input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+} */
+
+ /* input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button, .number_without{
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#amount, input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: default-button;
+} */
