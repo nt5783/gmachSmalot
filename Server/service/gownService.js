@@ -1,17 +1,36 @@
+
 import { executeQuery } from './db.js';
-import { getAllQuery, getByIdQuery, addItemQuery, updateItemQuery, deleteItemQuery, getByParamsQuery ,getByLimitQuery} from './queries.js'
+import { getGownsQuery, getGownByIdQuery, addGownQuery, deleteGownQuery, updateGownQuery } from './queryGown.js'
 
-export class Service {
+export class GownService {
 
-    async getAll(tableName) {
-        const query = getAllQuery(tableName);
-        const result = await executeQuery(query);
+    async getGowns(queryparams) {
+        const queryGown = getGownsQuery(queryparams);
+        const result = await executeQuery(queryGown);
         return result;
     }
 
-    async getByLimit(tableName, params) {
-        const query = getByLimitQuery(tableName);
-        const result = await executeQuery(query,Object.values(params));
+    async getGownById(id) {
+        const queryGown = getGownByIdQuery();
+        const result = await executeQuery(queryGown, [id]);
         return result;
+    }
+
+    async addGown(newGown) {
+        const queryGown = addGownQuery(Object.keys(newGown));
+        const result = await executeQuery(queryGown,Object.values(newGown));
+        return result;
+    }
+
+    async deleteGown(id) {
+        const queryGown = deleteGownQuery();
+        await executeQuery(queryGown, [id]);
+    }
+
+    async updateGown(updatedGown, id) {
+        let data = Object.values(updatedGown);
+        data.push(id)
+        const queryGown = updateGownQuery(Object.keys(updatedGown));
+        await executeQuery(queryGown, data);
     }
 }

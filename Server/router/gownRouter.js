@@ -1,16 +1,16 @@
 import express from "express";
-import {TodoController} from "../controllers/gownController.js";
+import {GownController} from "../controllers/gownController.js";
 
-const todoRouter = express.Router();
+const gownRouter = express.Router();
 
-const todoController = new TodoController();
+const gownController = new GownController();
 
-todoRouter.get("/:id", todoController.getTodoById)
-todoRouter.get("/", todoController.getTodos)
-todoRouter.post("/", todoController.addTodo)
-todoRouter.put("/:id", todoController.updateTodo)
-todoRouter.delete("/:id", todoController.deleteTodo)
+gownRouter.get("/:id", gownController.getGownById)
+gownRouter.get("/", gownController.getGowns)
+gownRouter.post("/", gownController.addGown)
+gownRouter.put("/:id", gownController.updateGown)
+gownRouter.delete("/:id", gownController.deleteGown)
 
 export {
-    todoRouter
+    gownRouter
 }
