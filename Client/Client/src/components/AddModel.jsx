@@ -6,16 +6,17 @@ import { fetchfunc } from "../fetch"
 const colors = ['white', 'beige', 'black', 'colorful', 'brown', 'pink', 'blue', 'lightBlue', 'green', 'purple', 'silver']
 const seasons = ['summer', 'winter', 'yearRound']
 
-export default function AddModel({ formOn, message }) {
+export default function AddModel({ formOn, setMessage }) {
 
     const [additional, setAdditional] = useState('')
     const { register, handleSubmit } = useForm()
 
     function addModelFunc(data) {
         console.log(data)
+        setMessage("adding model code"+ data.model + " color: " + data.color + "for " + data.season)
         formOn('')
         let res = fetchfunc('model', 'POST', data)
-        message = res
+        // setMessage(res)
 
 
     }

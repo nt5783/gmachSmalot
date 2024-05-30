@@ -17,10 +17,11 @@ const sizeWoman = ['30', '32', '34', '36', '38', '40', '42', '44', '46', '48', '
 function Manager() {
     const [visible, setVisible] = useState(false)
     const [additional, setAdditional] = useState('')
+    const [message, setMessage] = useState('')
     // const [, setAdditional] = useState('')
     // let img = new img[10]
 
-    let message = ''
+    
 
     useEffect(() => {
         // CASE 1 :message is empty (meaning no errors). Adjust as needed
@@ -76,9 +77,9 @@ function Manager() {
 
 
     return (<>
-        {visible && <div>{message}</div>}
+        {visible && <div style={{background : "green"}}>{message}</div>}
         {additional == "" && <button onClick={() => setAdditional("model")}>Add New Model</button>}
-        {additional == "model" && <AddModel formOn={setAdditional} message ={message}/>}
+        {additional == "model" && <AddModel formOn={setAdditional} setMessage ={setMessage}/>}
         {additional == "" && <button onClick={() => setAdditional("add")}>add gown</button>}
         {additional == "" && <button>search gown</button>}
         {(additional == "addGown" || additional == "addColor") && <form onSubmit={handleSubmit((data => addGownFunc(data)))}>
