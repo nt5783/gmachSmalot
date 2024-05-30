@@ -1,19 +1,19 @@
 import React from "react";
-import {NavLink, Outlet} from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 
 
-function Home(){
- return ( <>
-   <NavLink to="./about">
-        About</NavLink>
-    <NavLink to="./gowns">
-        Gowns</NavLink>
-    <NavLink to="./login">
-        Login</NavLink>
-    <NavLink to="./manager">
-        Manager</NavLink>
-<Outlet/>
- </>)
+function Home() {
+    return (<>
+        <NavLink to="./about">
+            About</NavLink>
+        <NavLink to="./gowns">
+            Gowns</NavLink>
+        <NavLink to="./login">
+            Login</NavLink>
+        <NavLink to="./manager">
+            Manager</NavLink>
+        <Outlet />
+    </>)
 }
 
 export default Home;
