@@ -9,7 +9,7 @@ modelRouter.get("/:id", modelcontroller.getModelById)
 modelRouter.get("/", modelcontroller.getModel)
 modelRouter.post("/", modelcontroller.addModel)
 modelRouter.delete("/:id", modelcontroller.deleteModel)
-modelRouter.put("/:id", modelcontroller.updateModel)
+modelRouter.patch("/:id", modelcontroller.updateModel)
 
 export {
     modelRouter

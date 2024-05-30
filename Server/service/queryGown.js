@@ -18,7 +18,7 @@ function getGownByIdQuery() {
 }
 
 function addGownQuery(keys) {
-    const query = `INSERT INTO gowns (id, ${keys.map(key => key)}) VALUES (null ,? ,? ,? ,? ,? ,? )`;
+    const query = `INSERT INTO gowns (id, ${keys.map(key => key)}) VALUES (null ,? ,? ,? ,?)`;
     return query
 }
 

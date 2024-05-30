@@ -18,10 +18,10 @@ function getModelByIdQuery() {
     return query
 }
 
-function addModelQuery() {
-    //להוסיף את הפרמטר המועבר לפונקציה אם משתמשים בו
-    // const query = `INSERT INTO models (model, ${keys.map(key => key)}) VALUES (null ,? ,? ,? )`;
-    const query = `INSERT INTO models VALUES (? ,? ,? ,? ,? ,null)`;
+function addModelQuery(keys) {
+    // const query = `INSERT INTO models (${keys.map(key => key)}) VALUES (${values.map(value => `'${value}'`)})`;
+    const query = `INSERT INTO models (${keys.map(key => key)}) VALUES (?${keys.slice.map(() => `,?`)})`;
+    // const query = `INSERT INTO models VALUES (? ,? ,? ,? ,? , ?)`;
     return query
 }
 

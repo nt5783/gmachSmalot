@@ -17,10 +17,10 @@ export class ModelService {
     }
 
     async addModel(newModel) {
-        const queryModel = addModelQuery();
-        const result = await executeQuery(queryModel, [newModel]);
-        // const queryModel = addModelQuery(Object.keys(newModel));
-        // const result = await executeQuery(queryModel, Object.values(newModel));
+        //const queryModel = addModelQuery();
+        // const result = await executeQuery(queryModel, [newModel]);
+        const queryModel = addModelQuery(Object.keys(newModel));
+        const result = await executeQuery(queryModel, Object.values(newModel));
         return result;
     }
 
@@ -32,7 +32,7 @@ export class ModelService {
     async updateModel(updatedModel, id) {
         let data = Object.values(updatedModel);
         data.push(id)
-        const queryModel = updateModelQuery(Object.keys(updatedModel));
+        const queryModel = updateModelQuery(Object.keys(updatedModel), id);
         await executeQuery(queryModel, data);
     }
 

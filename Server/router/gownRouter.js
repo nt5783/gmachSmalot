@@ -8,7 +8,7 @@ const gownController = new GownController();
 gownRouter.get("/:id", gownController.getGownById)
 gownRouter.get("/", gownController.getGowns)
 gownRouter.post("/", gownController.addGown)
-gownRouter.put("/:id", gownController.updateGown)
+gownRouter.patch("/:id", gownController.updateGown)
 gownRouter.delete("/:id", gownController.deleteGown)
 
 export {

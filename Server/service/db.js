@@ -13,6 +13,7 @@ async function executeQuery(query, params) {
 
     try {
         [results] = await connection.execute(query, params);
+        console.log(params)
     } catch (err) {
         console.log(err);
     }
