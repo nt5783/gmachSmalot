@@ -15,10 +15,12 @@ export default function AddGown({ formOn, setMessage }) {
 
     function addGownFunc(data) {
         console.log(data)
-        setMessage("adding gown model" + data.model + " ,length: " + data.length + " ,in size " + data.size)
+        // setMessage("adding gown model" + data.model + " ,length: " + data.length + " ,in size " + data.size)
         formOn('')
         let res = fetchfunc('gowns', 'POST', data)
-        // setMessage(res)
+        console.log(res);
+        console.log(res.value);
+        // setMessage(res[0])
     }
 
 
