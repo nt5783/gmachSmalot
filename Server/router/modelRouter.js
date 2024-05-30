@@ -7,7 +7,7 @@ const modelcontroller = new ModelController()
 
 modelRouter.get("/:id", modelcontroller.getModelById)
 modelRouter.get("/", modelcontroller.getModel)
-modelRouter.model("/", modelcontroller.addModel)
+modelRouter.post("/", modelcontroller.addModel)
 modelRouter.delete("/:id", modelcontroller.deleteModel)
 modelRouter.put("/:id", modelcontroller.updateModel)
 
