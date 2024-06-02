@@ -16,6 +16,8 @@ export default function AddModel({ formOn, setMessage }) {
         setMessage("adding model code "+ data.model + " color: " + data.color + " for " + data.season)
         formOn('')
         let res = fetchfunc('models', 'POST', data)
+        console.log('res')
+        console.log(res)
         // setMessage(res)
 
 
