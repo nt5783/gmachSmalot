@@ -12,6 +12,7 @@ function Home() {
             Login</NavLink>
         <NavLink to="./manager">
             Manager</NavLink>
+            <NavLink to="./invitationCalendar">InvitationCalendar</NavLink>
         <Outlet />
     </>)
 }
