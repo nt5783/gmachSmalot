@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
 --
 -- Host: localhost    Database: gmachsmalot
 -- ------------------------------------------------------
--- Server version	8.0.34
+-- Server version	8.0.33
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -39,7 +39,7 @@ CREATE TABLE `models` (
 
 LOCK TABLES `models` WRITE;
 /*!40000 ALTER TABLE `models` DISABLE KEYS */;
-INSERT INTO `models` VALUES (111,'red','summer',NULL,NULL,1),(222,'green','winter',NULL,NULL,1),(333,'blue','yearRound',NULL,NULL,1),(444,'pink','summer',NULL,NULL,1),(555,'black','summer',NULL,NULL,1),(666,'pink','summer',NULL,NULL,1),(777,'black','summer',NULL,NULL,1);
+INSERT INTO `models` VALUES (111,'red','summer','https://via.placeholder.com/600/92c952','https://via.placeholder.com/600/771796',1),(222,'black','winter','https://via.placeholder.com/600/24f355',NULL,1),(333,'blue','yearRound','https://via.placeholder.com/600/d32776',NULL,1),(444,'pink','summer',NULL,'https://via.placeholder.com/600/f66b97',1),(555,'green','summer','https://via.placeholder.com/600/56a8c2',NULL,1),(666,'pink','summer',NULL,'https://via.placeholder.com/600/b0f7cc',1),(777,'black','summer','https://via.placeholder.com/600/54176f','https://via.placeholder.com/600/51aa97',0),(888,'blue','summer','https://via.placeholder.com/600/810b14',NULL,1),(999,'silver','summer','https://via.placeholder.com/600/1ee8a4','https://via.placeholder.com/600/66b7d2',1),(1111,'silver','winter','https://via.placeholder.com/600/197d29',NULL,1),(2222,'red','yearRound',NULL,'https://via.placeholder.com/600/61a65',1);
 /*!40000 ALTER TABLE `models` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-30 18:34:49
+-- Dump completed on 2024-06-02 20:19:22

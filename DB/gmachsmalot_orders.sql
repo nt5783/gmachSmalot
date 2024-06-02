@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
 --
 -- Host: localhost    Database: gmachsmalot
 -- ------------------------------------------------------
--- Server version	8.0.34
+-- Server version	8.0.33
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,14 +23,15 @@ DROP TABLE IF EXISTS `orders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `orders` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `eventDate` date NOT NULL,
   `customerId` varchar(45) NOT NULL,
   `gownId` int NOT NULL,
-  PRIMARY KEY (`eventDate`,`customerId`,`gownId`),
-  KEY `gownId_idx` (`gownId`),
+  PRIMARY KEY (`id`),
   KEY `customerId_idx` (`customerId`),
+  KEY `gownId_idx` (`gownId`),
   CONSTRAINT `customerId` FOREIGN KEY (`customerId`) REFERENCES `customers` (`phone`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `gownId` FOREIGN KEY (`gownId`) REFERENCES `gowns` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `gownId` FOREIGN KEY (`gownId`) REFERENCES `gowns` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -52,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-30 18:10:23
+-- Dump completed on 2024-06-02 20:19:22

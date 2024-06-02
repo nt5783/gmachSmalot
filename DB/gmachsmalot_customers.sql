@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
 --
 -- Host: localhost    Database: gmachsmalot
 -- ------------------------------------------------------
--- Server version	8.0.34
+-- Server version	8.0.33
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,31 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `models`
+-- Table structure for table `customers`
 --
 
-DROP TABLE IF EXISTS `models`;
+DROP TABLE IF EXISTS `customers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `models` (
-  `model` int NOT NULL,
-  `color` varchar(45) NOT NULL,
-  `season` varchar(45) NOT NULL,
-  `womenImage` varchar(45) DEFAULT NULL,
-  `girlsImage` varchar(45) DEFAULT NULL,
-  `isInUse` tinyint DEFAULT '1',
-  PRIMARY KEY (`model`)
+CREATE TABLE `customers` (
+  `phone` varchar(45) NOT NULL,
+  `first_name` varchar(45) NOT NULL,
+  `last_name` varchar(45) NOT NULL,
+  `phone2` varchar(45) DEFAULT NULL,
+  `city` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`phone`),
+  UNIQUE KEY `id_UNIQUE` (`phone`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `models`
+-- Dumping data for table `customers`
 --
 
-LOCK TABLES `models` WRITE;
-/*!40000 ALTER TABLE `models` DISABLE KEYS */;
-INSERT INTO `models` VALUES (111,'red','summer',NULL,NULL,1),(222,'green','winter',NULL,NULL,1),(333,'blue','yearRound',NULL,NULL,1),(444,'pink','summer',NULL,NULL,1),(555,'black','summer',NULL,NULL,1),(666,'pink','summer',NULL,NULL,1),(777,'black','summer',NULL,NULL,1);
-/*!40000 ALTER TABLE `models` ENABLE KEYS */;
+LOCK TABLES `customers` WRITE;
+/*!40000 ALTER TABLE `customers` DISABLE KEYS */;
+/*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-30 18:10:23
+-- Dump completed on 2024-06-02 20:19:22
