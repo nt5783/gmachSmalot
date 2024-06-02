@@ -10,9 +10,9 @@ async function fetchfunc(url, method, body, thenfunc) {
         })
         const json = await response.json()
         const data = await json
-        console.log("json "+json)
-        console.log("data "+data)
-        if (!data){
+        console.log("json " + json)
+        console.log("data " + data)
+        if (!data) {
             throw "data does'nt exist!"
         }
         return data;
@@ -20,23 +20,50 @@ async function fetchfunc(url, method, body, thenfunc) {
     catch (e) {
         return e
     }
-
-
 }
 
-async function fetchDeletefunc(url, thenfunc) {
-    fetch(`http://localhost:8080/${url}`, {
-        method: 'DELETE',
-        headers: { 'content-Type': 'application/json; charset=UTF-8' },
-    }).then((response) => response.JSON())
-        .then((json) => {
-            thenfunc(json)
-        })
-        .catch((err) => { })
+const fetchUser = async () => {
+    const response = await fetch(url);
+    const data = await response.json();
+    const [user] = data.results;
+    setData(user);
+    setLoading(false);
+};
 
+async function fetchNoParamsfunc(url, method, setGowns) {
+    //     fetch(`http://localhost:8080/${url}`, {
+    //         method: method,
+    //         headers: { 'content-Type': 'application/json; charset=UTF-8' },
+    //     }).then((response) => response.JSON())
+    //         .then((json) => {
+    //             thenfunc(json)
+    //         })
+    //         .catch((err) => { })
+
+    // }
+    // try {
+        const response = await fetch(`http://localhost:8080/${url}`, {
+            method: method,
+            headers: { 'content-Type': 'application/json; charset=UTF-8' },
+        })
+        const data = await response.json()
+        // const gowns = data.results
+        setGowns(data)
+        console.log("data")
+        console.log(data)
+        // console.log("gowns")
+        // console.log(gowns)
+        if (!data) {
+            throw "data does'nt exist!"
+        }
+        return data;
+    // }
+    // catch (e) {
+    //     return e
+    // }
 }
 
 
 export {
-    fetchfunc, fetchDeletefunc
+    fetchfunc, fetchNoParamsfunc
 }
