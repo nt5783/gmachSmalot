@@ -1,19 +1,21 @@
 
 function getGownsQuery(queryparams) {
-    if(queryparams.hasOwnProperty('date'))
-    {
+    let query;
+    if (queryparams.hasOwnProperty('date')) {
         console.log(queryparams.date)
-        
+        query = 
     }
-    const fields = Object.keys(queryparams).filter(param => {
-        return param == 'model' || param == 'size' || param == 'length' || param == 'amount';
-    });
-    let conditions = "WHERE "
-    fields.forEach(field => conditions += field + " = '" + queryparams[field] + "' AND ")
-    const query = `SELECT * FROM gowns ${fields.length > 0 ? conditions.substring(0, conditions.length - 5) : ""} 
+    else {
+        const fields = Object.keys(queryparams).filter(param => {
+            return param == 'model' || param == 'size' || param == 'length' || param == 'amount';
+        });
+        let conditions = "WHERE "
+        fields.forEach(field => conditions += field + " = '" + queryparams[field] + "' AND ")
+        query = `SELECT * FROM gowns ${fields.length > 0 ? conditions.substring(0, conditions.length - 5) : ""} 
     ${queryparams._sort ? "ORDER BY " + queryparams._sort : ""} 
     ${queryparams._limit ? "LIMIT " + queryparams._limit : ""};`
-    console.log(query)
+        console.log(query)
+    }
     return query
 }
 
