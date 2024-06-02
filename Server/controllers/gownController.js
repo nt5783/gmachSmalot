@@ -63,8 +63,8 @@ export class GownController {
         try {
             const gownService = new GownService();
             const result = await gownService.updateGown(req.body, req.params.id);
-            if (result == null)
-                throw ("this data cannot be updated")
+            // if (result == null)
+            //     throw ("this data cannot be updated")
             res.status(200).json(req.params.id);
         }
         catch (ex) {

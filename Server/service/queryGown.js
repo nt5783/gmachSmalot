@@ -1,7 +1,12 @@
 
 function getGownsQuery(queryparams) {
+    if(queryparams.hasOwnProperty('date'))
+    {
+        console.log(queryparams.date)
+        
+    }
     const fields = Object.keys(queryparams).filter(param => {
-        return param == 'color' || param == 'size' || param == 'length' || param == 'season';
+        return param == 'model' || param == 'size' || param == 'length' || param == 'amount';
     });
     let conditions = "WHERE "
     fields.forEach(field => conditions += field + " = '" + queryparams[field] + "' AND ")

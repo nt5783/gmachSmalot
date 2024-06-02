@@ -1,5 +1,6 @@
 
 function getModelQuery(queryparams) {
+    //אם אני רוצה חורף וכל השנה?
     const fields = Object.keys(queryparams).filter(param => {
         return param == 'color' || param == 'season';
     });
@@ -20,7 +21,7 @@ function getModelByIdQuery() {
 
 function addModelQuery(keys) {
     // const query = `INSERT INTO models (${keys.map(key => key)}) VALUES (${values.map(value => `'${value}'`)})`;
-    const query = `INSERT INTO models (${keys.map(key => key)}) VALUES (?${keys.slice.map(() => `,?`)})`;
+    const query = `INSERT INTO models (${keys.map(key => key)}) VALUES (${keys.map(() => `?`)})`;
     // const query = `INSERT INTO models VALUES (? ,? ,? ,? ,? , ?)`;
     return query
 }

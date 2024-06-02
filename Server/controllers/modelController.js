@@ -33,6 +33,8 @@ export class ModelController {
         try {
             const modelService = new ModelService();
             const resultItem = await modelService.addModel(req.body);
+            console.log("resultItem")
+            console.log(resultItem)
             res.status(200).json(resultItem.insertId);
         }
         catch (ex) {
@@ -61,8 +63,8 @@ export class ModelController {
         try {
             const modelService = new ModelService();
             const result = await modelService.updateModel(req.body, req.params.id);
-            if (result == null)
-                throw ("this data cannot be updated")
+            // if (result == null)
+            //     throw ("this data cannot be updated")
             res.status(200).json(req.params.id);
         }
         catch (ex) {
