@@ -22,12 +22,11 @@ async function fetchfunc(url, method, body, thenfunc) {
     }
 }
 
-const fetchUser = async () => {
-    const response = await fetch(url);
+const fetchImg = async (model) => {
+    const response = await fetch(`http://localhost:8080/models/${model}`, {method: "GET"});
     const data = await response.json();
-    const [user] = data.results;
-    setData(user);
-    setLoading(false);
+    // const [user] = data.results;
+    console.log(data)
 };
 
 async function fetchNoParamsfunc(url, method, setGowns) {
@@ -64,6 +63,8 @@ async function fetchNoParamsfunc(url, method, setGowns) {
 }
 
 
+
+
 export {
-    fetchfunc, fetchNoParamsfunc
+    fetchfunc, fetchNoParamsfunc, fetchImg
 }
