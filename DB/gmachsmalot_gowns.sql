@@ -23,13 +23,13 @@ DROP TABLE IF EXISTS `gowns`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `gowns` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `gownId` int NOT NULL AUTO_INCREMENT,
   `model` int NOT NULL,
   `size` varchar(45) NOT NULL,
   `length` varchar(45) NOT NULL,
   `amount` int NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`),
+  PRIMARY KEY (`gownId`),
+  UNIQUE KEY `id_UNIQUE` (`gownId`),
   KEY `model_idx` (`model`),
   CONSTRAINT `model` FOREIGN KEY (`model`) REFERENCES `models` (`model`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-02 20:19:22
+-- Dump completed on 2024-06-02 21:40:37

@@ -23,16 +23,16 @@ DROP TABLE IF EXISTS `orders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `orders` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `orderId` int NOT NULL AUTO_INCREMENT,
   `eventDate` date NOT NULL,
   `customerId` varchar(45) NOT NULL,
   `gownId` int NOT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`orderId`),
   KEY `customerId_idx` (`customerId`),
   KEY `gownId_idx` (`gownId`),
   CONSTRAINT `customerId` FOREIGN KEY (`customerId`) REFERENCES `customers` (`phone`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `gownId` FOREIGN KEY (`gownId`) REFERENCES `gowns` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `gownId` FOREIGN KEY (`gownId`) REFERENCES `gowns` (`gownId`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,6 +41,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (1,'2024-08-09','0583270933',7),(2,'2024-08-09','0583270933',7),(3,'2024-08-09','0583270933',8),(4,'2024-08-09','0583270933',7),(5,'2024-08-09','0583270933',9),(6,'2024-08-09','0583270933',8);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-02 20:19:22
+-- Dump completed on 2024-06-02 21:40:37
