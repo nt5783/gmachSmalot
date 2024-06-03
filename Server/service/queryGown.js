@@ -2,8 +2,11 @@
 function getGownsQuery(queryparams) {
     let query;
     if (queryparams.hasOwnProperty('date')) {
+        //אולי צריך להיות המודלים?
+        //התאריכים צריכים להיות גם מלפני ואחרי
         console.log(queryparams.date)
-        query = 
+        query = `select distinct model from gowns where gownId not in (select OG.gownId from( select *,COUNT(*) as QuantityOccupied from gowns g NATURAL JOIN orders o where eventDate='${queryparams.date}' group by gownId) OG where QuantityOccupied=OG.amount);`
+        console.log(query)
     }
     else {
         const fields = Object.keys(queryparams).filter(param => {
