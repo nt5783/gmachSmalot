@@ -23,13 +23,15 @@ async function fetchfunc(url, method, body, thenfunc) {
 }
 
 const fetchImg = async (model) => {
-    const response = await fetch(`http://localhost:8080/models/${model}`, {method: "GET"});
+    // const response = await fetch(`http://localhost:8080/models/${model}`, {method: "GET"});
+    const response = await fetch(`http://localhost:8080/imgs/${model}`, {method: "GET"});
     const data = await response.json();
     // const [user] = data.results;
     console.log(data)
+    return data.blob()
 };
 
-async function fetchNoParamsfunc(url, method, setGowns) {
+async function fetchNoParamsfunc(url, method) {
     //     fetch(`http://localhost:8080/${url}`, {
     //         method: method,
     //         headers: { 'content-Type': 'application/json; charset=UTF-8' },
@@ -47,7 +49,7 @@ async function fetchNoParamsfunc(url, method, setGowns) {
         })
         const data = await response.json()
         // const gowns = data.results
-        setGowns(data)
+        // setGowns(data)
         console.log("data")
         console.log(data)
         // console.log("gowns")
