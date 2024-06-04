@@ -29,34 +29,34 @@ function Gowns({ state }) {
     // console.log(gowns)
   }, [])
 
-  useEffect(() => {
-    async function getMoreData() {
-      console.log('useEffect2')
-      let m, image;
-      for (let i = 0; i < gowns.length; i++) {
-        m = gowns[i].model
-        console.log('m')
-        console.log(m)
-        const imageBlob = await fetchImg(m)
-        console.log('image')
-        console.log(image)
-        // const imageBlob = await res.blob();
-        const imageObjectURL = URL.createObjectURL(imageBlob);
-        setImg(imageObjectURL);
-      }
-      // gowns.map((gown) => fetchImg(gown.model), setImg([...img]))
+  // useEffect(() => {
+  //   async function getMoreData() {
+  //     console.log('useEffect2')
+  //     let m, image;
+  //     for (let i = 0; i < gowns.length; i++) {
+  //       m = gowns[i].model
+  //       console.log('m')
+  //       console.log(m)
+  //       const imageBlob = await fetchImg(m)
+  //       console.log('image')
+  //       console.log(image)
+  //       // const imageBlob = await res.blob();
+  //       const imageObjectURL = URL.createObjectURL(imageBlob);
+  //       setImg(imageObjectURL);
+  //     }
+  //     // gowns.map((gown) => fetchImg(gown.model), setImg([...img]))
 
-      // const res = fetchNoParamsfunc('gowns', 'GET', setGowns)
-      // const data = await res;
-      // console.log("res")
-      // console.log(res)
-    }
+  //     // const res = fetchNoParamsfunc('gowns', 'GET', setGowns)
+  //     // const data = await res;
+  //     // console.log("res")
+  //     // console.log(res)
+  //   }
 
-    if (gowns.length != 0) {
-      getMoreData()
-    }
+  //   if (gowns.length != 0) {
+  //     getMoreData()
+  //   }
 
-  }, [gowns])
+  // }, [gowns])
 
   function onChange(nextValue) {
     setValue(nextValue);
@@ -71,10 +71,13 @@ function Gowns({ state }) {
     /> */}
 
     {gowns.length > 0 && gowns.map((gown, i) => {
-      return <div key={i}>{gown.model}  size:   {gown.size}  picture: {gown.womenImage}</div>
+      return <div key={i}>
+        {gown.model}  size:   {gown.size}
+        <img src="images/dress2.jpg" />
+        </div>
     })}
 
-    {img.length > 0 && <h2>img!!</h2>}
+    {/* {img.length > 0 && <h2>img!!</h2>} */}
 
   </>)
 }

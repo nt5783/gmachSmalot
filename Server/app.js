@@ -10,7 +10,8 @@ app.use(cors());
 app.use(express.json());
 app.use('/gowns', gownRouter);
 app.use('/models', modelRouter);
-app.use('/images', imageRouter);
+// app.use('/images', imageRouter);
+app.use('/images', express.static('dress2' + './img'));
 app.use(logErrors);
 
 app.listen(8080, (err) => {
