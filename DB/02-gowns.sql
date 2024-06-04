@@ -32,7 +32,7 @@ CREATE TABLE `gowns` (
   UNIQUE KEY `id_UNIQUE` (`gownId`),
   KEY `model_idx` (`model`),
   CONSTRAINT `model` FOREIGN KEY (`model`) REFERENCES `models` (`model`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

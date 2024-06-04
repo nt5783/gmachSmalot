@@ -32,7 +32,7 @@ CREATE TABLE `orders` (
   KEY `gownId_idx` (`gownId`),
   CONSTRAINT `customerId` FOREIGN KEY (`customerId`) REFERENCES `customers` (`phone`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `gownId` FOREIGN KEY (`gownId`) REFERENCES `gowns` (`gownId`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
