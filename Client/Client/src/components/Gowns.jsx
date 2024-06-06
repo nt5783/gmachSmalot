@@ -63,7 +63,6 @@ function Gowns({ state }) {
   }
 
 
-
   return (<>
     {/* <Calendar
       onChange={onChange}
@@ -73,7 +72,7 @@ function Gowns({ state }) {
     {gowns.length > 0 && gowns.map((gown, i) => {
       return <div key={i}>
         {gown.model}  size:   {gown.size}
-        <img src="images/dress2.jpg" />
+        <img src="../img/women/615.png" />
         </div>
     })}
 
