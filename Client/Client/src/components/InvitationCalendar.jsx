@@ -19,7 +19,7 @@ function InvitationCalendar() {
   return (
     <div style={{ margin: "300px" }}>
       <Calendar maxDate={oneYearFromNow} minDate={new Date()} minDetail='year' calendarType='hebrew' next2Label={null} prev2Label={null}
-        onClickDay={(value) => navigate('/gowns', { state: { value } })}
+        onClickDay={(value) => navigate('/models', { state: { value } })}
         onChange={onChange} tileDisabled={({ activeStartDate, date, view }) => date.getDay() === 6 || date.getDay() === 5}
         value={value}
       />

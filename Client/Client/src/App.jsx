@@ -6,6 +6,7 @@ import Gowns from './components/Gowns'
 import Manager from './components/Manager'
 import Login from './components/Login'
 import About from './components/About'
+import Models from './components/Models'
 import InvitationCalendar from './components/InvitationCalendar'
 import './App.css'
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="manager" element={<Manager />} />
           <Route path="gowns" element={<Gowns />} />
+          <Route path="models" element={<Models />} />
           <Route path="invitationCalendar" element={<InvitationCalendar />} />
         </Route>
       </Routes>
