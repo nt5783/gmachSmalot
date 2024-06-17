@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
 -- Host: localhost    Database: gmachsmalot
 -- ------------------------------------------------------
--- Server version	8.0.33
+-- Server version	8.3.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -24,10 +24,10 @@ DROP TABLE IF EXISTS `models`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `models` (
   `model` int NOT NULL,
-  `color` varchar(45) NOT NULL,
-  `season` varchar(45) NOT NULL,
-  `womenImage` varchar(45) DEFAULT NULL,
-  `girlsImage` varchar(45) DEFAULT NULL,
+  `color` varchar(45) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `season` varchar(45) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `womenImage` varchar(45) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+  `girlsImage` varchar(45) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
   `isInUse` tinyint DEFAULT '1',
   PRIMARY KEY (`model`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-02 21:40:37
+-- Dump completed on 2024-06-16 23:15:28

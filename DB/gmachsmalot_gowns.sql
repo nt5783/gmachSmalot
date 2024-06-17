@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
 -- Host: localhost    Database: gmachsmalot
 -- ------------------------------------------------------
--- Server version	8.0.33
+-- Server version	8.3.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,33 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `orders`
+-- Table structure for table `gowns`
 --
 
-DROP TABLE IF EXISTS `orders`;
+DROP TABLE IF EXISTS `gowns`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `orders` (
-  `orderId` int NOT NULL AUTO_INCREMENT,
-  `eventDate` date NOT NULL,
-  `customerId` varchar(45) NOT NULL,
-  `gownId` int NOT NULL,
-  PRIMARY KEY (`orderId`),
-  KEY `customerId_idx` (`customerId`),
-  KEY `gownId_idx` (`gownId`),
-  CONSTRAINT `customerId` FOREIGN KEY (`customerId`) REFERENCES `customers` (`phone`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `gownId` FOREIGN KEY (`gownId`) REFERENCES `gowns` (`gownId`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+CREATE TABLE `gowns` (
+  `gownId` int NOT NULL AUTO_INCREMENT,
+  `model` int NOT NULL,
+  `size` varchar(45) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `length` varchar(45) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `amount` int NOT NULL,
+  PRIMARY KEY (`gownId`),
+  UNIQUE KEY `id_UNIQUE` (`gownId`),
+  KEY `model_idx` (`model`),
+  CONSTRAINT `model` FOREIGN KEY (`model`) REFERENCES `models` (`model`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `orders`
+-- Dumping data for table `gowns`
 --
 
-LOCK TABLES `orders` WRITE;
-/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,'2024-08-09','0583270933',7),(2,'2024-08-09','0583270933',7),(3,'2024-08-09','0583270933',8),(4,'2024-08-09','0583270933',7),(5,'2024-08-09','0583270933',9),(6,'2024-08-09','0583270933',8);
-/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
+LOCK TABLES `gowns` WRITE;
+/*!40000 ALTER TABLE `gowns` DISABLE KEYS */;
+INSERT INTO `gowns` VALUES (1,111,'10','maxi',2),(2,111,'6','maxi',2),(3,111,'12','maxi',20),(5,444,'8','midi',4),(6,444,'20','midi',5),(7,444,'14','maxi',3),(8,111,'24m','short',4),(9,444,'0','short',2),(10,111,'9m','short',2),(11,111,'6m','maxi',2),(14,666,'40','maxi',18);
+/*!40000 ALTER TABLE `gowns` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-02 21:40:37
+-- Dump completed on 2024-06-16 23:15:25
