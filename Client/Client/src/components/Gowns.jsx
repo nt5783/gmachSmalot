@@ -1,20 +1,22 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 // import { AppContext } from "../App";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { fetchNoParamsfunc, fetchImg } from '../fetch'
 
-function Gowns({ state }) {
+function Gowns() {
   const [gowns, setGowns] = useState([])
   const [value, setValue] = useState(new Date());
   const [img, setImg] = useState([]);
-
+  const { state } = useLocation();
+  const model = state.model;
+  console.log(state)
   useEffect(() => {
     async function getData() {
       console.log('useEffect')
-      const res = fetchNoParamsfunc('gowns', 'GET')
+      const res = fetchNoParamsfunc(`gowns?model=${model.model}`, 'GET')
       const data = await res;
       if (data.length > 0) {
         setGowns(data)
@@ -68,16 +70,13 @@ function Gowns({ state }) {
       onChange={onChange}
       value={value}
     /> */}
-
+    <img height={200} src={model.womenImage} />
+    {model.model}
     {gowns.length > 0 && gowns.map((gown, i) => {
       return <div key={i}>
-        {gown.model}  size:   {gown.size}
-        <img src="../img/women/615.png" />
-        </div>
+        size:  {gown.size}  amount: {gown.amount}
+      </div>
     })}
-
-    {/* {img.length > 0 && <h2>img!!</h2>} */}
-
   </>)
 }
 export default Gowns;

@@ -14,6 +14,11 @@ end to end project - gowns gemach
 
 
 שאילתות
+SELECT model,womenImage,girlsImage,color,season FROM models NATURAL JOIN colors NATURAL JOIN seasons WHERE model = 610;
+SELECT gownId,model,amount,size,length FROM gowns NATURAL JOIN sizes NATURAL JOIN lengths WHERE gownId = 316
+
+WHERE date BETWEEN ‘YYYY-MM-DD’ AND ‘YYYY-MM-DD’;
+
 UPDATE `gmachsmalot`.`models` SET `color` = 'blue' WHERE (`model` = '888');
 
 UPDATE models SET color= 'black' WHERE model = '222'
@@ -125,3 +130,14 @@ where QuantityOccupied=OG.amount);
 
 select gownId, model, size, length, amount, size-amount
 from gowns
+
+WHERE date BETWEEN ‘YYYY-MM-DD’ AND ‘YYYY-MM-DD’;
+
+
+
+
+שיהיה אחידות בטבלאות של הקודים כרגע שמתי את הראשון עם אי די ואת השני בלי כלום (בצבעים)
+וגם בשמות של אי די של כל אחד, שיכיל את שם החפץ או לא?
+
+
+השארתי קצת בלאגן צריך שיציג שמלות ומודלים רק מהתאריכים הנכונים ושהשאילתה תכיל גם מה שצריך כל צבע מידה וכו

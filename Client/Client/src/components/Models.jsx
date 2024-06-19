@@ -7,6 +7,7 @@ import 'react-calendar/dist/Calendar.css';
 import { fetchNoParamsfunc, fetchImg } from '../fetch'
 
 function Models({ state }) {
+    const navigate = useNavigate();
     const [models, setModels] = useState([])
     const [value, setValue] = useState(new Date());
     const [img, setImg] = useState([]);
@@ -60,12 +61,12 @@ function Models({ state }) {
 
 
     return (<>
-        { models.length > 0 && <div className='filter_by'>
-                
-            </div>}
+        {models.length > 0 && <div className='filter_by'>
+
+        </div>}
         <div className='models_container'>
             {models.length > 0 && models.map((model, i) => {
-                return <div className='model_item' key={i}>
+                return <div className='model_item' key={i} onClick={() => navigate(`./${model.model}`, { state: { model } })}>
                     {model.model}<br />
                     <img height={400} src={model.womenImage} />
                 </div>

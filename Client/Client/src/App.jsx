@@ -19,13 +19,23 @@ function App() {
           <Route path="about" element={<About />} />
           <Route path="login" element={<Login />} />
           <Route path="manager" element={<Manager />} />
-          <Route path="gowns" element={<Gowns />} />
-          <Route path="models" element={<Models />} />
+          {/* <Route path="gowns" element={<Gowns />} />
+          <Route path="models" element={<Models />} /> */}
+          <Route path="models">
+            <Route index element={<Models />} />
+            <Route path=":id" element={<Gowns />} />
+          </Route>
           <Route path="invitationCalendar" element={<InvitationCalendar />} />
         </Route>
       </Routes>
     </Router>
   )
 }
+
+{/* <Route path="posts">
+                <Route index element={<Posts />} />
+                <Route path=":id" element={<SinglePost />}>
+                  <Route path="comments" element={<Comments />} />
+                </Route> */}
 
 export default App
