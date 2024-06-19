@@ -13,6 +13,7 @@ export class GownService {
     async getGownById(id) {
         const queryGown = getGownByIdQuery();
         const result = await executeQuery(queryGown, [id]);
+        console.log(result)
         return result;
     }
 
