@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
 --
 -- Host: localhost    Database: gmachsmalot
 -- ------------------------------------------------------
--- Server version	8.3.0
+-- Server version	8.0.33
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -24,11 +24,11 @@ DROP TABLE IF EXISTS `seasons`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `seasons` (
   `seasonId` int NOT NULL AUTO_INCREMENT,
-  `seasonName` varchar(45) NOT NULL,
+  `season` varchar(45) NOT NULL,
   PRIMARY KEY (`seasonId`),
   UNIQUE KEY `seasonId_UNIQUE` (`seasonId`),
-  UNIQUE KEY `seasonscol_UNIQUE` (`seasonName`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `seasonscol_UNIQUE` (`season`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,6 +37,7 @@ CREATE TABLE `seasons` (
 
 LOCK TABLES `seasons` WRITE;
 /*!40000 ALTER TABLE `seasons` DISABLE KEYS */;
+INSERT INTO `seasons` VALUES (2,'summer'),(3,'winter'),(1,'yearRound');
 /*!40000 ALTER TABLE `seasons` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-16 23:15:29
+-- Dump completed on 2024-06-19 21:35:05

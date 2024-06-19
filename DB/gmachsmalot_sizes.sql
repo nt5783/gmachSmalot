@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
 --
 -- Host: localhost    Database: gmachsmalot
 -- ------------------------------------------------------
--- Server version	8.3.0
+-- Server version	8.0.33
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -24,11 +24,11 @@ DROP TABLE IF EXISTS `sizes`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sizes` (
   `sizeId` int NOT NULL AUTO_INCREMENT,
-  `sizeName` varchar(45) NOT NULL,
+  `size` varchar(45) NOT NULL,
   PRIMARY KEY (`sizeId`),
   UNIQUE KEY `sizeId_UNIQUE` (`sizeId`),
-  UNIQUE KEY `sizescol_UNIQUE` (`sizeName`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `sizescol_UNIQUE` (`size`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,6 +37,7 @@ CREATE TABLE `sizes` (
 
 LOCK TABLES `sizes` WRITE;
 /*!40000 ALTER TABLE `sizes` DISABLE KEYS */;
+INSERT INTO `sizes` VALUES (1,'0'),(14,'10'),(15,'12'),(5,'12m'),(16,'14'),(17,'16'),(6,'18m'),(7,'24m'),(8,'3'),(18,'32'),(19,'34'),(20,'36'),(21,'38'),(2,'3m'),(9,'4'),(22,'40'),(23,'42'),(24,'44'),(25,'46'),(26,'48'),(10,'5'),(27,'50'),(28,'52'),(11,'6'),(3,'6m'),(12,'7'),(13,'8'),(4,'9m');
 /*!40000 ALTER TABLE `sizes` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-16 23:15:26
+-- Dump completed on 2024-06-19 21:35:05

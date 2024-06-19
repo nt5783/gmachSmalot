@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
 --
 -- Host: localhost    Database: gmachsmalot
 -- ------------------------------------------------------
--- Server version	8.3.0
+-- Server version	8.0.33
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,12 +23,12 @@ DROP TABLE IF EXISTS `lengths`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `lengths` (
-  `lengthsId` int NOT NULL AUTO_INCREMENT,
-  `lengthName` varchar(45) NOT NULL,
-  PRIMARY KEY (`lengthsId`),
-  UNIQUE KEY `lengthName_UNIQUE` (`lengthName`),
-  UNIQUE KEY `lengthsId_UNIQUE` (`lengthsId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `lengthId` int NOT NULL AUTO_INCREMENT,
+  `length` varchar(45) NOT NULL,
+  PRIMARY KEY (`lengthId`),
+  UNIQUE KEY `lengthName_UNIQUE` (`length`),
+  UNIQUE KEY `lengthsId_UNIQUE` (`lengthId`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,6 +37,7 @@ CREATE TABLE `lengths` (
 
 LOCK TABLES `lengths` WRITE;
 /*!40000 ALTER TABLE `lengths` DISABLE KEYS */;
+INSERT INTO `lengths` VALUES (4,'changing'),(1,'maxi'),(2,'midi'),(3,'short');
 /*!40000 ALTER TABLE `lengths` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-16 23:15:26
+-- Dump completed on 2024-06-19 21:35:05
