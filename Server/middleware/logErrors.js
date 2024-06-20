@@ -15,6 +15,8 @@ function errMessageForClient(statusCode) {
             return 'Authorization required';
         case 404:
             return 'Not found';
+        case 409:
+            return 'Conflict';
         case 500:
             return 'Internal Server Error';
         default:
