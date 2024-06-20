@@ -5,8 +5,8 @@ import { useForm } from "react-hook-form";
 
 function Login() {
     // const { setUserDetails } = useContext(AppContext)
-    // const navigate = useNavigate();
-    // const { register, handleSubmit } = useForm();
+    const navigate = useNavigate();
+    const { register, handleSubmit } = useForm();
 
     // useEffect(() => {
     //     const currentUser = JSON.parse(localStorage.getItem('currentUser'))
@@ -16,7 +16,7 @@ function Login() {
     //     }
     // }, [])
 
-    // function loginUser(name, password) {
+    function loginUser(name, password) {
     //     fetch(`http://localhost:8080/login`, {
     //         method: 'POST',
     //         body: JSON.stringify({ username: name, password: password }),
@@ -34,8 +34,8 @@ function Login() {
     //             localStorage.setItem('currentUser', JSON.stringify(user));
     //             navigate(`/home/users/${user.id}`);
     //         }
-    //     }).catch(ex => alert(ex))
-    // }
+        // }).catch(ex => alert(ex))
+    }
 
     return (<>
         <form onSubmit={handleSubmit((data => loginUser(data.name, data.password)))}>
@@ -45,6 +45,8 @@ function Login() {
             <input name='password' type='password' required {...register('password')}></input>
             <button type='submit'>enter</button>
         </form>
+        <button className='navigate_link' onClick={()=> navigate('../signup')}>new user? sign up</button>
+        
     </>)
 }
 
