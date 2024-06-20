@@ -104,7 +104,7 @@ where eventDate='2024-08-09'
 group by gownId) X
 where QuantityOccupied < X.amount;
 
-
+/* בודק שמודל בשימוש? */
 /* V מודלים פנויים בתאריך */
 /*select model
 from gowns
@@ -118,8 +118,8 @@ group by gownId) X
 where QuantityOccupied=X.amount;*/
 
 select distinct model
-from gowns
-where gownId not in (select OG.gownId
+from gowns NATURAL JOIN models
+where isInUse=1 and gownId not in (select OG.gownId
 from(
 select *,COUNT(*) as QuantityOccupied
 from gowns g NATURAL JOIN orders o
@@ -127,6 +127,18 @@ where eventDate='2024-08-09'
 group by gownId) OG
 where QuantityOccupied=OG.amount);
 
+/*V ובימים שמסביב  מודלים פנויים בתאריך */
+
+select distinct model
+select distinct model,color,season,womenImage,girlsImage
+from gowns NATURAL JOIN models NATURAL JOIN colors NATURAL JOIN seasons
+where isInUse=1 and gownId not in (select OG.gownId
+from(
+select *,COUNT(*) as QuantityOccupied
+from gowns g NATURAL JOIN orders o
+where eventDate BETWEEN '2024-08-07' AND '2024-08-11'
+group by gownId) OG
+where QuantityOccupied=OG.amount);
 
 select gownId, model, size, length, amount, size-amount
 from gowns
@@ -135,9 +147,33 @@ WHERE date BETWEEN ‘YYYY-MM-DD’ AND ‘YYYY-MM-DD’;
 
 
 
-
 שיהיה אחידות בטבלאות של הקודים כרגע שמתי את הראשון עם אי די ואת השני בלי כלום (בצבעים)
 וגם בשמות של אי די של כל אחד, שיכיל את שם החפץ או לא?
 
 
 השארתי קצת בלאגן צריך שיציג שמלות ומודלים רק מהתאריכים הנכונים ושהשאילתה תכיל גם מה שצריך כל צבע מידה וכו
+
+
+
+
+
+
+
+
+about: to fill
+login: users
+signup
+passwords
+(google)
+manager
+cart
+payment
+access token
+cookies
+filters & search
+to style
+
+
+
+
+gowns			לפי תאריך

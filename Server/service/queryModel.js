@@ -1,12 +1,35 @@
 
 function getModelQuery(queryparams) {
+    console.log(queryparams)
     let query;
     if (queryparams.hasOwnProperty('date')) {
         //אולי צריך להיות המודלים?
         //התאריכים צריכים להיות גם מלפני ואחרי
         console.log(queryparams.date)
-        query = `select distinct model from gowns where gownId not in (select OG.gownId from( select *,COUNT(*) as QuantityOccupied from gowns g NATURAL JOIN orders o where eventDate='${queryparams.date}' group by gownId) OG where QuantityOccupied=OG.amount);`
-        console.log(query)
+        const date = new Date(queryparams.date)
+        const firstDate = new Date(date);
+        firstDate.setDate(date.getDate() - 2);
+
+        const secondDate = new Date(date);
+        secondDate.setDate(date.getDate() + 2);
+
+        const formatDate = (date) => {
+            return date.toISOString().slice(0, 10);
+        }
+
+        console.log("d1: ", formatDate(firstDate));
+        console.log("d2: ", formatDate(secondDate));
+
+        query = `select distinct model,color,season,womenImage,girlsImage
+        from gowns NATURAL JOIN models NATURAL JOIN colors NATURAL JOIN seasons
+        where isInUse=1 and gownId not in (select OG.gownId
+        from(
+        select *,COUNT(*) as QuantityOccupied
+        from gowns g NATURAL JOIN orders o
+        where eventDate BETWEEN '${formatDate(firstDate)}' AND '${formatDate(secondDate)}'
+        group by gownId) OG
+        where QuantityOccupied=OG.amount);`
+        // query = `select distinct model from gowns where gownId not in (select OG.gownId from( select *,COUNT(*) as QuantityOccupied from gowns g NATURAL JOIN orders o where eventDate='${queryparams.date}' group by gownId) OG where QuantityOccupied=OG.amount);`
     }
     else {
         //אם אני רוצה חורף וכל השנה?

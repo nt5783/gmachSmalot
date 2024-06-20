@@ -1,21 +1,24 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 // import { AppContext } from "../App";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { fetchNoParamsfunc, fetchImg } from '../fetch'
 
-function Models({ state }) {
+function Models() {
     const navigate = useNavigate();
     const [models, setModels] = useState([])
     const [value, setValue] = useState(new Date());
     const [img, setImg] = useState([]);
-
+    const { state } = useLocation();
+    const eventDate = state.value;
+    console.log(eventDate)
     useEffect(() => {
         async function getData() {
             console.log('useEffect')
-            const res = fetchNoParamsfunc('models', 'GET')
+            //ואם המודל בלי תאריך?
+            const res = fetchNoParamsfunc(`models?date=${eventDate}`, 'GET')
             const data = await res;
             if (data.length > 0) {
                 setModels(data)
