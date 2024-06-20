@@ -16,29 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `lengths`
+-- Table structure for table `passwords`
 --
 
-DROP TABLE IF EXISTS `lengths`;
+DROP TABLE IF EXISTS `passwords`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `lengths` (
-  `lengthId` int NOT NULL AUTO_INCREMENT,
-  `length` varchar(45) NOT NULL,
-  PRIMARY KEY (`lengthId`),
-  UNIQUE KEY `lengthName_UNIQUE` (`length`),
-  UNIQUE KEY `lengthsId_UNIQUE` (`lengthId`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `passwords` (
+  `username` varchar(45) NOT NULL,
+  `password` varchar(45) NOT NULL,
+  PRIMARY KEY (`username`),
+  UNIQUE KEY `username_UNIQUE` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `lengths`
+-- Dumping data for table `passwords`
 --
 
-LOCK TABLES `lengths` WRITE;
-/*!40000 ALTER TABLE `lengths` DISABLE KEYS */;
-INSERT INTO `lengths` VALUES (1,'maxi'),(2,'midi'),(3,'short'),(4,'staggered');
-/*!40000 ALTER TABLE `lengths` ENABLE KEYS */;
+LOCK TABLES `passwords` WRITE;
+/*!40000 ALTER TABLE `passwords` DISABLE KEYS */;
+/*!40000 ALTER TABLE `passwords` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-20 18:35:26
+-- Dump completed on 2024-06-20 18:35:25

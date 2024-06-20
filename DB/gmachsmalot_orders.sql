@@ -32,7 +32,7 @@ CREATE TABLE `orders` (
   KEY `customerId_idx` (`customerId`),
   CONSTRAINT `customerId` FOREIGN KEY (`customerId`) REFERENCES `customers` (`customerId`),
   CONSTRAINT `gownId` FOREIGN KEY (`gownId`) REFERENCES `gowns` (`gownId`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,6 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,'2024-08-09',583270933,7),(2,'2024-08-09',583270933,7),(3,'2024-08-09',583270933,8),(4,'2024-08-09',583270933,7),(5,'2024-08-09',583270933,9),(6,'2024-08-09',583270933,8);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-19 21:35:05
+-- Dump completed on 2024-06-20 18:35:26

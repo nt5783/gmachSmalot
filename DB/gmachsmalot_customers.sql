@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
 --
 -- Host: localhost    Database: gmachsmalot
 -- ------------------------------------------------------
--- Server version	8.3.0
+-- Server version	8.0.33
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -24,15 +24,17 @@ DROP TABLE IF EXISTS `customers`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `customers` (
   `customerId` int NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(45) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `last_name` varchar(45) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `phone` varchar(45) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `phone2` varchar(45) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
-  `city` varchar(45) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
-  `email` varchar(45) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+  `username` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `full_name` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+  `phone` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `phone2` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+  `city` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+  `email` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
   PRIMARY KEY (`customerId`),
-  UNIQUE KEY `id_UNIQUE` (`customerId`)
-) ENGINE=InnoDB AUTO_INCREMENT=583270934 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+  UNIQUE KEY `id_UNIQUE` (`customerId`),
+  UNIQUE KEY `username_UNIQUE` (`username`),
+  KEY `username_idx` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=583270937 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +43,6 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES (583270933,'feigi','zaks','','0548436304',NULL,'pz0933@gmail.com');
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-16 23:15:28
+-- Dump completed on 2024-06-20 18:35:25
