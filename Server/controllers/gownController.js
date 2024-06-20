@@ -1,9 +1,9 @@
 import { GownService } from '../service/gownService.js'
+            const gownService = new GownService();
 
 export class GownController {
     async getGowns(req, res, next) {
         try {
-            const gownService = new GownService();
             const resultItems = await gownService.getGowns(req.query);
             return res.status(200).json(resultItems);
         }
@@ -17,7 +17,6 @@ export class GownController {
 
     async getGownById(req, res, next) {
         try {
-            const gownService = new GownService();
             const resultItem = await gownService.getGownById(req.params.id);
             res.status(200).json(resultItem);
         }
@@ -31,7 +30,6 @@ export class GownController {
 
     async addGown(req, res, next) {
         try {
-            const gownService = new GownService();
             console.log("aaa")
             console.log(req.body)
             const resultItem = await gownService.addGown(req.body);
@@ -47,7 +45,6 @@ export class GownController {
 
     async deleteGown(req, res, next) {
         try {
-            const gownService = new GownService();
             await gownService.deleteGown(req.params.id)
             res.status(200).json(req.params.id);
         }
@@ -61,7 +58,6 @@ export class GownController {
 
     async updateGown(req, res, next) {
         try {
-            const gownService = new GownService();
             const result = await gownService.updateGown(req.body, req.params.id);
             // if (result == null)
             //     throw ("this data cannot be updated")

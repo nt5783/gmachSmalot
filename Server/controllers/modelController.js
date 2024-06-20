@@ -1,9 +1,9 @@
 import { ModelService } from '../service/modelService.js'
+const modelService = new ModelService();
 export class ModelController {
 
     async getModel(req, res, next) {
         try {
-            const modelService = new ModelService();
             const resultItems = await modelService.getModel(req.query);
             return res.status(200).json(resultItems);
         }
@@ -17,7 +17,6 @@ export class ModelController {
 
     async getModelById(req, res, next) {
         try {
-            const modelService = new ModelService();
             const resultItem = await modelService.getModelById(req.params.id);
             res.status(200).json(resultItem);
         }
@@ -31,7 +30,6 @@ export class ModelController {
 
     async addModel(req, res, next) {
         try {
-            const modelService = new ModelService();
             const resultItem = await modelService.addModel(req.body);
             console.log("resultItem")
             console.log(resultItem)
@@ -47,7 +45,6 @@ export class ModelController {
 
     async deleteModel(req, res, next) {
         try {
-            const modelService = new ModelService();
             await modelService.deleteModel(req.params.id);
             res.status(200).json(req.params.id);
         }
@@ -61,7 +58,6 @@ export class ModelController {
 
     async updateModel(req, res, next) {
         try {
-            const modelService = new ModelService();
             const result = await modelService.updateModel(req.body, req.params.id);
             // if (result == null)
             //     throw ("this data cannot be updated")

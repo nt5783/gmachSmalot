@@ -1,10 +1,10 @@
 import { Service } from '../service/service.js'
+            const gownService = new Service();
 
 export class GownController {
 
     async getGowns(req, res, next) {
         try {
-            const gownService = new Service();
             const resultItems = Object.keys(req.query).length != 0 ? await gownService.getByParams('gowns', req.query) : await gownService.getAll('gowns')
             return res.status(200).json(resultItems);
         }
@@ -18,7 +18,6 @@ export class GownController {
 
     async getGownById(req, res, next) {
         try {
-            const gownService = new Service();
             const resultItem = await gownService.getById('gowns', req.params.id);
             return res.status(200).json(resultItem[0]);
         }
@@ -33,7 +32,6 @@ export class GownController {
 
     async addGown(req, res, next) {
         try {
-            const gownService = new Service();
             const resultItem = await gownService.add('gowns', req.body);
             res.status(200).json({ id: resultItem.insertId });
         }
@@ -47,7 +45,6 @@ export class GownController {
 
     async deleteGown(req, res, next) {
         try {
-            const gownService = new Service();
             await gownService.delete('gowns', req.params.id);
             return res.status(200).json({});
         }
@@ -61,7 +58,6 @@ export class GownController {
 
     async updateGown(req, res, next) {
         try {
-            const gownService = new Service();
             await gownService.update('gowns', req.params.id, req.body);
             res.status(200).json({ id: req.params.id });
         }
@@ -72,7 +68,4 @@ export class GownController {
             next(err)
         }
     }
-
-
-
 }
