@@ -10,12 +10,14 @@ async function fetchfunc(url, method, body, thenfunc) {
         })
         const json = await response.json()
         const data = await json
-        console.log("json " + json)
-        console.log("data " + data)
+        console.log("json ")
+        console.log(json)
+        console.log("data")
+        console.log(data)
         if (!data) {
             throw "data does'nt exist!"
         }
-        return data;
+        return data[0];
     }
     catch (e) {
         return e

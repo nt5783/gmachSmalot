@@ -1,13 +1,13 @@
 import { UserService } from "../service/userService.js";
-const userService = new UserService();
+const signupService = new UserService();
 
-export class UserController {
+export class SignupController {
 
     async signUp(req, res, next) {
         try {
             if (req.body) {
 
-                const resultItems = await userService.signup(req.body);
+                const resultItems = await signupService.signup(req.body);
                 if (resultItems.length == 0){
                     return res.status(409).json(resultItems);
                 }

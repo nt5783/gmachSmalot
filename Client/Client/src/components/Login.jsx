@@ -18,12 +18,14 @@ function Login() {
     //     }
     // }, [])
 
-    function loginUser(data) {
+    async function loginUser(data) {
 
         let res = fetchfunc('login', 'POST', data)
-        console.log('res')
+        const json = await res.json()
+        console.log('res' + res)
         console.log(res)
-        console.log(data);
+        console.log('json')
+        console.log(json)
 
         // fetch(`http://localhost:8080/login`, {
         //     method: 'POST',
@@ -47,11 +49,11 @@ function Login() {
 
     return (<>
         <form onSubmit={handleSubmit((data => loginUser(data)))}>
-            <label htmlFor='name' >user name</label>
-            <input name='name' type='text' required {...register('name')}></input>
+            <label htmlFor='username' >username</label>
+            <input name='username' type='text' required {...register('username')}></input>
             <label htmlFor='password' >password</label>
             <input name='password' type='password' required {...register('password')}></input>
-            <button type='submit'>enter</button>
+            <button type='submit'>Submit</button>
         </form>
         <button className='navigate_link' onClick={() => navigate('../signup')}>new user? sign up</button>
 

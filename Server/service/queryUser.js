@@ -1,6 +1,6 @@
 
 function getUserQuery(){
-    const query = `SELECT * FROM customers`
+    const query = `SELECT username, fullName FROM customers WHERE username = ?`
     return query
 }
 
@@ -10,7 +10,7 @@ function setUserQuery(keys){
 }
 
 function getPasswordQuery(){
-    const query = `SELECT * FROM passwords WHERE username = ?`
+    const query = `SELECT * FROM passwords WHERE username = ? AND password = ?`
     return query
 }
 
