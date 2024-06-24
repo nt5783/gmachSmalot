@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate,useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 // import { AppContext } from "../App";
 import Calendar from 'react-calendar';
@@ -9,8 +9,6 @@ import { fetchNoParamsfunc, fetchImg } from '../fetch'
 function Models() {
     const navigate = useNavigate();
     const [models, setModels] = useState([])
-    const [value, setValue] = useState(new Date());
-    const [img, setImg] = useState([]);
     const { state } = useLocation();
     const eventDate = state.value;
     console.log(eventDate)
@@ -69,7 +67,7 @@ function Models() {
         </div>}
         <div className='models_container'>
             {models.length > 0 && models.map((model, i) => {
-                return <div className='model_item' key={i} onClick={() => navigate(`./${model.model}`, { state: { model } })}>
+                return <div className='model_item' key={i} onClick={() => navigate(`./${model.model}`, { state: { model: model, eventDate: eventDate } })}>
                     {model.model}<br />
                     <img height={400} src={model.womenImage} />
                 </div>

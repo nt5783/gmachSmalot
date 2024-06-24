@@ -2,17 +2,20 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 // import { AppContext } from "../App";
-import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { fetchNoParamsfunc, fetchImg } from '../fetch'
 
 function Gowns() {
   const [gowns, setGowns] = useState([])
-  const [value, setValue] = useState(new Date());
-  const [img, setImg] = useState([]);
   const { state } = useLocation();
-  const model = state.model;
   console.log(state)
+  const model = state.model;
+  const eventDate = state.eventDate;
+  console.log("model")
+  console.log(model)
+  console.log("eventDate")
+  console.log(eventDate)
+
   useEffect(() => {
     async function getData() {
       console.log('useEffect')
@@ -30,6 +33,18 @@ function Gowns() {
     // console.log("gowns")
     // console.log(gowns)
   }, [])
+
+  return (<>
+    <img height={200} src={model.womenImage} />
+    {model.model}
+    {gowns.length > 0 && gowns.map((gown, i) => {
+      return <div key={i}>
+        size:  {gown.size}  amount: {gown.amount}
+      </div>
+    })}
+  </>)
+}
+export default Gowns;
 
   // useEffect(() => {
   //   async function getMoreData() {
@@ -59,24 +74,3 @@ function Gowns() {
   //   }
 
   // }, [gowns])
-
-  function onChange(nextValue) {
-    setValue(nextValue);
-  }
-
-
-  return (<>
-    {/* <Calendar
-      onChange={onChange}
-      value={value}
-    /> */}
-    <img height={200} src={model.womenImage} />
-    {model.model}
-    {gowns.length > 0 && gowns.map((gown, i) => {
-      return <div key={i}>
-        size:  {gown.size}  amount: {gown.amount}
-      </div>
-    })}
-  </>)
-}
-export default Gowns;
