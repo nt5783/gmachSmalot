@@ -10,13 +10,14 @@ function Models() {
     const navigate = useNavigate();
     const [models, setModels] = useState([])
     const { state } = useLocation();
-    const eventDate = state.value;
+    console.log(state)
+    const eventDate = state ? state.value : null;
     console.log(eventDate)
     useEffect(() => {
         async function getData() {
             console.log('useEffect')
             //ואם המודל בלי תאריך?
-            const res = fetchNoParamsfunc(`models?date=${eventDate}`, 'GET')
+            const res = eventDate ? fetchNoParamsfunc(`models?date=${eventDate}`, 'GET') : fetchNoParamsfunc(`models`, 'GET');
             const data = await res;
             if (data.length > 0) {
                 setModels(data)
@@ -27,39 +28,7 @@ function Models() {
         console.log(models)
         console.log('state')
         console.log(state)
-        // console.log("models")
-        // console.log(models)
     }, [])
-
-    // useEffect(() => {
-    //   async function getMoreData() {
-    //     console.log('useEffect2')
-    //     let m, image;
-    //     for (let i = 0; i < models.length; i++) {
-    //       m = models[i].model
-    //       console.log('m')
-    //       console.log(m)
-    //       const imageBlob = await fetchImg(m)
-    //       console.log('image')
-    //       console.log(image)
-    //       // const imageBlob = await res.blob();
-    //       const imageObjectURL = URL.createObjectURL(imageBlob);
-    //       setImg(imageObjectURL);
-    //     }
-    //     // models.map((model) => fetchImg(model.model), setImg([...img]))
-
-    //     // const res = fetchNoParamsfunc('models', 'GET', setModels)
-    //     // const data = await res;
-    //     // console.log("res")
-    //     // console.log(res)
-    //   }
-
-    //   if (models.length != 0) {
-    //     getMoreData()
-    //   }
-
-    // }, [models])
-
 
     return (<>
         {models.length > 0 && <div className='filter_by'>
