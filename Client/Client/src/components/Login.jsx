@@ -1,6 +1,8 @@
 // import React, { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
+import { fetchfunc } from '../fetch';
+
 // import { AppContext } from "../App";
 
 function Login() {
@@ -16,37 +18,43 @@ function Login() {
     //     }
     // }, [])
 
-    function loginUser(name, password) {
-    //     fetch(`http://localhost:8080/login`, {
-    //         method: 'POST',
-    //         body: JSON.stringify({ username: name, password: password }),
-    //         headers: { 'Content-type': 'application/json; charset=UTF-8' },
-    //     }).then(response => {
-    //         if (!response.ok)
-    //             throw 'Error' + response.status + ': ' + response.statusText;
-    //         return response.json();
-    //     }).then(user => {
-    //         user = user[0];
-    //         if (!user)
-    //             throw 'incorrect data, you have to signup'
-    //         else {
-    //             setUserDetails(user);
-    //             localStorage.setItem('currentUser', JSON.stringify(user));
-    //             navigate(`/home/users/${user.id}`);
-    //         }
+    function loginUser(data) {
+
+        let res = fetchfunc('login', 'POST', data)
+        console.log('res')
+        console.log(res)
+        console.log(data);
+
+        // fetch(`http://localhost:8080/login`, {
+        //     method: 'POST',
+        //     body: JSON.stringify({ username: name, password: password }),
+        //     headers: { 'Content-type': 'application/json; charset=UTF-8' },
+        // }).then(response => {
+        //     if (!response.ok)
+        //         throw 'Error' + response.status + ': ' + response.statusText;
+        //     return response.json();
+        // }).then(user => {
+        //     user = user[0];
+        //     if (!user)
+        //         throw 'incorrect data, you have to signup'
+        //     else {
+        //         setUserDetails(user);
+        //         localStorage.setItem('currentUser', JSON.stringify(user));
+        //         navigate(`/home/users/${user.id}`);
+        //     }
         // }).catch(ex => alert(ex))
     }
 
     return (<>
-        <form onSubmit={handleSubmit((data => loginUser(data.name, data.password)))}>
+        <form onSubmit={handleSubmit((data => loginUser(data)))}>
             <label htmlFor='name' >user name</label>
             <input name='name' type='text' required {...register('name')}></input>
             <label htmlFor='password' >password</label>
             <input name='password' type='password' required {...register('password')}></input>
             <button type='submit'>enter</button>
         </form>
-        <button className='navigate_link' onClick={()=> navigate('../signup')}>new user? sign up</button>
-        
+        <button className='navigate_link' onClick={() => navigate('../signup')}>new user? sign up</button>
+
     </>)
 }
 

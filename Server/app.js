@@ -15,6 +15,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/gowns', gownRouter);
 app.use('/signup', userRouter);
+app.use('/login', userRouter);
 app.use('/models', modelRouter);
 app.use("/img", express.static(__dirname + '/img'));
 app.use(logErrors);

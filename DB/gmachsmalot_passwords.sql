@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `passwords`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `passwords` (
   `username` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL,
+  `password` varchar(256) NOT NULL,
   PRIMARY KEY (`username`),
   UNIQUE KEY `username_UNIQUE` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -36,6 +36,7 @@ CREATE TABLE `passwords` (
 
 LOCK TABLES `passwords` WRITE;
 /*!40000 ALTER TABLE `passwords` DISABLE KEYS */;
+INSERT INTO `passwords` VALUES ('feigi','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3'),('nechama','2782526eaa0c5c254b36d0c90e1f8c06af41d167a8b539bd3c81cd6d155e7e5f');
 /*!40000 ALTER TABLE `passwords` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -48,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-23 15:41:16
+-- Dump completed on 2024-06-24 11:19:03

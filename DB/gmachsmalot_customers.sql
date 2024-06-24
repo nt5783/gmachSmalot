@@ -33,7 +33,7 @@ CREATE TABLE `customers` (
   PRIMARY KEY (`customersId`),
   UNIQUE KEY `username_UNIQUE` (`username`),
   CONSTRAINT `username` FOREIGN KEY (`username`) REFERENCES `passwords` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,6 +42,7 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
+INSERT INTO `customers` VALUES (1,'feigi','feigi zaks','0583270933','','yerushalaim','pz@pz'),(2,'nechama','nechama taurog','0583243609','','yerushalaim','nt5783@mailbox.org');
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-23 15:41:18
+-- Dump completed on 2024-06-24 11:19:06

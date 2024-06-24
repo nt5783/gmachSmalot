@@ -5,17 +5,18 @@ function getUserQuery(){
 }
 
 function setUserQuery(keys){
-    const query = `SELECT model,womenImage,girlsImage,color,season FROM models NATURAL JOIN colors NATURAL JOIN seasons WHERE model = ?`
+    const query = `INSERT INTO customers (${keys.map(key => key)}) VALUES (${keys.map(() => `?`)})`
     return query
 }
 
 function getPasswordQuery(){
-    const query = `SELECT * FROM passwords WHERE username = ? and password = ?`
+    const query = `SELECT * FROM passwords WHERE username = ?`
     return query
 }
 
-function setPasswordQuery(keys){
-    const query = `INSERT INTO passwords (${keys.map(key => key)}) VALUES (${keys.map(() => `?`)})`
+function setPasswordQuery(){
+    // const query = `INSERT INTO passwords (${keys.map(key => key)}) VALUES (${keys.map(() => `?`)})`
+    const query = `INSERT INTO passwords VALUES (?,?)`
     return query
 }
 

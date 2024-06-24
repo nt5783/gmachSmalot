@@ -12,19 +12,25 @@ export class UserService {
         const result = await executeQuery(queryUser, Object.values(queryUser));
         return result;
     }
-
-    async signup(body) {
+//צריכים לראות מה מחזירים
+    async signup(newUser) {
         //check that not exist
-        const hashPsw = sha256(body.password);
+        const hashPsw = sha256(newUser.password);
         const queryPwd = getPasswordQuery();
-        const doesUserExist = await executeQuery(queryPwd, [body.username, hashPsw]);
+        const doesUserExist = await executeQuery(queryPwd, [newUser.username]);
+        console.log(doesUserExist)
         if (doesUserExist.length > 0) {
             return doesUserExist
         }
         const addPwd = setPasswordQuery();
-        const pwdResult = await executeQuery(addPwd, [body.username, hashPsw]);
-        const user = {username: body.username, }
-        const addUser = setUserQuery(Object.keys())
+        const pwdResult = await executeQuery(addPwd, [newUser.username, hashPsw]);
+        // const user = {username: body.username, }
+        delete newUser.password;
+        console.log(newUser)
+        const addUser = setUserQuery(Object.keys(newUser))
+        const userResult=await executeQuery(addUser, Object.values(newUser))
+        console.log(userResult)
+        return userResult;
     }
 
     // if (req.body) {

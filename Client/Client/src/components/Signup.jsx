@@ -19,7 +19,7 @@ const Signup = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
             <input type="text" required {...register("username")} placeholder="Username" /><br/>
             <input type="password" {...register("password")} placeholder="Password" /><br/><br/>
-            <input type="text" {...register("full_name")} placeholder="Full Name" /><br/>
+            <input type="text" {...register("fullName")} placeholder="Full Name" /><br/>
             <input type="text" required {...register("phone",  {pattern:/^[0-9\-\+\s]{7,14}$/})} placeholder="Phone" /><br/>
             {errors.phone && <><p className="error">Phone number must be between 7 and 14 digits and contain only numbers.</p><br/></>}
             <input type="text" {...register("phone2",  {pattern:/^[0-9\-\+\s]{7,14}$/})} placeholder="Phone 2" /><br/>
