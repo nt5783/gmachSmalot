@@ -14,50 +14,36 @@ export class UserService {
     }
 
     async login(newUser) {
-        console.log('newUser')
-        console.log(newUser)
         const hashPsw = sha256(newUser.password)
-        console.log('hashPsw')
-        console.log(hashPsw)
         const queryPwd = getPasswordQuery()
-        console.log('queryPwd')
-        console.log(queryPwd)
         const doesUserExist = await executeQuery(queryPwd, [newUser.username, hashPsw]);
-        console.log('doesUserExist')
-        console.log(doesUserExist)
         if (doesUserExist.length > 0) {
-            console.log('doesUserExist')
-            console.log(doesUserExist.length)
             delete newUser.password
-            
+
             const queryUser = getUserQuery()
             const user = await executeQuery(queryUser, [newUser.username])
-            console.log('user')
-            console.log(user)
             return user
         }
-        return newUser
+        return []
     }
 
-    //צריכים לראות מה מחזירים
     async signup(newUser) {
-        //check that not exist
         const hashPsw = sha256(newUser.password)
         const queryPwd = getPasswordQuery()
         const doesUserExist = await executeQuery(queryPwd, [newUser.username, hashPsw])
-        console.log(doesUserExist)
         if (doesUserExist.length > 0) {
-            return doesUserExist
+            return []
         }
         const addPwd = setPasswordQuery()
         const pwdResult = await executeQuery(addPwd, [newUser.username, hashPsw])
-        // const user = {username: body.username, }
         delete newUser.password;
-        console.log(newUser)
-        const addUser = setUserQuery(Object.keys(newUser))
-        const userResult = await executeQuery(addUser, Object.values(newUser))
-        console.log(userResult)
-        return userResult
+        if (pwdResult) {
+            const addUser = setUserQuery(Object.keys(newUser))
+            const userResult = await executeQuery(addUser, Object.values(newUser))
+            const user = {username: newUser.username, fullName: newUser.fullName}
+            return [user]
+        }
+        return []
     }
 
     // if (req.body) {

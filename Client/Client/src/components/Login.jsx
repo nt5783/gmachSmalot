@@ -21,11 +21,9 @@ function Login() {
     async function loginUser(data) {
 
         let res = fetchfunc('login', 'POST', data)
-        const json = await res.json()
-        console.log('res' + res)
-        console.log(res)
-        console.log('json')
-        console.log(json)
+        const user = await res;
+        console.log('user')
+        console.log(user)
 
         // fetch(`http://localhost:8080/login`, {
         //     method: 'POST',
