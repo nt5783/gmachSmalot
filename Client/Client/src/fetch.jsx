@@ -10,12 +10,11 @@ async function fetchfunc(url, method, body, thenfunc) {
         })
         const json = await response.json()
         const data = await json
-        console.log("json " + json)
-        console.log("data " + data)
+        const user =  typeof data[0] != 'undefined' ? data[0] : null
         if (!data) {
             throw "data does'nt exist!"
         }
-        return data;
+        return {status: response.status, data: user}
     }
     catch (e) {
         return e
@@ -27,7 +26,6 @@ const fetchImg = async (model) => {
     const response = await fetch(`http://localhost:8080/imgs/${model}`, {method: "GET"});
     const data = await response.json();
     // const [user] = data.results;
-    console.log(data)
     return data.blob()
 };
 

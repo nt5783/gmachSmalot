@@ -8,12 +8,16 @@ const Signup = () => {
     const { register, handleSubmit, formState: { errors }  } = useForm();
     const navigate = useNavigate();
 
-    const onSubmit = (data) => {
+    async function onSubmit(data) {
         let res = fetchfunc('signup', 'POST', data)
-        console.log('res')
-        console.log(res)
-        console.log(data);
-    };
+        const user = await res
+        console.log('user')
+        console.log(user)
+        if (user.status == 200) {
+            localStorage.setItem("user", JSON.stringify(user.data))
+            navigate('../models')
+        }
+    }
 
     return (<>
         <form onSubmit={handleSubmit(onSubmit)}>

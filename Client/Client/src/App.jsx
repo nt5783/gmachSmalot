@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, createContext } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Home from './components/Home'
 import Gowns from './components/Gowns'
@@ -11,26 +11,43 @@ import Models from './components/Models'
 import InvitationCalendar from './components/InvitationCalendar'
 import './App.css'
 
+export const UserContext = createContext()
+export const CartContext = createContext()
+
+
 function App() {
 
+  // const [isLoading, setIsLoading] = useState(true)
+  const [user, setUser] = useState()
+  const [products, setProducts] = useState([])
+  // const [error, setError] = useState(false)
+  // const [cart, setCart] = useLocalStorageState<CartProps>('cart', {})
+
+
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />}>
-          <Route path="about" element={<About />} />
-          <Route path="login" element={<Login />} />
-          <Route path="signup" element={<Signup />} />
-          <Route path="manager" element={<Manager />} />
-          {/* <Route path="gowns" element={<Gowns />} />
+    <div className='App'>
+      <UserContext.Provider value={{ user, setUser }}>
+        <CartContext.Provider value={{ products, setProducts }}>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Home />}>
+                <Route path="about" element={<About />} />
+                <Route path="login" element={<Login />} />
+                <Route path="signup" element={<Signup />} />
+                <Route path="manager" element={<Manager />} />
+                {/* <Route path="gowns" element={<Gowns />} />
           <Route path="models" element={<Models />} /> */}
-          <Route path="models">
-            <Route index element={<Models />} />
-            <Route path=":id" element={<Gowns />} />
-          </Route>
-          <Route path="invitationCalendar" element={<InvitationCalendar />} />
-        </Route>
-      </Routes>
-    </Router>
+                <Route path="models">
+                  <Route index element={<Models />} />
+                  <Route path=":id" element={<Gowns />} />
+                </Route>
+                <Route path="invitationCalendar" element={<InvitationCalendar />} />
+              </Route>
+            </Routes>
+          </Router>
+        </CartContext.Provider>
+      </UserContext.Provider>
+    </div>
   )
 }
 

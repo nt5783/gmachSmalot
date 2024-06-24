@@ -3,6 +3,8 @@ import { NavLink, Outlet } from "react-router-dom";
 
 
 function Home() {
+    
+
     return (<>
         <NavLink to="./about">
             About</NavLink>

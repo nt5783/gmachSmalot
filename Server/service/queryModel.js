@@ -3,8 +3,6 @@ function getModelQuery(queryparams) {
     console.log(queryparams)
     let query;
     if (queryparams.hasOwnProperty('date')) {
-        //אולי צריך להיות המודלים?
-        //התאריכים צריכים להיות גם מלפני ואחרי
         console.log(queryparams.date)
         const date = new Date(queryparams.date)
         const firstDate = new Date(date);
@@ -16,9 +14,6 @@ function getModelQuery(queryparams) {
         const formatDate = (date) => {
             return date.toISOString().slice(0, 10);
         }
-
-        console.log("d1: ", formatDate(firstDate));
-        console.log("d2: ", formatDate(secondDate));
 
         query = `select distinct model,color,season,womenImage,girlsImage
         from gowns NATURAL JOIN models NATURAL JOIN colors NATURAL JOIN seasons

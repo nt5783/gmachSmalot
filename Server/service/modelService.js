@@ -1,5 +1,6 @@
 
 import { executeQuery } from './db.js';
+import 'dotenv/config'
 import { getModelQuery, getModelByIdQuery, addModelQuery, deleteModelQuery, updateModelQuery } from './queryModel.js'
 
 export class ModelService {
@@ -9,9 +10,9 @@ export class ModelService {
         const result = await executeQuery(queryModel);
         for (let i = 0; i < result.length; i++) {
             if (result[i].womenImage)
-            result[i].womenImage = `http://localhost:8080/img/${result[i].womenImage}`
+            result[i].womenImage = `http://${process.env.DB_HOST}:${process.env.DB_PORT}/img/${result[i].womenImage}`
         }
-        // console.log(result)
+         console.log(result)
         return result;
     }
 
@@ -19,9 +20,9 @@ export class ModelService {
         const queryModel = getModelByIdQuery();
         const result = await executeQuery(queryModel, [id]);
         if (result[0].womenImage)
-            result[0].womenImage = `http://localhost:8080/img/${result[0].womenImage}`
+            result[0].womenImage = `http://${process.env.DB_HOST}:${process.env.DB_PORT}/img/${result[0].womenImage}`
         //לטפל בכל המקרים, אם אין תמונה, יש תמונה של ילדות וכו
-        // console.log(result)
+         console.log(result)
         return result;
     }
 

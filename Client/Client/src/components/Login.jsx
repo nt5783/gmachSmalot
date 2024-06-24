@@ -1,12 +1,13 @@
-// import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { fetchfunc } from '../fetch';
+import { UserContext } from '../App';
 
 // import { AppContext } from "../App";
 
 function Login() {
-    // const { setUserDetails } = useContext(AppContext)
+    const { setUserDetails } = useContext(UserContext)
     const navigate = useNavigate();
     const { register, handleSubmit } = useForm();
 
@@ -18,12 +19,17 @@ function Login() {
     //     }
     // }, [])
 
-    function loginUser(data) {
+    async function loginUser(data) {
 
         let res = fetchfunc('login', 'POST', data)
-        console.log('res')
-        console.log(res)
-        console.log(data);
+        const user = await res;
+        console.log('user')
+        console.log(user)
+        if (user.status == 200) {
+            localStorage.setItem("user", JSON.stringify(user.data))
+            setUserDetails(user.data)
+            navigate('../models')
+        }
 
         // fetch(`http://localhost:8080/login`, {
         //     method: 'POST',
@@ -47,11 +53,11 @@ function Login() {
 
     return (<>
         <form onSubmit={handleSubmit((data => loginUser(data)))}>
-            <label htmlFor='name' >user name</label>
-            <input name='name' type='text' required {...register('name')}></input>
+            <label htmlFor='username' >username</label>
+            <input name='username' type='text' required {...register('username')}></input>
             <label htmlFor='password' >password</label>
             <input name='password' type='password' required {...register('password')}></input>
-            <button type='submit'>enter</button>
+            <button type='submit'>Submit</button>
         </form>
         <button className='navigate_link' onClick={() => navigate('../signup')}>new user? sign up</button>
 

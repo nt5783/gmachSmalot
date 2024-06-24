@@ -1,25 +1,33 @@
 
 function getGownsQuery(queryparams) {
-    let query;
+    let firstPartOfQuery = 'SELECT gownId,model,amount,size,length FROM gowns NATURAL JOIN sizes NATURAL JOIN lengths '
     if (queryparams.hasOwnProperty('date')) {
-        //אולי צריך להיות המודלים?
-        //התאריכים צריכים להיות גם מלפני ואחרי
-        console.log(queryparams.date)
-        query = `select distinct model from gowns where gownId not in (select OG.gownId from( select *,COUNT(*) as QuantityOccupied from gowns g NATURAL JOIN orders o where eventDate='${queryparams.date}' group by gownId) OG where QuantityOccupied=OG.amount);`
-        console.log(query)
+        const date = new Date(queryparams.date)
+        const firstDate = new Date(date);
+        firstDate.setDate(date.getDate() - 2);
+        const secondDate = new Date(date);
+        secondDate.setDate(date.getDate() + 2);
+        const formatDate = (date) => {
+            return date.toISOString().slice(0, 10);
+        }
+
+        firstPartOfQuery = `select gownId, model, size, length, amount, X.amount - QuantityOccupied as available
+        from lengths NATURAL JOIN sizes NATURAL JOIN gowns g1 NATURAL LEFT OUTER JOIN
+        (select *,COUNT(*) as QuantityOccupied
+        from gowns g NATURAL JOIN orders o
+        where eventDate BETWEEN '${formatDate(firstDate)}' AND '${formatDate(secondDate)}'
+        group by gownId) X`
     }
-    else {
-        const fields = Object.keys(queryparams).filter(param => {
-            return param == 'model' || param == 'size' || param == 'length' || param == 'amount';
-        });
-        let conditions = "WHERE "
-        fields.forEach(field => conditions += field + " = '" + queryparams[field] + "' AND ")
-        //query = `SELECT * FROM gowns ${fields.length > 0 ? conditions.substring(0, conditions.length - 5) : ""} 
-        query = `SELECT gownId,model,amount,size,length FROM gowns NATURAL JOIN sizes NATURAL JOIN lengths ${fields.length > 0 ? conditions.substring(0, conditions.length - 5) : ""} 
+    const fields = Object.keys(queryparams).filter(param => {
+        return param == 'model' || param == 'size' || param == 'length' || param == 'amount';
+    });
+    let conditions = "WHERE "
+    fields.forEach(field => conditions += field + " = '" + queryparams[field] + "' AND ")
+    //query = `SELECT * FROM gowns ${fields.length > 0 ? conditions.substring(0, conditions.length - 5) : ""} 
+    const query = `${firstPartOfQuery} ${fields.length > 0 ? conditions.substring(0, conditions.length - 5) : ""} 
     ${queryparams._sort ? "ORDER BY " + queryparams._sort : ""} 
     ${queryparams._limit ? "LIMIT " + queryparams._limit : ""};`
-        console.log(query)
-    }
+    console.log(query)
     return query
 }
 
