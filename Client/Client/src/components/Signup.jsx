@@ -13,6 +13,10 @@ const Signup = () => {
         const user = await res
         console.log('user')
         console.log(user)
+        if (user.status == 200) {
+            localStorage.setItem("user", JSON.stringify(user.data))
+            navigate('../models')
+        }
     }
 
     return (<>

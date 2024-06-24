@@ -1,12 +1,13 @@
-// import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { fetchfunc } from '../fetch';
+import { UserContext } from '../App';
 
 // import { AppContext } from "../App";
 
 function Login() {
-    // const { setUserDetails } = useContext(AppContext)
+    const { setUserDetails } = useContext(UserContext)
     const navigate = useNavigate();
     const { register, handleSubmit } = useForm();
 
@@ -24,6 +25,11 @@ function Login() {
         const user = await res;
         console.log('user')
         console.log(user)
+        if (user.status == 200) {
+            localStorage.setItem("user", JSON.stringify(user.data))
+            setUserDetails(user.data)
+            navigate('../models')
+        }
 
         // fetch(`http://localhost:8080/login`, {
         //     method: 'POST',
