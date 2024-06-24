@@ -7,6 +7,11 @@ export class GownService {
     async getGowns(queryparams) {
         const queryGown = getGownsQuery(queryparams);
         const result = await executeQuery(queryGown);
+        for (let i = 0; i < result.length; i++) {
+            if (result[i].available == null)
+                result[i].available = result[i].amount;
+        }
+        console.log(result);
         return result;
     }
 
@@ -19,7 +24,7 @@ export class GownService {
 
     async addGown(newGown) {
         const queryGown = addGownQuery(Object.keys(newGown));
-        const result = await executeQuery(queryGown,Object.values(newGown));
+        const result = await executeQuery(queryGown, Object.values(newGown));
         return result;
     }
 
