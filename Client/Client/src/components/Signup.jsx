@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useEffect, useContext} from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { fetchfunc } from '../fetch';
+import { UserContext } from '../App';
 
 
 const Signup = () => {
+    const { user, setUser } = useContext(UserContext)
     const { register, handleSubmit, formState: { errors }  } = useForm();
     const navigate = useNavigate();
 
@@ -15,6 +17,7 @@ const Signup = () => {
         console.log(user)
         if (user.status == 200) {
             localStorage.setItem("user", JSON.stringify(user.data))
+            setUser(user.data)
             navigate('../models')
         }
     }

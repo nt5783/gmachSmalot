@@ -7,17 +7,19 @@ import { UserContext } from '../App';
 // import { AppContext } from "../App";
 
 function Login() {
-    const { setUserDetails } = useContext(UserContext)
+    const { user, setUser } = useContext(UserContext)
     const navigate = useNavigate();
     const { register, handleSubmit } = useForm();
 
-    // useEffect(() => {
-    //     const currentUser = JSON.parse(localStorage.getItem('currentUser'))
-    //     if (currentUser != null) {
-    //         navigate(`/home/users/${currentUser.id}`);
-    //         setUserDetails(currentUser)
-    //     }
-    // }, [])
+    useEffect(() => {
+        console.log('user context!!')
+        console.log(user)
+        // const currentUser = JSON.parse(localStorage.getItem('currentUser'))
+        // if (currentUser != null) {
+        //     navigate(`/home/users/${currentUser.id}`);
+        //     setUserDetails(currentUser)
+        // }
+    }, [user])
 
     async function loginUser(data) {
 
@@ -27,7 +29,7 @@ function Login() {
         console.log(user)
         if (user.status == 200) {
             localStorage.setItem("user", JSON.stringify(user.data))
-            setUserDetails(user.data)
+            setUser(user.data)
             navigate('../models')
         }
 
