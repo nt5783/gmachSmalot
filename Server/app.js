@@ -7,6 +7,7 @@ import {logErrors} from './middleware/logErrors.js'
 import { modelRouter } from './router/modelRouter.js'
 import { loginRouter } from './router/loginRouter.js';
 import { signupRouter } from './router/signupRouter.js';
+import { colorRouter } from './router/colorRouter.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,6 +19,7 @@ app.use('/gowns', gownRouter);
 app.use('/signup', signupRouter);
 app.use('/login', loginRouter);
 app.use('/models', modelRouter);
+app.use('/colors',colorRouter)
 app.use("/img", express.static(__dirname + '/img'));
 app.use(logErrors);
 

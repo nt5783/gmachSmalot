@@ -6,14 +6,25 @@ function getModelQuery(queryparams) {
         console.log(queryparams.date)
         const date = new Date(queryparams.date)
         const firstDate = new Date(date);
-        firstDate.setDate(date.getDate() - 2);
-
         const secondDate = new Date(date);
-        secondDate.setDate(date.getDate() + 2);
-
+        // firstDate.setDate(date.getDate() - 2);  
+        // secondDate.setDate(date.getDate() + 2);
+        const addBusinessDays = (date, days) => {
+            for (let i = 0; i < days; i++) {
+                date.setDate(date.getDate() + 1);
+                // Skip Fridays (day 5) and Saturdays (day 6)
+                if (date.getDay() === 5) {
+                    date.setDate(date.getDate() + 2); // Skip to Monday
+                } else if (date.getDay() === 6) {
+                    date.setDate(date.getDate() + 1); // Skip to Sunday
+                }
+            }
+        };
+        addBusinessDays(firstDate, -2);
+        addBusinessDays(secondDate, 2);
         const formatDate = (date) => {
             return date.toISOString().slice(0, 10);
-        }
+        };
 
         query = `select distinct model,color,season,womenImage,girlsImage
         from gowns NATURAL JOIN models NATURAL JOIN colors NATURAL JOIN seasons
