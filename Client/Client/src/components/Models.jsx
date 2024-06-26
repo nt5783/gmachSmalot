@@ -1,33 +1,25 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useForm } from "react-hook-form";
-// import { AppContext } from "../App";
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
+import React, { useState, useEffect, useContext } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { useForm } from "react-hook-form"
+import Calendar from 'react-calendar'
+import 'react-calendar/dist/Calendar.css'
 import { fetchNoParamsfunc, fetchImg } from '../fetch'
 
 function Models() {
     const navigate = useNavigate();
     const [models, setModels] = useState([])
     const { state } = useLocation();
-    console.log(state)
     const eventDate = state ? state.value : null;
-    console.log(eventDate)
     useEffect(() => {
         async function getData() {
-            console.log('useEffect')
             //ואם המודל בלי תאריך?
-            const res = eventDate ? fetchNoParamsfunc(`models?date=${eventDate}`, 'GET') : fetchNoParamsfunc(`models`, 'GET');
+            const res = eventDate ? fetchNoParamsfunc(`models?date=${eventDate}`, 'GET') : fetchNoParamsfunc(`models`, 'GET')
             const data = await res;
             if (data.length > 0) {
                 setModels(data)
             }
         }
         getData()
-        console.log('models')
-        console.log(models)
-        console.log('state')
-        console.log(state)
     }, [])
 
     return (<>
@@ -46,4 +38,4 @@ function Models() {
 
     </>)
 }
-export default Models;
+export default Models

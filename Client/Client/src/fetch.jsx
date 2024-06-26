@@ -48,8 +48,8 @@ async function fetchNoParamsfunc(url, method) {
         const data = await response.json()
         // const gowns = data.results
         // setGowns(data)
-        console.log("data")
-        console.log(data)
+        // console.log("data")
+        // console.log(data)
         // console.log("gowns")
         // console.log(gowns)
         if (!data) {
