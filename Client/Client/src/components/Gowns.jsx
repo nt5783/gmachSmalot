@@ -1,25 +1,21 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useForm } from "react-hook-form";
+import React, { useState, useEffect, useContext } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { useForm } from "react-hook-form"
+import { CartContext } from '../App'
 // import { AppContext } from "../App";
-import 'react-calendar/dist/Calendar.css';
+import 'react-calendar/dist/Calendar.css'
 import { fetchNoParamsfunc, fetchImg } from '../fetch'
 
 function Gowns() {
+  const { cart, setCart } = useContext(CartContext)
   const [gowns, setGowns] = useState([])
   const [selectedGown, setSelectedGown] = useState(null)
   const { state } = useLocation();
-  console.log(state)
   const model = state.model;
   const eventDate = state.eventDate;
-  console.log("model")
-  console.log(model)
-  console.log("eventDate")
-  console.log(eventDate)
-  
+
   useEffect(() => {
     async function getData() {
-      console.log('useEffect')
       const res = eventDate ? fetchNoParamsfunc(`gowns?model=${model.model}&date=${eventDate}`, 'GET') : fetchNoParamsfunc(`gowns?model=${model.model}`, 'GET');
       const data = await res;
       if (data.length > 0) {
@@ -27,15 +23,18 @@ function Gowns() {
       }
     }
     getData()
-    console.log('gowns')
-    console.log(gowns)
-    console.log('state')
-    console.log(state)
   }, [])
 
-function gownSelected(i) {
-  setSelectedGown((prev) => (prev === i ? null : i)); // Toggle selected gown
-}
+  function gownSelected(i) {
+    setSelectedGown((prev) => (prev === i ? null : i)); // Toggle selected gown
+  }
+
+  function AddGownToCart(gown){
+    setCart(prevItems => [...prevItems, {id: gown.gownId, model: gown.model, size: gown.size, length: gown.length, img: model.womenImage, qty: 1}])
+    console.log('cart added')
+    console.log(cart)
+    // localStorage.setItem('cart', JSON.stringify(cart))
+  }
 
   return (
     <>
@@ -50,7 +49,7 @@ function gownSelected(i) {
       {selectedGown !== null && (
         <div>
           <span>Available amount: {gowns[selectedGown].available}</span>
-          <button>Add to cart</button> 
+          <button onClick={() => AddGownToCart(gowns[selectedGown])}>Add to cart</button>
           <button>Order now</button>
         </div>
       )}

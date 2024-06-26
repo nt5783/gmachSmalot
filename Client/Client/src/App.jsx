@@ -8,6 +8,7 @@ import Login from './components/Login'
 import Signup from './components/Signup'
 import About from './components/About'
 import Models from './components/Models'
+import Cart from './components/Cart'
 import InvitationCalendar from './components/InvitationCalendar'
 import './App.css'
 
@@ -18,8 +19,8 @@ export const CartContext = createContext()
 function App() {
 
   // const [isLoading, setIsLoading] = useState(true)
-  const [user, setUser] = useState()
-  const [products, setProducts] = useState([])
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
+  const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')) ? JSON.parse(localStorage.getItem('cart')) : [])
   // const [error, setError] = useState(false)
   // const [cart, setCart] = useLocalStorageState<CartProps>('cart', {})
 
@@ -27,10 +28,11 @@ function App() {
   return (
     <div className='App'>
       <UserContext.Provider value={{ user, setUser }}>
-        <CartContext.Provider value={{ products, setProducts }}>
+        <CartContext.Provider value={{ cart, setCart }}>
           <Router>
             <Routes>
               <Route path="/" element={<Home />}>
+                <Route path="cart" element={<Cart />} />
                 <Route path="about" element={<About />} />
                 <Route path="login" element={<Login />} />
                 <Route path="signup" element={<Signup />} />
