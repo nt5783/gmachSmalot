@@ -1,10 +1,9 @@
-import React, { useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useForm } from "react-hook-form";
-import { fetchfunc } from '../fetch';
-import { UserContext } from '../App';
+import React, { useEffect, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useForm } from "react-hook-form"
+import { fetchfunc } from '../fetch'
+import { UserContext } from '../App'
 
-// import { AppContext } from "../App";
 
 function Login() {
     const { user, setUser } = useContext(UserContext)
@@ -16,7 +15,7 @@ function Login() {
         console.log(user)
         // const currentUser = JSON.parse(localStorage.getItem('currentUser'))
         // if (currentUser != null) {
-        //     navigate(`/home/users/${currentUser.id}`);
+        //     navigate(`/home/users/${currentUser.id}`)
         //     setUserDetails(currentUser)
         // }
     }, [user])
@@ -27,10 +26,20 @@ function Login() {
         const user = await res;
         console.log('user')
         console.log(user)
+        // date for cookie exp.
+        // // let now = new Date()
+        // let expires = new Date()
+        // console.log('now')
+        // console.log(expires)
+        // expires.setTime(expires.getTime() + (2*60*60*1000))
+        // console.log('expires')
+        // console.log(expires)
         if (user.status == 200) {
             localStorage.setItem("user", JSON.stringify(user.data))
             setUser(user.data)
             navigate('../models')
+            // need to save access token
+            // document.cookie = `username=${user.data.username}; expires=${expires} UTC; path=/`;
         }
 
         // fetch(`http://localhost:8080/login`, {
@@ -66,4 +75,4 @@ function Login() {
     </>)
 }
 
-export default Login;
+export default Login
