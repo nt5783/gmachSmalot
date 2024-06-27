@@ -2,21 +2,17 @@ import React from "react"
 import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { fetchfunc, fetchNoParamsfunc } from "../fetch"
-
-// const colors = ['white', 'beige', 'black', 'colorful', 'brown', 'pink', 'blue', 'lightBlue', 'green', 'purple', 'silver']
-const seasons = ['summer', 'winter', 'yearRound']
+import 'react-dropzone-uploader/dist/styles.css'
+import Dropzone from 'react-dropzone-uploader'
+import '../index.css'
 
 export default function AddModel({ formOn, setMessage }) {
-
     const [additional, setAdditional] = useState('')
-    const { register, handleSubmit } = useForm()
+    const { register, handleSubmit, setValue } = useForm()
     const [colors, setColors] = useState([])
-    const [seasons, setSeasons] = useState(['s', 'w', 'y'])
+    const [seasons, setSeasons] = useState([])
+    const [imageData, setImageData] = useState(null);
 
-
-    // const onSubmit = (data) => {
-    //   console.log(data);
-    // };
     async function getData(table, setfunc) {
         const res = fetchNoParamsfunc(table, 'GET');
         const data = await res;
@@ -26,65 +22,99 @@ export default function AddModel({ formOn, setMessage }) {
 
     useEffect(() => {
         getData('colors', setColors)
-        // getData('seasons', setSeasons)
+        getData('seasons', setSeasons)
     }, [])
 
+    // const onSubmit = async (data) => {
+    //     const formData = {
+    //       ...data,
+    //       image: imageData.name, // מוסיף את שם התמונה לאובייקט הנתונים
+    //     };
+
+    //     try {
+    //       const response = await axios.post('http://localhost:8080/submit', formData);
+    //       console.log('Response:', response.data);
+    //     } catch (error) {
+    //       console.error('Error:', error);
+    //     }
+    //   };
+
     function addModelFunc(data) {
-        // console.log(data)
-        setMessage("adding model code " + data.model + " color: " + data.color + " for " + data.season)
-        formOn('')
-        let res = fetchfunc('models', 'POST', data)
-        // console.log('res')
-        // console.log(res)
-        // setMessage(res)
+        let formData;
+        if (!imageData)
+            formData = { ...data, image: null, };
+        else
+            formData = { ...data, image: imageData.name, };
+        console.log(formData)
+        // setMessage("adding model code " + data.model + " color: " + data.color + " for " + data.season)
+        // formOn('')
+        // let res = fetchfunc('models', 'POST', data)
+        // // console.log('res')
+        // // console.log(res)
+        // // setMessage(res)
     }
 
     function addColor(event) {
-         event.preventDefault();
-        fetchfunc('colors','POST', event.target.value)
+        event.preventDefault();
+        const newColor = event.target[0].value;
+        if (newColor && !colors.includes(newColor))
+            fetchfunc('colors', 'POST', { color: newColor })
+        //להוסיף בדיקה שעבד
+        setColors(prev => [...prev, newColor])
+        setAdditional('')
+    }
+    //לעשות גם גנרי או לפחות כמו הקודם.trim()
+    function addSeason(event) {
+        event.preventDefault();
+        fetchfunc('seasons', 'POST', { season: event.target[0].value })
+        //להוסיף בדיקה שעבד
+        setSeasons(prev => [...prev, event.target[0].value])
         setAdditional('')
     }
 
-    // const handleChange = (event) => {
-    //     event.preventDefault()
-    //     switch (event.target.value) {
-    //         case "other": {
-    //             setAdditional("addColor")
-    //             break;
-    //         }
-    //         default:
-    //             // setAdditional("")
-    //             return
-    //     }
-    // }
+    const getUploadParams = ({ meta }) => {
+        // return { url: 'http://localhost:8080/upload' };
+        return { url: 'https://httpbin.org/post' };
+    };
 
-    // const handleAddColor = (e) => {
-    //     const newColor = e.target.value.trim();
-    //     if (newColor && !colors.includes(newColor)) {
-    //         setValue('color', newColor);
-    //     }
+    const handleChangeStatus = ({ meta, file }, status) => {
+        if (status === 'done') {
+            setImageData({ name: meta.name, type: meta.type });
+            setValue('image', meta.name);
+        } else if (status === 'removed') {
+            setImageData(null);
+            setValue('image', '');
+        }
+    };
+
+    // const Preview = ({ meta }) => {
+    //     const { name, percent, status, previewUrl } = meta;
+    //     console.log("percent")
+    //     console.log(percent)
+    //     return (
+    //         <div className="preview">
+    //             <img src={previewUrl} alt={name} style={{ width: '50px' }} />
+    //             {/* {status !== 'done' && ()} */}
+    //                 <div className="progress-bar">
+    //                     <div className="progress" style={{ width: `${percent}%` }}></div>
+    //                 </div>
+                
+    //             {status === 'done' && <span>✔️</span>}
+    //         </div>
+    //     );
     // };
 
-    // // specify upload params and url for your files
-    // const getUploadParams = ({ meta }) => { return { url: 'https://httpbin.org/post' } }
-
-    // // called every time a file's `status` changes
-    // const handleChangeStatus = ({ meta, file }, status) => { console.log(status, meta, file) }
-
-    // // receives array of files that are done uploading when submit button is clicked
-    // const handleSubmitDropbox = (files) => {
-    //     console.log(files.map(f => f.meta))
-    //     // files.map((f, i) => {
-    //     //     img[i] = f
-    //     // })
-    // }
+    const imgHandleSubmit = (files, allFiles) => {
+        console.log(files.map(f => f.meta));
+        allFiles.forEach(f => f.remove());
+    };
 
     return (<>
         <form onSubmit={handleSubmit((data => addModelFunc(data)))}>
             <label>Model:<input className='number_without' type="number" name="model" required {...register("model")} /></label><br />
-
+            {/* , { onChange: (e) => handleChange(e) } */}
             <label>Color:
-                <select name="color" required {...register("color", { onChange: (e) => handleChange(e) })}>
+                <select name="color" required {...register("color")}>
                     <option disabled selected></option>
                     {colors.map((color, i) => <option key={i} value={color}>{color}</option>)}
                     {/* <option value="other">other</option> */}
@@ -93,11 +123,23 @@ export default function AddModel({ formOn, setMessage }) {
             <br />
             <label>Season:<select name="season" defaultValue={'yearRound'} required {...register("season")}>
                 {seasons.map((season, i) => <option key={i} value={season}>{season}</option>)}</select></label><br />
-
-            {/* <Dropzone getUploadParams={getUploadParams}
-                onChangeStatus={handleChangeStatus}
-                onSubmit={handleSubmitDropbox}
-                accept="image/*,video/*" />*/}
+            <label>
+                Image:
+                <Dropzone
+                    getUploadParams={getUploadParams}
+                    onChangeStatus={handleChangeStatus}
+                     onSubmit={imgHandleSubmit}
+                    // accept="image/*"
+                    maxFiles={1}
+                    // canCancel='false'
+                    // canRemove='false'
+                    // inputWithFilesContent='Add Files'
+                    // PreviewComponent={Preview}
+                    styles={{
+                        dropzone: { width: 400, height: 200, border: '2px dashed #007bff', borderRadius: '5px' },
+                        dropzoneActive: { borderColor: 'green' },
+                    }} />
+            </label>
 
             <input type="button" value="Cancel" onClick={() => formOn('')} />
             <input type="submit" value="Add Model" /><br />
@@ -108,52 +150,11 @@ export default function AddModel({ formOn, setMessage }) {
             <input name='color' type='text' required></input>
             <button type="submit">Add</button>
         </form>}
-
-
+        <button onClick={() => setAdditional(prev => prev == 'seasons' ? '' : 'seasons')}>add season</button>
+        {additional == 'seasons' && <form onSubmit={addSeason}>
+            <label htmlFor='season' >season name:</label>
+            <input name='season' type='text' required></input>
+            <button type="submit">Add</button>
+        </form>}
     </>)
 }
-
-
-//  <form onSubmit={handleSubmit(onSubmit)}>
-// <label>
-//     Model:
-//     <input type="number" required {...register('model')} />
-// </label>
-
-// <label>
-//     Colors:
-//     <select
-//         {...register('color', { required: true })}
-//         onChange={handleAddColor}
-//         value={watch('color')}
-//     >
-//         {colors.map(color => (
-//             <option key={color} value={color}>{color}</option>
-//         ))}
-//         <option value="">Add New Color</option>
-//     </select>
-// </label>
-
-// <label>
-//     Seasons:
-//     <select
-//         {...register('season', { required: true })}
-//         onChange={handleAddSeason}
-//         value={watch('season')}
-//     >
-//         {seasons.map(season => (
-//             <option key={season} value={season}>{season}</option>
-//         ))}
-//         <option value="">Add New Season</option>
-//     </select>
-// </label>
-
-// <label>
-//     Image:
-//     {/* Implement Dropzone functionality for image upload using a library like react-dropzone */}
-//     {/* Example: <Dropzone {...register('image')} /> */}
-//     {/* Remember to handle file upload logic */}
-// </label>
-
-// <button type="submit">Submit</button>
-// </form>
