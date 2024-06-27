@@ -26,15 +26,50 @@ function Gowns() {
   }, [])
 
   function gownSelected(i) {
-    setSelectedGown((prev) => (prev === i ? null : i)); // Toggle selected gown
+    setSelectedGown((prev) => (prev === i ? i : i)); // Toggle selected gown
   }
 
-  function AddGownToCart(gown){
-    setCart(prevItems => [...prevItems, {id: gown.gownId, model: gown.model, size: gown.size, length: gown.length, img: model.womenImage, qty: 1}])
-    console.log('cart added')
-    console.log(cart)
-    // localStorage.setItem('cart', JSON.stringify(cart))
-  }
+  // function AddGownToCart(gown){
+  //   // if (cart)
+  //   if (cart.some(item => item.id === gown.id)) {
+  //   }
+  //   setCart(prevItems => [...prevItems, {id: gown.gownId, model: gown.model, size: gown.size, length: gown.length, img: model.womenImage, qty: 1}])
+  //   console.log('cart added')
+  //   console.log(cart)
+  //   // localStorage.setItem('cart', JSON.stringify(cart))
+  // }
+
+  function AddGownToCart(gown) {
+    const gownId = gown.gownId;
+
+    setCart(prevCart => {
+        const gownIndex = prevCart.items.findIndex(item => item.id === gownId);
+
+        if (gownIndex !== -1) {
+            // Gown with the same ID already exists, update the quantity
+            const updatedItems = prevCart.items.map((item, index) => {
+                if (index === gownIndex) {
+                    return {
+                        ...item,
+                        qty: item.qty + 1
+                    };
+                }
+                return item;
+            });
+            return { length: prevCart.length + 1, items: updatedItems };
+        } else {
+            // Gown with the ID doesn't exist, add a new item
+            return {
+                length: prevCart.length + 1,
+                items: [
+                    ...prevCart.items,
+                    { id: gownId, model: gown.model, size: gown.size, length: gown.length, img: model.womenImage, qty: 1 }
+                ]
+            };
+        }
+    })
+    // setGowns(prev => )
+}
 
   return (
     <>

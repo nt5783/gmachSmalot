@@ -20,7 +20,7 @@ function App() {
 
   // const [isLoading, setIsLoading] = useState(true)
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
-  const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')) ? JSON.parse(localStorage.getItem('cart')) : [])
+  const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')) ? JSON.parse(localStorage.getItem('cart')) : {length: 0, items: []})
   // const [error, setError] = useState(false)
   // const [cart, setCart] = useLocalStorageState<CartProps>('cart', {})
 
