@@ -16,7 +16,7 @@ function Cart() {
                 <img height={100} src={gown.img} alt="gown image" onClick={() => navigate(`../models/${gown.model}`
                 ,{ state: { model: {model: gown.model, womenImage: gown.img}, eventDate: eventDate } }
                 )}/>
-                {gown.model} {gown.size} {gown.color} {gown.length}
+                {gown.model} {gown.size} {gown.color} {gown.length}, {gown.qty}
             </div>})}
         {cart.length == 0 && <h3>your cart is empty</h3>}
     </>)

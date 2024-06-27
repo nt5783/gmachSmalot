@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 import { fetchfunc } from '../fetch'
 import { UserContext } from '../App'
@@ -9,6 +9,16 @@ function Login() {
     const { user, setUser } = useContext(UserContext)
     const navigate = useNavigate();
     const { register, handleSubmit } = useForm();
+    const { state } = useLocation();
+    const model = state? state.model.model : null;
+    const message = state? state.message : null;
+
+
+    console.log('state')
+    if (state) console.log(state)
+    console.log('model')
+    if (model) console.log(model)
+
 
     useEffect(() => {
         console.log('user context!!')
@@ -34,13 +44,14 @@ function Login() {
         // expires.setTime(expires.getTime() + (2*60*60*1000))
         // console.log('expires')
         // console.log(expires)
-        if (user.status == 200) {
-            localStorage.setItem("user", JSON.stringify(user.data))
-            setUser(user.data)
-            navigate('../models')
-            // need to save access token
-            // document.cookie = `username=${user.data.username}; expires=${expires} UTC; path=/`;
-        }
+        if (user.status != 200) return
+        localStorage.setItem("user", JSON.stringify(user.data))
+        setUser(user.data)
+        if (model) navigate(`../models/${model}`, {state: {model: state.model, eventDate: state.eventDate ? state.eventDate : null}})
+        else navigate('../models')
+        // need to save access token
+        // document.cookie = `username=${user.data.username}; expires=${expires} UTC; path=/`;
+        
 
         // fetch(`http://localhost:8080/login`, {
         //     method: 'POST',
@@ -63,14 +74,15 @@ function Login() {
     }
 
     return (<>
-        <form onSubmit={handleSubmit((data => loginUser(data)))}>
+            {message && <><div>{message}</div><div> you will be redirected to the gown</div></>}
+            <form onSubmit={handleSubmit((data => loginUser(data)))}>
             <label htmlFor='username' >username</label>
             <input name='username' type='text' required {...register('username')}></input>
             <label htmlFor='password' >password</label>
             <input name='password' type='password' required {...register('password')}></input>
             <button type='submit'>Submit</button>
         </form>
-        <button className='navigate_link' onClick={() => navigate('../signup')}>new user? sign up</button>
+        <button className='navigate_link' onClick={() => navigate('../signup', {state: state})}>new user? sign up</button>
 
     </>)
 }
