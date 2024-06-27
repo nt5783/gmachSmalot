@@ -13,16 +13,8 @@ function Home() {
         localStorage.setItem('cart', JSON.stringify(cart))
     }, [cart])
 
-    if (typeof user != 'undefined') {
-        console.log('user.username')
-        console.log(user.username)
-    }
-
-    console.log('cart')
-    console.log(cart)
-
     return (<>
-        {typeof user != 'undefined' && <span>{user.username}</span>}
+        { user && <span>{user.username}</span>}
         {/* <a href="" title="smart cart icons"/> */}
         <NavLink to="./cart">
             {cart.length}<img height={'50px'} src={cartIcon} alt="cart icon" /></NavLink>
