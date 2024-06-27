@@ -23,9 +23,8 @@ export class ColorService {
     }
 
     async addColor(newColor) {
-        console.log(newColor)
         const queryColor = addColorQuery();
-        const result = await executeQuery(queryColor, [newColor]);
+        const result = await executeQuery(queryColor, Object.values(newColor));
         return result;
     }
 
