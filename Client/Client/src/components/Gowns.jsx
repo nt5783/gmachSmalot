@@ -2,17 +2,39 @@ import React, { useState, useEffect, useContext } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 import { CartContext } from '../App'
+import { UserContext } from '../App'
 // import { AppContext } from "../App";
 import 'react-calendar/dist/Calendar.css'
 import { fetchNoParamsfunc, fetchImg } from '../fetch'
 
 function Gowns() {
+  const navigate = useNavigate();
+  const { user } = useContext(UserContext)
   const { cart, setCart } = useContext(CartContext)
   const [gowns, setGowns] = useState([])
   const [selectedGown, setSelectedGown] = useState(null)
   const { state } = useLocation();
   const model = state.model;
   const eventDate = state.eventDate;
+  const [message, setMessage] = useState('')
+  const [visible, setVisible] = useState(false)
+
+
+  console.log('state gowns')
+  if (state) console.log(state)
+
+    useEffect(() => {
+        if (!message) {
+            setVisible(false)
+            return
+        }
+        setVisible(true)
+        const timer = setTimeout(() => {
+            setVisible(false)
+            setMessage('')
+        }, 5000);
+        return () => clearTimeout(timer);
+    }, [message])
 
   useEffect(() => {
     async function getData() {
@@ -41,7 +63,7 @@ function Gowns() {
 
   function AddGownToCart(gown) {
     const gownId = gown.gownId;
-
+    if (!user) navigate('/login', {state: {model: model, message: 'you must log in to your account', eventDate: eventDate}})
     setCart(prevCart => {
         const gownIndex = prevCart.items.findIndex(item => item.id === gownId);
 
@@ -68,11 +90,13 @@ function Gowns() {
             };
         }
     })
+    setMessage(`gown model: ${gown.model}, size: ${gown.size} was added to cart successfully`)
     // setGowns(prev => )
 }
 
   return (
     <>
+     {visible && <div className='successMessage' style={{ background: "green" }}>{message}</div>}
       <img height={200} src={model.womenImage} />
       {model.model}
       <span>Size: </span>
@@ -90,7 +114,5 @@ function Gowns() {
       )}
     </>
   );
-
-
 }
 export default Gowns;
