@@ -1,7 +1,7 @@
 
 import { executeQuery } from './db.js';
 import 'dotenv/config'
-import { getModelQuery, getModelByIdQuery, addModelQuery, deleteModelQuery, updateModelQuery } from './queryModel.js'
+import { getModelQuery, getModelByIdQuery, addModelQuery, deleteModelQuery, updateModelQuery, getColorIdQuery, getSeasonIdQuery } from './queryModel.js'
 
 export class ModelService {
 
@@ -9,27 +9,26 @@ export class ModelService {
         const queryModel = getModelQuery(queryparams);
         const result = await executeQuery(queryModel);
         for (let i = 0; i < result.length; i++) {
-            if (result[i].womenImage)
-            result[i].womenImage = `http://${process.env.DB_HOST}:${process.env.DB_PORT}/img/${result[i].womenImage}`
+            if (!result[i].image)
+                result[0].image = `http://${process.env.DB_HOST}:${process.env.DB_PORT}/img/deafult image.jpg`
+            result[i].image = `http://${process.env.DB_HOST}:${process.env.DB_PORT}/img/${result[i].image}`
         }
-         console.log(result)
+        console.log(result)
         return result;
     }
 
     async getModelById(id) {
         const queryModel = getModelByIdQuery();
         const result = await executeQuery(queryModel, [id]);
-        if (result[0].womenImage)
-            result[0].womenImage = `http://${process.env.DB_HOST}:${process.env.DB_PORT}/img/${result[0].womenImage}`
-        //לטפל בכל המקרים, אם אין תמונה, יש תמונה של ילדות וכו
-         console.log(result)
+        if (!result[0].image)
+            result[0].image = `http://${process.env.DB_HOST}:${process.env.DB_PORT}/img/deafult image.jpg`
+        result[0].image = `http://${process.env.DB_HOST}:${process.env.DB_PORT}/img/${result[0].image}`
+        console.log(result)
         return result;
     }
 
-    async addModel(newModel) {
-        //const queryModel = addModelQuery();
-        // const result = await executeQuery(queryModel, [newModel]);
-        const queryModel = addModelQuery(Object.keys(newModel));
+    async addModel(newModel) {  
+        const queryModel = addModelQuery();
         const result = await executeQuery(queryModel, Object.values(newModel));
         return result;
     }

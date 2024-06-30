@@ -6,12 +6,7 @@ export class SeasonService {
 
     async getSeasons(queryparams) {
         const querySeason = getSeasonsQuery(queryparams);
-        const tempResult = await executeQuery(querySeason);
-        const result=[]
-        for (let i = 0; i < tempResult.length; i++) {
-            result[i] = tempResult[i].season;
-        }
-        //  console.log(result);
+        const result = await executeQuery(querySeason);
         return result;
     }
 
