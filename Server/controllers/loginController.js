@@ -1,6 +1,6 @@
 import { UserService } from "../service/userService.js";
 const loginService = new UserService();
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken'
 
 export class LoginController {
 
@@ -9,10 +9,24 @@ export class LoginController {
             if (req.body) {
 
                 const resultItems = await loginService.login(req.body);
+                console.log('resultItems[0]')
+                console.log(resultItems[0])
+                console.log('resultItems length')
+                console.log(resultItems.length)
                 if (resultItems.length == 0) {
-                    return res.status(409).json(resultItems);
+                    return res.status(409).json(resultItems[0]);
                 }
-                return res.status(200).json(resultItems);
+                const token = jwt.sign(
+                    { userId: resultItems.userId, admin: resultItems.isManager },
+                    process.env.RANDOM_TOKEN_SECRET,
+                    { expiresIn: '24h' });
+                console.log('token')
+                console.log(token)
+                // resultItems[0].token = token
+                delete resultItems[0].userId
+                console.log('{ token: token, data: resultItems[0] }')
+                console.log({ token: token, data: resultItems[0] })
+                return res.status(200).json({ token: token, data: resultItems[0] });
             }
         }
         catch (ex) {

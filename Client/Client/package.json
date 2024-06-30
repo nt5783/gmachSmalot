@@ -15,6 +15,7 @@
     "@mui/material": "^5.15.19",
     "react": "^18.2.0",
     "react-calendar": "^5.0.0",
+    "react-cookie": "^7.1.4",
     "react-dom": "^18.2.0",
     "react-dropzone-uploader": "^2.11.0",
     "react-hook-form": "^7.51.5",
