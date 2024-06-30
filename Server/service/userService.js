@@ -17,30 +17,29 @@ export class UserService {
         const hashPsw = sha256(newUser.password)
         const queryPwd = getPasswordQuery()
         const doesUserExist = await executeQuery(queryPwd, [newUser.username, hashPsw]);
-        if (doesUserExist.length > 0) {
-            delete newUser.password
+        if (!doesUserExist || doesUserExist.length == 0) return [];
 
-            const queryUser = getUserQuery()
-            const user = await executeQuery(queryUser, [newUser.username])
-            return user
-        }
-        return []
+        delete newUser.password;
+        const queryUser = getUserQuery();
+        const user = await executeQuery(queryUser, [newUser.username]);
+        return user
+
+
     }
 
     async signup(newUser) {
         const hashPsw = sha256(newUser.password)
         const queryPwd = getPasswordQuery()
         const doesUserExist = await executeQuery(queryPwd, [newUser.username, hashPsw])
-        if (doesUserExist.length > 0) {
-            return []
-        }
+        if (doesUserExist.length > 0) return []
+
         const addPwd = setPasswordQuery()
         const pwdResult = await executeQuery(addPwd, [newUser.username, hashPsw])
         delete newUser.password;
         if (pwdResult) {
             const addUser = setUserQuery(Object.keys(newUser))
             const userResult = await executeQuery(addUser, Object.values(newUser))
-            const user = {username: newUser.username, fullName: newUser.fullName}
+            const user = { username: newUser.username, fullName: newUser.fullName }
             return [user]
         }
         return []

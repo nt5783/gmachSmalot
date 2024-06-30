@@ -27,14 +27,14 @@ function getModelQuery(queryparams) {
         };
 
         query = `select distinct model,color,season,womenImage,girlsImage
-        from gowns NATURAL JOIN models NATURAL JOIN colors NATURAL JOIN seasons
-        where isInUse=1 and gownId not in (select OG.gownId
-        from(
-        select *,COUNT(*) as QuantityOccupied
-        from gowns g NATURAL JOIN orders o
-        where eventDate BETWEEN '${formatDate(firstDate)}' AND '${formatDate(secondDate)}'
-        group by gownId) OG
-        where QuantityOccupied=OG.amount);`
+                from gowns NATURAL JOIN models NATURAL JOIN colors NATURAL JOIN seasons
+                where isInUse=1 and gownId not in (select OG.gownId
+                from(
+                select *,COUNT(*) as QuantityOccupied
+                from gowns g NATURAL JOIN orders o
+                where eventDate BETWEEN '${formatDate(firstDate)}' AND '${formatDate(secondDate)}'
+                group by gownId) OG
+                where QuantityOccupied=OG.amount);`
         // query = `select distinct model from gowns where gownId not in (select OG.gownId from( select *,COUNT(*) as QuantityOccupied from gowns g NATURAL JOIN orders o where eventDate='${queryparams.date}' group by gownId) OG where QuantityOccupied=OG.amount);`
     }
     else {
