@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
 --
 -- Host: localhost    Database: gmachsmalot
 -- ------------------------------------------------------
--- Server version	8.3.0
+-- Server version	8.0.33
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -26,8 +26,7 @@ CREATE TABLE `models` (
   `model` int NOT NULL,
   `colorId` int NOT NULL,
   `seasonId` int NOT NULL,
-  `womenImage` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
-  `girlsImage` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+  `image` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
   `isInUse` tinyint DEFAULT '1',
   PRIMARY KEY (`model`),
   KEY `season_idx` (`seasonId`),
@@ -43,7 +42,7 @@ CREATE TABLE `models` (
 
 LOCK TABLES `models` WRITE;
 /*!40000 ALTER TABLE `models` DISABLE KEYS */;
-INSERT INTO `models` VALUES (316,1,1,'316.JPG',NULL,1),(332,9,2,'332.JPG',NULL,1),(401,2,2,'401.JPG',NULL,1),(417,10,2,'417.JPG',NULL,1),(426,2,2,'426.JPG',NULL,1),(514,1,1,'514.JPG',NULL,1),(518,1,1,'518.JPG',NULL,1),(606,2,2,'606.JPG',NULL,1),(607,4,3,'607.JPG',NULL,1),(609,10,3,'609.JPG',NULL,1),(610,13,3,'610.JPG',NULL,1),(612,4,3,'612.JPG',NULL,1),(613,4,3,'613.JPG',NULL,1),(615,1,1,'615.JPG',NULL,1),(616,1,1,'616.JPG',NULL,1),(617,1,1,'617.JPG',NULL,1),(618,1,1,'618.JPG',NULL,1),(621,1,1,'621.JPG',NULL,1),(622,1,1,'622.JPG',NULL,1),(625,1,1,'625.JPG',NULL,1),(626,1,1,'626.JPG',NULL,1),(627,1,1,'627.JPG',NULL,1);
+INSERT INTO `models` VALUES (316,1,1,'316.JPG',1),(332,9,2,'332.JPG',1),(401,2,2,'401.JPG',1),(417,10,2,'417.JPG',1),(426,2,2,'426.JPG',1),(606,2,2,'606.JPG',1),(607,4,3,'607.JPG',1),(609,10,3,'609.JPG',1),(610,13,3,'610.JPG',1),(612,4,3,NULL,1),(613,4,3,NULL,1);
 /*!40000 ALTER TABLE `models` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-25  0:11:19
+-- Dump completed on 2024-06-30 18:49:44
