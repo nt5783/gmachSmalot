@@ -51,16 +51,6 @@ function Gowns() {
     setSelectedGown((prev) => (prev === i ? i : i)); // Toggle selected gown
   }
 
-  // function AddGownToCart(gown){
-  //   // if (cart)
-  //   if (cart.some(item => item.id === gown.id)) {
-  //   }
-  //   setCart(prevItems => [...prevItems, {id: gown.gownId, model: gown.model, size: gown.size, length: gown.length, img: model.womenImage, qty: 1}])
-  //   console.log('cart added')
-  //   console.log(cart)
-  //   // localStorage.setItem('cart', JSON.stringify(cart))
-  // }
-
   function AddGownToCart(gown) {
     const gownId = gown.gownId;
     if (!user) navigate('/login', {state: {model: model, message: 'you must log in to your account', eventDate: eventDate}})
@@ -68,7 +58,6 @@ function Gowns() {
         const gownIndex = prevCart.items.findIndex(item => item.id === gownId);
         const username = user.username
         if (gownIndex !== -1) {
-            // Gown with the same ID already exists, update the quantity
             const updatedItems = prevCart.items.map((item, index) => {
                 if (index === gownIndex) {
                     return {
@@ -80,7 +69,6 @@ function Gowns() {
             });
             return { user: username, length: prevCart.length + 1, items: updatedItems };
         } else {
-            // Gown with the ID doesn't exist, add a new item
             return {
                 user: username,
                 length: prevCart.length + 1,

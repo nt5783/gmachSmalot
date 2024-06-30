@@ -10,10 +10,10 @@ export class ModelService {
         const result = await executeQuery(queryModel);
         for (let i = 0; i < result.length; i++) {
             if (!result[i].image)
-                result[0].image = `http://${process.env.DB_HOST}:${process.env.DB_PORT}/img/deafult image.jpg`
-            result[i].image = `http://${process.env.DB_HOST}:${process.env.DB_PORT}/img/${result[i].image}`
+                result[i].image = `http://${process.env.DB_HOST}:${process.env.DB_PORT}/img/deafult image.jpg`
+            else
+                result[i].image = `http://${process.env.DB_HOST}:${process.env.DB_PORT}/img/${result[i].image}`
         }
-        console.log(result)
         return result;
     }
 
@@ -23,11 +23,10 @@ export class ModelService {
         if (!result[0].image)
             result[0].image = `http://${process.env.DB_HOST}:${process.env.DB_PORT}/img/deafult image.jpg`
         result[0].image = `http://${process.env.DB_HOST}:${process.env.DB_PORT}/img/${result[0].image}`
-        console.log(result)
         return result;
     }
 
-    async addModel(newModel) {  
+    async addModel(newModel) {
         const queryModel = addModelQuery();
         const result = await executeQuery(queryModel, Object.values(newModel));
         return result;

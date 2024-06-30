@@ -24,25 +24,21 @@ export default function AddModel({ formOn, setMessage }) {
         getData('seasons', setSeasons)
     }, [])
 
-    function addModelFunc(data) {
+    function addModel(data) {
         let formData;
         if (!imageData)
             formData = { ...data, image: null, };
         else
             formData = { ...data, image: imageData.name, };
         console.log(formData)
-        
         // setMessage("adding model code " + data.model + " color: " + data.color + " for " + data.season)
-        // formOn('')
+        formOn('')
         let res = fetchfunc('models', 'POST', formData)
-        // // console.log('res')
-        // // console.log(res)
-        // // setMessage(res)
     }
 
     function addColor(event) {
         event.preventDefault();
-        const newColor = event.target[0].value;
+        const newColor = event.target[0].value.trim();
         if (newColor && !colors.includes(newColor))
             fetchfunc('colors', 'POST', { color: newColor })
         //להוסיף בדיקה שעבד
@@ -52,7 +48,7 @@ export default function AddModel({ formOn, setMessage }) {
     //לעשות גם גנרי או לפחות כמו הקודם.trim()
     function addSeason(event) {
         event.preventDefault();
-        const newSeason = event.target[0].value;
+        const newSeason = event.target[0].value.trim();
         if (newSeason && !seasons.includes(newSeason))
             fetchfunc('seasons', 'POST', { season: newSeason })
         //להוסיף בדיקה שעבד
@@ -83,7 +79,7 @@ export default function AddModel({ formOn, setMessage }) {
     // };
 
     return (<>
-        <form onSubmit={handleSubmit((data => addModelFunc(data)))}>
+        <form onSubmit={handleSubmit((data => addModel(data)))}>
             <label>Model:<input className='number_without' type="number" name="model" required {...register("model")} /></label><br />
             {/* , { onChange: (e) => handleChange(e) } */}
             <label>Color:
@@ -103,13 +99,8 @@ export default function AddModel({ formOn, setMessage }) {
                 <Dropzone
                     getUploadParams={getUploadParams}
                     onChangeStatus={handleChangeStatus}
-                    // onSubmit={imgHandleSubmit}
                     accept="image/*"
                     maxFiles={1}
-                    // canCancel='false'
-                    // canRemove='false'
-                    // inputWithFilesContent='Add Files'
-                    // PreviewComponent={Preview}
                     styles={{
                         dropzone: { width: 400, height: 200, border: '2px dashed #007bff', borderRadius: '5px' },
                         dropzoneActive: { borderColor: 'green' },
@@ -133,41 +124,3 @@ export default function AddModel({ formOn, setMessage }) {
         </form>}
     </>)
 }
-
-
-
-    // const Preview = ({ meta }) => {
-    //     const { name, percent, status, previewUrl } = meta;
-    //     console.log("percent")
-    //     console.log(percent)
-    //     return (
-    //         <div className="preview">
-    //             <img src={previewUrl} alt={name} style={{ width: '50px' }} />
-    //             {/* {status !== 'done' && ()} */}
-    //                 <div className="progress-bar">
-    //                     <div className="progress" style={{ width: `${percent}%` }}></div>
-    //                 </div>
-
-    //             {status === 'done' && <span>✔️</span>}
-    //         </div>
-    //     );
-    // };
-
-    // const Preview = ({ meta }) => {
-    //     const { name, percent, status, previewUrl } = meta;
-    //     console.log("sta")
-    //     console.log(status)
-    //     // return (
-    //     //     <div className="preview">
-    //     //         <img src={previewUrl} alt={name} style={{ width: '50px' }} />
-    //     //         {status === 'uploading' && console.log(percent)}
-    //     //         {/* {status === 'uploading' && (
-
-    //     //             <div className="progress-bar">
-    //     //                 <div className="progress" style={{ width: `${percent}%` }}></div>
-    //     //             </div>
-    //     //         )} */}
-    //     //         {status === 'done' && <span>✔️</span>}
-    //     //     </div>
-    //     // );
-    // };

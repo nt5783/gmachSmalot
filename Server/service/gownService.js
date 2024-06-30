@@ -23,7 +23,7 @@ export class GownService {
     }
 
     async addGown(newGown) {
-        const queryGown = addGownQuery(Object.keys(newGown));
+        const queryGown = addGownQuery();
         const result = await executeQuery(queryGown, Object.values(newGown));
         return result;
     }

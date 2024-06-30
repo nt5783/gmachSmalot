@@ -1,44 +1,85 @@
 import React from "react"
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { fetchfunc } from "../fetch"
-
-
-const lengths = ['maxi', 'midi', 'short']
-
-const sizeBaby = ['6m', '9m', '12m', '18m', '24m']
-const sizeGirl = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '10', '12', '14', '16', '18', '20']
-const sizeWoman = ['30', '32', '34', '36', '38', '40', '42', '44', '46', '48', '50', '52']
+import { fetchfunc, fetchNoParamsfunc } from "../fetch"
 
 export default function AddGown({ formOn, setMessage }) {
     const { register, handleSubmit } = useForm()
+    const [additional, setAdditional] = useState('')
+    const [sizes, setSizes] = useState([])
+    const [lengths, setLengths] = useState([])
 
-    function addGownFunc(data) {
+    async function getData(table, setfunc) {
+        const res = fetchNoParamsfunc(table, 'GET');
+        const data = await res;
+        if (data.length > 0)
+            setfunc(data)
+    }
+
+    useEffect(() => {
+        getData('sizes', setSizes)
+        getData('lengths', setLengths)
+    }, [])
+//כאן ובמודלים לטפל בזה שמוסיפים מידה גודל צבע וכו וזה מיד מוסיף למערך
+
+    // function addProperty(event, property) {
+    //     event.preventDefault();
+    //     const newProperty = event.target[0].value.trim();
+    //     console.log(newProperty)
+    //     console.log(newProperty)
+    //     if (newProperty && !colors.includes(newProperty))
+    //         fetchfunc('colors', 'POST', { color: newProperty })
+    //     //להוסיף בדיקה שעבד
+    //     setColors(prev => [...prev, newColor])
+    //     setAdditional('')
+    // }
+
+    function addLength(event) {
+        event.preventDefault();
+        const newLength = event.target[0].value.trim();
+        if (newLength && !lengths.includes(newLength))
+            fetchfunc('lengths', 'POST', { length: newLength })
+        //להוסיף בדיקה שעבד
+        // setLengths(prev => [...prev, newLength])
+        getData('lengths', setLengths)
+        setAdditional('')
+    }
+
+    //לעשות גם גנרי או לפחות כמו הקודם.trim()
+    function addSize(event) {
+        event.preventDefault();
+        const newSize = event.target[0].value.trim();
+        if (newSize && !sizes.includes(newSize))
+            fetchfunc('sizes', 'POST', { size: newSize })
+        //להוסיף בדיקה שעבד
+        // setSizes(prev => [...prev, newSize])
+        getData('sizes', setSizes)
+        setAdditional('')
+    }
+
+
+    function addGown(data) {
         console.log(data)
         // setMessage("adding gown model" + data.model + " ,length: " + data.length + " ,in size " + data.size)
         formOn('')
         let res = fetchfunc('gowns', 'POST', data)
-        console.log(res);
-        console.log(res.value);
-        // setMessage(res[0])
     }
 
 
     return (<>
-        <form onSubmit={handleSubmit((data => addGownFunc(data)))}>
-
+        <form onSubmit={handleSubmit((data => addGown(data)))}>
+            {/* temporary */}
             <label>Model:<input className='number_without' type="number" name="model" required {...register("model")} /></label><br />
 
             <label>Size:<select name="size" required {...register("size")}>
                 <option disabled selected></option>
-                {sizeBaby.map((size, i) => <option key={i} value={size}>{size}</option>)}
-                {sizeGirl.map((size, i) => <option key={i} value={size}>{size}</option>)}
-                {sizeWoman.map((size, i) => <option key={i} value={size}>{size}</option>)}
+                {sizes.map((size, i) => <option key={i} value={size.sizeId}>{size.size}</option>)}
             </select></label><br />
 
             <label>Length:<select name="length" required {...register("length")}>
                 <option disabled selected></option>
-                {lengths.map((length, i) => <option key={i} value={length}>{length}</option>)}</select></label><br />
+                {lengths.map((length, i) => <option key={i} value={length.lengthId}>{length.length}</option>)}
+            </select></label><br />
 
             <label>Amount:<input id='amount' type="number" min="1" name="amount" required {...register("amount")} /></label><br />
 
@@ -46,5 +87,18 @@ export default function AddGown({ formOn, setMessage }) {
             <input type="submit" value="Submit" /><br />
 
         </form>
+
+        <button onClick={() => setAdditional(prev => prev == 'lengths' ? '' : 'lengths')}>add length</button>
+        {additional == 'lengths' && <form onSubmit={addLength}>
+            <label htmlFor='length' >length:</label>
+            <input name='length' type='text' required></input>
+            <button type="submit">Add</button>
+        </form>}
+        <button onClick={() => setAdditional(prev => prev == 'sizes' ? '' : 'sizes')}>add size</button>
+        {additional == 'sizes' && <form onSubmit={addSize}>
+            <label htmlFor='size' >size:</label>
+            <input name='size' type='text' required></input>
+            <button type="submit">Add</button>
+        </form>}
     </>)
 }
