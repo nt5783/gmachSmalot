@@ -10,10 +10,6 @@ import { signupRouter } from './router/signupRouter.js';
 import { colorRouter } from './router/colorRouter.js';
 import { seasonRouter } from './router/seasonRouter.js';
 import multer from 'multer';
-// import bodyParser from 'body-parser'
-
-// const multer = require('multer');
-// const bodyParser = require('body-parser');
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -39,9 +35,10 @@ const storage = multer.diskStorage({
         cb(null, 'img'); // שמירת הקבצים בתיקיית img
     },
     filename: (req, file, cb) => {
-        cb(null, `${Date.now()}-${file.originalname}`);
+        cb(null, file.originalname);
     },
 });
+
 
 const upload = multer({ storage });
 
