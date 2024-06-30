@@ -9,6 +9,8 @@ import { loginRouter } from './router/loginRouter.js';
 import { signupRouter } from './router/signupRouter.js';
 import { colorRouter } from './router/colorRouter.js';
 import { seasonRouter } from './router/seasonRouter.js';
+import { sizeRouter } from './router/sizeRouter.js';
+import { lengthRouter } from './router/lengthRouter.js';
 import multer from 'multer';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -23,6 +25,8 @@ app.use('/login', loginRouter);
 app.use('/models', modelRouter);
 app.use('/colors', colorRouter)
 app.use('/seasons', seasonRouter)
+app.use('/sizes', sizeRouter)
+app.use('/lengths', lengthRouter)
 app.use("/img", express.static(__dirname + '/img'));
 app.use(logErrors);
 
