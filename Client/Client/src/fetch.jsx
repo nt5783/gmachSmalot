@@ -1,6 +1,6 @@
 import React from "react";
 import { json } from "react-router-dom";
-// import {useCookies} from 'react-cookie'
+// import {Cookies} from 'react-cookie'
 
 async function fetchfunc(url, method, body, thenfunc) {
     try {
@@ -30,22 +30,21 @@ async function loginfetchfunc(url, method, body, thenfunc) {
             headers: { 'content-Type': 'application/json; charset=UTF-8' },
         })
         if (response) {
-            const token = response.token
-            console.log('token')
-            console.log(token)  //X  :(
             const json = await response.json()
             const token2 = json.token
             console.log('token2')
             console.log(token2) // :)
+            // const cookie = new Cookies()
+            document.cookie = `token=${token2} ;path=/;`
             /////////////i'm in the middle here!!!!!!!!!!!!
-        }
 
-        // const data = await json
-        // const user =  typeof data != 'undefined' ? data : null
-        // if (!data) {
-        //     throw "data does'nt exist!"
-        // }
-        // return {status: response.status, data: user}
+        const data = await json
+        const user =  typeof data != 'undefined' ? data : null
+        if (!data) {
+            throw "data does'nt exist!"
+        }
+        return {status: response.status, data: user}
+        }
 
     }
     catch (e) {
