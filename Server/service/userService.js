@@ -18,13 +18,12 @@ export class UserService {
         const queryPwd = getPasswordQuery()
         const doesUserExist = await executeQuery(queryPwd, [newUser.username, hashPsw]);
         if (!doesUserExist || doesUserExist.length == 0) return [];
-
+        const isManager = doesUserExist.isManager ? 1: 0;
         delete newUser.password;
         const queryUser = getUserQuery();
         const user = await executeQuery(queryUser, [newUser.username]);
+        user[0].isManager = isManager
         return user
-
-
     }
 
     async signup(newUser) {
@@ -34,7 +33,7 @@ export class UserService {
         if (doesUserExist.length > 0) return []
 
         const addPwd = setPasswordQuery()
-        const pwdResult = await executeQuery(addPwd, [newUser.username, hashPsw])
+        const pwdResult = await executeQuery(addPwd, [newUser.username, hashPsw, 0])
         delete newUser.password;
         if (pwdResult) {
             const addUser = setUserQuery(Object.keys(newUser))
