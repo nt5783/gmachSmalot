@@ -6,12 +6,7 @@ export class ColorService {
 
     async getColors(queryparams) {
         const queryColor = getColorsQuery(queryparams);
-        const tempResult = await executeQuery(queryColor);
-        const result=[]
-        for (let i = 0; i < tempResult.length; i++) {
-            result[i] = tempResult[i].color;
-        }
-        //  console.log(result);
+        const result = await executeQuery(queryColor);
         return result;
     }
 

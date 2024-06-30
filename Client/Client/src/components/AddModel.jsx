@@ -31,9 +31,10 @@ export default function AddModel({ formOn, setMessage }) {
         else
             formData = { ...data, image: imageData.name, };
         console.log(formData)
+        
         // setMessage("adding model code " + data.model + " color: " + data.color + " for " + data.season)
         // formOn('')
-        // let res = fetchfunc('models', 'POST', data)
+        let res = fetchfunc('models', 'POST', formData)
         // // console.log('res')
         // // console.log(res)
         // // setMessage(res)
@@ -76,10 +77,10 @@ export default function AddModel({ formOn, setMessage }) {
         }
     };
 
-    const imgHandleSubmit = (files, allFiles) => {
-        console.log(files.map(f => f.meta));
-        allFiles.forEach(f => f.remove());
-    };
+    // const imgHandleSubmit = (files, allFiles) => {
+    //     console.log(files.map(f => f.meta));
+    //     allFiles.forEach(f => f.remove());
+    // };
 
     return (<>
         <form onSubmit={handleSubmit((data => addModelFunc(data)))}>
@@ -88,14 +89,14 @@ export default function AddModel({ formOn, setMessage }) {
             <label>Color:
                 <select name="color" required {...register("color")}>
                     <option disabled selected></option>
-                    {colors.map((color, i) => <option key={i} value={color}>{color}</option>)}
+                    {colors.map((color, i) => <option key={i} value={color.colorId}>{color.color}</option>)}
                     {/* <option value="other">other</option> */}
                 </select></label>
             {/* {additional == "addColor" && <label>new color:<input id='newColor' type="text" required {...register("color")}/></label>} */}
             <br />
             <label>Season:<select name="season" required {...register("season")}>
                 <option disabled selected></option>
-                {seasons.map((season, i) => <option key={i} value={season}>{season}</option>)}
+                {seasons.map((season, i) => <option key={i} value={season.seasonId}>{season.season}</option>)}
             </select></label><br />
             <label>
                 Image:
@@ -103,7 +104,7 @@ export default function AddModel({ formOn, setMessage }) {
                     getUploadParams={getUploadParams}
                     onChangeStatus={handleChangeStatus}
                     // onSubmit={imgHandleSubmit}
-                    // accept="image/*"
+                    accept="image/*"
                     maxFiles={1}
                     // canCancel='false'
                     // canRemove='false'
