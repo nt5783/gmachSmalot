@@ -1,5 +1,6 @@
 import { UserService } from "../service/userService.js";
 const loginService = new UserService();
+const jwt = require('jsonwebtoken');
 
 export class LoginController {
 
@@ -8,7 +9,7 @@ export class LoginController {
             if (req.body) {
 
                 const resultItems = await loginService.login(req.body);
-                if (resultItems.length == 0){
+                if (resultItems.length == 0) {
                     return res.status(409).json(resultItems);
                 }
                 return res.status(200).json(resultItems);
