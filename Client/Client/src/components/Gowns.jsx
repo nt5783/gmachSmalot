@@ -86,7 +86,7 @@ function Gowns() {
                 length: prevCart.length + 1,
                 items: [
                     ...prevCart.items,
-                    { id: gownId, model: gown.model, size: gown.size, length: gown.length, img: model.womenImage, qty: 1 }
+                    { id: gownId, model: gown.model, size: gown.size, length: gown.length, img: model.image, qty: 1 }
                 ]
             };
         }
@@ -98,14 +98,15 @@ function Gowns() {
   return (
     <>
      {visible && <div className='successMessage' style={{ background: "green" }}>{message}</div>}
-      <img height={200} src={model.womenImage} />
+      <img height={200} src={model.image} />
       {model.model}
+      <br />
       <span>Size: </span>
-      {gowns.length > 0 && gowns.map((gown, i) => (
-        <div key={i}>
+      {gowns.length > 0 && <div className='size_buttons'>{gowns.map((gown, i) => (
+        // <div key={i}>
           <button disabled={gown.available < 1} onClick={() => gownSelected(i)}>{gown.size}</button>
-        </div>
-      ))}
+        // </div>
+      ))}</div>}
       {selectedGown !== null && (
         <div>
           <span>Available amount: {gowns[selectedGown].available}</span>

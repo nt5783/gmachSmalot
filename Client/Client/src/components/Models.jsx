@@ -13,7 +13,6 @@ function Models() {
 
     useEffect(() => {
         async function getData() {
-            //ואם המודל בלי תאריך?
             eventDate? console.log(true) : console.log(false)
             const res = eventDate ? fetchNoParamsfunc(`models?date=${eventDate}`, 'GET') : fetchNoParamsfunc(`models`, 'GET')
             const data = await res;
@@ -26,9 +25,10 @@ function Models() {
 
     
     return (<>
-        {eventDate != null ? <div>the models with gowns available for your event: {eventDate.getDate()}/{eventDate.getMonth()}/{eventDate.getFullYear()}</div>
-            : <><div>pay attention that the models may not be available for the date of your event.</div>
-                <div>to view only models available for the date of your event <a className='no_background' href='./eventCalendar'>pick a date here</a></div></>}
+        {eventDate != null ? <div>the models with gowns available for your event: {eventDate.getDate()}/{eventDate.getMonth()}/{eventDate.getFullYear()}
+        <a className='no_background' href='./eventCalendar'> change date</a></div>
+            : <><div>pay attention that the gown may not be available for the date of your event.</div>
+                <div>to view only models with gowns available for the date of your event <a className='no_background' href='./eventCalendar'>pick a date here</a></div></>}
         {models.length > 0 && <div className='filter_by'>
 
         </div>}
@@ -36,7 +36,7 @@ function Models() {
             {models.length > 0 && models.map((model, i) => {
                 return <div className='model_item' key={i} onClick={() => navigate(`./${model.model}`, { state: { model: model, eventDate: eventDate } })}>
                     {model.model}<br />
-                    <img height={400} src={model.womenImage} />
+                    <img height={400} src={model.image} />
                 </div>
             })}
         </div>
