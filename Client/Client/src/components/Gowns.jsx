@@ -64,9 +64,9 @@ function Gowns() {
   function AddGownToCart(gown) {
     const gownId = gown.gownId;
     if (!user) navigate('/login', {state: {model: model, message: 'you must log in to your account', eventDate: eventDate}})
-    setCart(prevCart => {
+    else setCart(prevCart => {
         const gownIndex = prevCart.items.findIndex(item => item.id === gownId);
-
+        const username = user.username
         if (gownIndex !== -1) {
             // Gown with the same ID already exists, update the quantity
             const updatedItems = prevCart.items.map((item, index) => {
@@ -78,10 +78,11 @@ function Gowns() {
                 }
                 return item;
             });
-            return { length: prevCart.length + 1, items: updatedItems };
+            return { user: username, length: prevCart.length + 1, items: updatedItems };
         } else {
             // Gown with the ID doesn't exist, add a new item
             return {
+                user: username,
                 length: prevCart.length + 1,
                 items: [
                     ...prevCart.items,

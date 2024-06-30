@@ -10,9 +10,11 @@ function Models() {
     const [models, setModels] = useState([])
     const { state } = useLocation();
     const eventDate = state ? state.value : null;
+
     useEffect(() => {
         async function getData() {
             //ואם המודל בלי תאריך?
+            eventDate? console.log(true) : console.log(false)
             const res = eventDate ? fetchNoParamsfunc(`models?date=${eventDate}`, 'GET') : fetchNoParamsfunc(`models`, 'GET')
             const data = await res;
             if (data.length > 0) {
@@ -20,9 +22,13 @@ function Models() {
             }
         }
         getData()
-    }, [])
+    }, [state])
 
+    
     return (<>
+        {eventDate != null ? <div>the models with gowns available for your event: {eventDate.getDate()}/{eventDate.getMonth()}/{eventDate.getFullYear()}</div>
+            : <><div>pay attention that the models may not be available for the date of your event.</div>
+                <div>to view only models available for the date of your event <a className='no_background' href='./eventCalendar'>pick a date here</a></div></>}
         {models.length > 0 && <div className='filter_by'>
 
         </div>}
