@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form'
 import { fetchfunc, fetchNoParamsfunc } from "../fetch"
 import 'react-dropzone-uploader/dist/styles.css'
 import Dropzone from 'react-dropzone-uploader'
-import '../index.css'
 
 export default function AddModel({ formOn, setMessage }) {
     const [additional, setAdditional] = useState('')
@@ -24,20 +23,6 @@ export default function AddModel({ formOn, setMessage }) {
         getData('colors', setColors)
         getData('seasons', setSeasons)
     }, [])
-
-    // const onSubmit = async (data) => {
-    //     const formData = {
-    //       ...data,
-    //       image: imageData.name, // מוסיף את שם התמונה לאובייקט הנתונים
-    //     };
-
-    //     try {
-    //       const response = await axios.post('http://localhost:8080/submit', formData);
-    //       console.log('Response:', response.data);
-    //     } catch (error) {
-    //       console.error('Error:', error);
-    //     }
-    //   };
 
     function addModelFunc(data) {
         let formData;
@@ -66,18 +51,22 @@ export default function AddModel({ formOn, setMessage }) {
     //לעשות גם גנרי או לפחות כמו הקודם.trim()
     function addSeason(event) {
         event.preventDefault();
-        fetchfunc('seasons', 'POST', { season: event.target[0].value })
+        const newSeason = event.target[0].value;
+        if (newSeason && !seasons.includes(newSeason))
+            fetchfunc('seasons', 'POST', { season: newSeason })
         //להוסיף בדיקה שעבד
-        setSeasons(prev => [...prev, event.target[0].value])
+        setSeasons(prev => [...prev, newSeason])
         setAdditional('')
     }
 
     const getUploadParams = ({ meta }) => {
-        // return { url: 'http://localhost:8080/upload' };
-        return { url: 'https://httpbin.org/post' };
+        return { url: 'http://localhost:8080/upload' };
+        // return { url: 'https://httpbin.org/post' };
     };
 
     const handleChangeStatus = ({ meta, file }, status) => {
+        console.log("status")
+        console.log(status)
         if (status === 'done') {
             setImageData({ name: meta.name, type: meta.type });
             setValue('image', meta.name);
@@ -86,23 +75,6 @@ export default function AddModel({ formOn, setMessage }) {
             setValue('image', '');
         }
     };
-
-    // const Preview = ({ meta }) => {
-    //     const { name, percent, status, previewUrl } = meta;
-    //     console.log("percent")
-    //     console.log(percent)
-    //     return (
-    //         <div className="preview">
-    //             <img src={previewUrl} alt={name} style={{ width: '50px' }} />
-    //             {/* {status !== 'done' && ()} */}
-    //                 <div className="progress-bar">
-    //                     <div className="progress" style={{ width: `${percent}%` }}></div>
-    //                 </div>
-                
-    //             {status === 'done' && <span>✔️</span>}
-    //         </div>
-    //     );
-    // };
 
     const imgHandleSubmit = (files, allFiles) => {
         console.log(files.map(f => f.meta));
@@ -121,14 +93,16 @@ export default function AddModel({ formOn, setMessage }) {
                 </select></label>
             {/* {additional == "addColor" && <label>new color:<input id='newColor' type="text" required {...register("color")}/></label>} */}
             <br />
-            <label>Season:<select name="season" defaultValue={'yearRound'} required {...register("season")}>
-                {seasons.map((season, i) => <option key={i} value={season}>{season}</option>)}</select></label><br />
+            <label>Season:<select name="season" required {...register("season")}>
+                <option disabled selected></option>
+                {seasons.map((season, i) => <option key={i} value={season}>{season}</option>)}
+            </select></label><br />
             <label>
                 Image:
                 <Dropzone
                     getUploadParams={getUploadParams}
                     onChangeStatus={handleChangeStatus}
-                     onSubmit={imgHandleSubmit}
+                    // onSubmit={imgHandleSubmit}
                     // accept="image/*"
                     maxFiles={1}
                     // canCancel='false'
@@ -158,3 +132,41 @@ export default function AddModel({ formOn, setMessage }) {
         </form>}
     </>)
 }
+
+
+
+    // const Preview = ({ meta }) => {
+    //     const { name, percent, status, previewUrl } = meta;
+    //     console.log("percent")
+    //     console.log(percent)
+    //     return (
+    //         <div className="preview">
+    //             <img src={previewUrl} alt={name} style={{ width: '50px' }} />
+    //             {/* {status !== 'done' && ()} */}
+    //                 <div className="progress-bar">
+    //                     <div className="progress" style={{ width: `${percent}%` }}></div>
+    //                 </div>
+
+    //             {status === 'done' && <span>✔️</span>}
+    //         </div>
+    //     );
+    // };
+
+    // const Preview = ({ meta }) => {
+    //     const { name, percent, status, previewUrl } = meta;
+    //     console.log("sta")
+    //     console.log(status)
+    //     // return (
+    //     //     <div className="preview">
+    //     //         <img src={previewUrl} alt={name} style={{ width: '50px' }} />
+    //     //         {status === 'uploading' && console.log(percent)}
+    //     //         {/* {status === 'uploading' && (
+
+    //     //             <div className="progress-bar">
+    //     //                 <div className="progress" style={{ width: `${percent}%` }}></div>
+    //     //             </div>
+    //     //         )} */}
+    //     //         {status === 'done' && <span>✔️</span>}
+    //     //     </div>
+    //     // );
+    // };
