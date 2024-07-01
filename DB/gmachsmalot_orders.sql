@@ -25,13 +25,13 @@ DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `orderId` int NOT NULL AUTO_INCREMENT,
   `eventDate` date NOT NULL,
-  `customerId` int NOT NULL,
+  `userId` int NOT NULL,
   `gownId` int NOT NULL,
   PRIMARY KEY (`orderId`),
-  KEY `customerId_idx` (`customerId`),
+  KEY `customerId_idx` (`userId`),
   KEY `gownId_idx` (`gownId`),
-  CONSTRAINT `customerId` FOREIGN KEY (`customerId`) REFERENCES `customers` (`customersId`),
-  CONSTRAINT `gownId` FOREIGN KEY (`gownId`) REFERENCES `gowns` (`gownId`)
+  CONSTRAINT `gownId` FOREIGN KEY (`gownId`) REFERENCES `gowns` (`gownId`),
+  CONSTRAINT `userId` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-30 18:49:44
+-- Dump completed on 2024-07-01 20:49:32
