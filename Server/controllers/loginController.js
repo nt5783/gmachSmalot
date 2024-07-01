@@ -18,7 +18,7 @@ export class LoginController {
                 }
                 const token = jwt.sign(
                     { userId: resultItems.userId, admin: resultItems.isManager },
-                    process.env.RANDOM_TOKEN_SECRET,
+                    'A35nb4DLadJhM11h91xQ',
                     { expiresIn: '24h' });
                 console.log('token')
                 console.log(token)
