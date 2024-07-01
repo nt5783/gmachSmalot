@@ -34,24 +34,24 @@ function Login() {
     async function loginUser(data) {
 
         let res = loginfetchfunc('login', 'POST', data)
-        // const user = await res;
+        const user = await res;
         // console.log('user')
         // console.log(user)
-        // // date for cookie exp.
-        // // // let now = new Date()
-        // // let expires = new Date()
-        // // console.log('now')
-        // // console.log(expires)
-        // // expires.setTime(expires.getTime() + (2*60*60*1000))
-        // // console.log('expires')
-        // // console.log(expires)
-        // if (user.status != 200) return
-        // localStorage.setItem("user", JSON.stringify(user.data))
-        // setUser(user.data)
-        // if (model) navigate(`../models/${model}`, {state: {model: state.model, eventDate: state.eventDate ? state.eventDate : null}})
-        // else navigate('../models')
-        // // need to save access token
-        // // document.cookie = `username=${user.data.username}; expires=${expires} UTC; path=/`;
+        // date for cookie exp.
+        // // let now = new Date()
+        // let expires = new Date()
+        // console.log('now')
+        // console.log(expires)
+        // expires.setTime(expires.getTime() + (2*60*60*1000))
+        // console.log('expires')
+        // console.log(expires)
+        if (user.status != 200) return
+        localStorage.setItem("user", JSON.stringify(user.data.data))
+        setUser(user.data.data)
+        if (model) navigate(`../models/${model}`, {state: {model: state.model, eventDate: state.eventDate ? state.eventDate : null}})
+        else navigate('../models')
+        // need to save access token
+        // document.cookie = `username=${user.data.username}; expires=${expires} UTC; path=/`;
         
         
         // fetch(`http://localhost:8080/login`, {

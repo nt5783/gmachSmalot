@@ -6,8 +6,6 @@ import { getUserQuery, setUserQuery, getPasswordQuery, setPasswordQuery } from '
 export class UserService {
 
     async addUser(newUser) {
-        //const queryModel = addModelQuery();
-        // const result = await executeQuery(queryModel, [newModel])
         const queryUser = addModelQuery(Object.keys(newUser))
         const result = await executeQuery(queryUser, Object.values(queryUser))
         return result
@@ -18,7 +16,7 @@ export class UserService {
         const queryPwd = getPasswordQuery()
         const doesUserExist = await executeQuery(queryPwd, [newUser.username, hashPsw]);
         if (!doesUserExist || doesUserExist.length == 0) return [];
-        const isManager = doesUserExist.isManager ? 1: 0;
+        const isManager = doesUserExist[0].isManager
         delete newUser.password;
         const queryUser = getUserQuery();
         const user = await executeQuery(queryUser, [newUser.username]);
@@ -31,32 +29,13 @@ export class UserService {
         const queryPwd = getPasswordQuery()
         const doesUserExist = await executeQuery(queryPwd, [newUser.username, hashPsw])
         if (doesUserExist.length > 0) return []
-
         const addPwd = setPasswordQuery()
         const pwdResult = await executeQuery(addPwd, [newUser.username, hashPsw, 0])
         delete newUser.password;
-        if (pwdResult) {
-            const addUser = setUserQuery(Object.keys(newUser))
-            const userResult = await executeQuery(addUser, Object.values(newUser))
-            const user = { username: newUser.username, fullName: newUser.fullName }
-            return [user]
-        }
-        return []
+        if (!pwdResult) return []
+        const addUser = setUserQuery(Object.keys(newUser))
+        const userResult = await executeQuery(addUser, Object.values(newUser))
+        const user = { username: newUser.username, fullName: newUser.fullName }
+        return [user]
     }
-
-    // if (req.body) {
-    //     const signupService = new Service()
-    //     const hashPsw = sha256(req.body.psw.password)
-    //     const userPsw = { username: req.body.psw.username, password: hashPsw }
-    //     const resultItem = await signupService.getByParams('passwords', userPsw)
-    //     if (resultItem.length > 0) {
-    //         res.status(409).json({})
-    //     }
-    //     else {
-    //         const resultItems = await signupService.add('users', req.body.user);
-    //         await signupService.add('passwords', userPsw);
-    //         res.status(200).json({ id: resultItems.insertId });
-    //     }
-    // }
-
 }

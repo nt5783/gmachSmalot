@@ -3,11 +3,16 @@ import { json } from "react-router-dom";
 // import {Cookies} from 'react-cookie'
 
 async function fetchfunc(url, method, body, thenfunc) {
+    const allCookies = document.cookie;
+    console.log(allCookies);
+    const token = document.cookie;
+    console.log(token);
     try {
         const response = await fetch(`http://localhost:8080/${url}`, {
             method: method,
             body: JSON.stringify(body),
-            headers: { 'content-Type': 'application/json; charset=UTF-8' },
+            headers: { 'Authorization': `Bearer ${token}`,'content-Type': 'application/json; charset=UTF-8' },
+            // credentials: 'same-origin'
         })
         const json = await response.json()
         const data = await json
@@ -38,12 +43,12 @@ async function loginfetchfunc(url, method, body, thenfunc) {
             document.cookie = `token=${token2} ;path=/;`
             /////////////i'm in the middle here!!!!!!!!!!!!
 
-        const data = await json
-        const user =  typeof data != 'undefined' ? data : null
-        if (!data) {
-            throw "data does'nt exist!"
-        }
-        return {status: response.status, data: user}
+            const data = await json
+            const user = typeof data != 'undefined' ? data : null
+            if (!data) {
+                throw "data does'nt exist!"
+            }
+            return { status: response.status, data: user }
         }
 
     }

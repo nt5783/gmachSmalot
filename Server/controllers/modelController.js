@@ -31,8 +31,6 @@ export class ModelController {
     async addModel(req, res, next) {
         try {
             const resultItem = await modelService.addModel(req.body);
-            console.log("resultItem")
-            console.log(resultItem)
             res.status(200).json(resultItem.insertId);
         }
         catch (ex) {
