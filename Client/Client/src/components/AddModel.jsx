@@ -32,7 +32,7 @@ export default function AddModel({ formOn, setMessage }) {
             formData = { ...data, image: imageData.name, };
         console.log(formData)
         // setMessage("adding model code " + data.model + " color: " + data.color + " for " + data.season)
-        formOn('')
+        formOn(false)
         let res = fetchfunc('models', 'POST', formData)
     }
 
@@ -108,7 +108,7 @@ export default function AddModel({ formOn, setMessage }) {
                     }} />
             </label>
 
-            <input type="button" value="Cancel" onClick={() => formOn('')} />
+            <input type="button" value="Cancel" onClick={() => formOn(false)} />
             <input type="submit" value="Add Model" /><br />
         </form>
         <button onClick={() => setAdditional(prev => prev == 'colors' ? '' : 'colors')}>add color</button>
