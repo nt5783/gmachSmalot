@@ -1,32 +1,33 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { useForm } from "react-hook-form"
-import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
-import { fetchNoParamsfunc, fetchImg } from '../fetch'
+import { fetchNoParamsfunc } from '../fetch'
+import AddModel from './AddModel'
 
 function Models() {
     const navigate = useNavigate();
     const [models, setModels] = useState([])
+    const [addModelForm, setAddModelForm] = useState(false)
     const { state } = useLocation();
     const eventDate = state ? state.value : null;
 
     useEffect(() => {
         async function getData() {
-            eventDate? console.log(true) : console.log(false)
+            eventDate ? console.log(true) : console.log(false)
             const res = eventDate ? fetchNoParamsfunc(`models?date=${eventDate}`, 'GET') : fetchNoParamsfunc(`models`, 'GET')
             const data = await res;
-            if (data.length > 0) {
+            if (data.length > 0)
                 setModels(data)
-            }
         }
         getData()
     }, [state])
 
-    
+
     return (<>
+        <button onClick={() => setAddModelForm(prev => !prev)}>add new model</button>
+        {addModelForm && <AddModel />}
         {eventDate != null ? <div>the models with gowns available for your event: {eventDate.getDate()}/{eventDate.getMonth()}/{eventDate.getFullYear()}
-        <a className='no_background' href='./eventCalendar'> change date</a></div>
+            <a className='no_background' href='./eventCalendar'> change date</a></div>
             : <><div>pay attention that the gown may not be available for the date of your event.</div>
                 <div>to view only models with gowns available for the date of your event <a className='no_background' href='./eventCalendar'>pick a date here</a></div></>}
         {models.length > 0 && <div className='filter_by'>
@@ -40,8 +41,6 @@ function Models() {
                 </div>
             })}
         </div>
-        {/* {img.length > 0 && <h2>img!!</h2>} */}
-
     </>)
 }
 export default Models

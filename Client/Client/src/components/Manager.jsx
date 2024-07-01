@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import 'react-dropzone-uploader/dist/styles.css'
-import Dropzone from 'react-dropzone-uploader'
 import AddModel from './AddModel'
 import { fetchfunc } from '../fetch';
 import AddGown from './AddGown';
@@ -54,22 +53,6 @@ function Manager() {
             default:
                 return
         }
-    }
-
-    // specify upload params and url for your files
-    const getUploadParams = ({ meta }) => { return { url: 'https://httpbin.org/post' } }
-
-
-    // called every time a file's `status` changes
-    const handleChangeStatus = ({ meta, file }, status) => { console.log(status, meta, file) }
-
-
-    // receives array of files that are done uploading when submit button is clicked
-    const handleSubmitDropbox = (files) => {
-        console.log(files.map(f => f.meta))
-        // files.map((f, i) => {
-        //     img[i] = f
-        // })
     }
 
 

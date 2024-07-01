@@ -20,7 +20,6 @@ export default function AddGown({ formOn, setMessage }) {
         getData('sizes', setSizes)
         getData('lengths', setLengths)
     }, [])
-//כאן ובמודלים לטפל בזה שמוסיפים מידה גודל צבע וכו וזה מיד מוסיף למערך
 
     // function addProperty(event, property) {
     //     event.preventDefault();
@@ -34,26 +33,29 @@ export default function AddGown({ formOn, setMessage }) {
     //     setAdditional('')
     // }
 
-    function addLength(event) {
+    async function addLength(event) {
         event.preventDefault();
         const newLength = event.target[0].value.trim();
-        if (newLength && !lengths.includes(newLength))
-            fetchfunc('lengths', 'POST', { length: newLength })
-        //להוסיף בדיקה שעבד
-        // setLengths(prev => [...prev, newLength])
-        getData('lengths', setLengths)
+        if (newLength && !lengths.find((length) => length.length === newLength)) {
+            // //להוסיף בדיקה שעבד
+            try {
+                await fetchfunc('lengths', 'POST', { length: newLength });
+                await getData('lengths', setLengths);
+            } catch (error) { alert('Error adding length:', error) }
+        }
         setAdditional('')
     }
 
-    //לעשות גם גנרי או לפחות כמו הקודם.trim()
-    function addSize(event) {
+    async function addSize(event) {
         event.preventDefault();
         const newSize = event.target[0].value.trim();
-        if (newSize && !sizes.includes(newSize))
-            fetchfunc('sizes', 'POST', { size: newSize })
-        //להוסיף בדיקה שעבד
-        // setSizes(prev => [...prev, newSize])
-        getData('sizes', setSizes)
+        if (newSize && !sizes.find((size) => size.size === newSize)) {
+            try {
+                await fetchfunc('sizes', 'POST', { size: newSize });
+                await getData('sizes', setSizes);
+            } catch (error) { alert('Error adding size:', error) }
+        }
+        //להוסיף בדיקה שעבד)
         setAdditional('')
     }
 
