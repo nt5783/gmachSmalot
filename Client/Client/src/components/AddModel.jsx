@@ -36,29 +36,33 @@ export default function AddModel({ formOn, setMessage }) {
         let res = fetchfunc('models', 'POST', formData)
     }
 
-    function addColor(event) {
+    async function addColor(event) {
         event.preventDefault();
         const newColor = event.target[0].value.trim();
-        if (newColor && !colors.includes(newColor))
-            fetchfunc('colors', 'POST', { color: newColor })
+        if (newColor && !colors.find((color) => color.color === newColor)) {
+            try {
+                await fetchfunc('colors', 'POST', { color: newColor })
+                await getData('colors', setColors)
+            } catch (error) { alert('Error adding color:', error) }
+        }
         //להוסיף בדיקה שעבד
-        setColors(prev => [...prev, newColor])
         setAdditional('')
     }
-    //לעשות גם גנרי או לפחות כמו הקודם.trim()
-    function addSeason(event) {
+
+    async function addSeason(event) {
         event.preventDefault();
         const newSeason = event.target[0].value.trim();
-        if (newSeason && !seasons.includes(newSeason))
-            fetchfunc('seasons', 'POST', { season: newSeason })
-        //להוסיף בדיקה שעבד
-        setSeasons(prev => [...prev, newSeason])
+        if (newSeason && !seasons.find((season) => season.season === newSeason)) {
+            try {
+                await fetchfunc('seasons', 'POST', { season: newSeason })
+                await getData('seasons', setSeasons)
+            } catch (error) { alert('Error adding season:', error) }
+        }
         setAdditional('')
     }
 
     const getUploadParams = ({ meta }) => {
         return { url: 'http://localhost:8080/upload' };
-        // return { url: 'https://httpbin.org/post' };
     };
 
     const handleChangeStatus = ({ meta, file }, status) => {
@@ -81,14 +85,11 @@ export default function AddModel({ formOn, setMessage }) {
     return (<>
         <form onSubmit={handleSubmit((data => addModel(data)))}>
             <label>Model:<input className='number_without' type="number" name="model" required {...register("model")} /></label><br />
-            {/* , { onChange: (e) => handleChange(e) } */}
             <label>Color:
                 <select name="color" required {...register("color")}>
                     <option disabled selected></option>
                     {colors.map((color, i) => <option key={i} value={color.colorId}>{color.color}</option>)}
-                    {/* <option value="other">other</option> */}
                 </select></label>
-            {/* {additional == "addColor" && <label>new color:<input id='newColor' type="text" required {...register("color")}/></label>} */}
             <br />
             <label>Season:<select name="season" required {...register("season")}>
                 <option disabled selected></option>
