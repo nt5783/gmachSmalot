@@ -24,9 +24,15 @@ function Models() {
         getData()
     }, [state])
 
+    console.log('user')
+    console.log(user)
+
+    console.log('models')
+    console.log(models)
+
 
     return (<>
-        {user.isManager==1 && <button onClick={() => setAddModelForm(prev => !prev)}>add new model</button>}
+        {user && user.isManager == 1 && <button onClick={() => setAddModelForm(prev => !prev)}>add new model</button>}
         {addModelForm && <AddModel formOn={setAddModelForm} />}
         {eventDate != null ? <div>the models with gowns available for your event: {eventDate.getDate()}/{eventDate.getMonth()}/{eventDate.getFullYear()}
             <a className='no_background' href='./eventCalendar'> change date</a></div>
