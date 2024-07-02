@@ -10,6 +10,7 @@ import About from './components/About'
 import Models from './components/Models'
 import Cart from './components/Cart'
 import EventCalendar from './components/EventCalendar'
+import Order from './components/Order'
 import './App.css'
 
 export const UserContext = createContext()
@@ -35,6 +36,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />}>
                   <Route path="cart" element={<Cart />} />
+                  <Route path="order" element={<Order />} />
                   <Route path="about" element={<About />} />
                   <Route path="login" element={<Login />} />
                   <Route path="signup" element={<Signup />} />

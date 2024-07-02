@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 
-const PayPalCheckout = () => {
+const Order = () => {
     const [isAgreementChecked, setIsAgreementChecked] = useState(false);
 
     const handleAgreementChange = (e) => {
@@ -9,7 +9,7 @@ const PayPalCheckout = () => {
     };
 
     return (
-        <PayPalScriptProvider options={{ "client-id": "YOUR_CLIENT_ID" }}>
+        <PayPalScriptProvider options={{ "client-id": "ATjqmx7s7BZKVhYLfEngKieXUDvP8D7zQzw8Wz7OrDRWi8lgaKLNh3LRRyIgDu8mYH4KtROFhK5YxWMv" }}>
             <div>
                 <h2>Evening Dress Purchase</h2>
                 <p>Price: 100 ILS</p>
@@ -55,7 +55,7 @@ const PayPalCheckout = () => {
     );
 };
 
-export default PayPalCheckout;
+export default Order;
 
 
 
@@ -92,18 +92,4 @@ export default PayPalCheckout;
 // export default PayPalPayment;
 
 
-
-
-
-// ב-PayPal, ה-Client ID הוא מזהה ייחודי שניתן לכם כאשר אתם יוצרים אפליקציה בחשבון המפתחים של PayPal. זהו מזהה שנדרש כדי להשתמש ב-SDK של PayPal ולבצע אינטגרציה עם המערכות של PayPal.
-
-// כדי לקבל את ה-Client ID האמיתי שלכם מ-PayPal, תצטרכו לבצע את השלבים הבאים:
-
-// היכנסו לאתר המפתחים של PayPal: PayPal Developer.
-// היכנסו עם חשבון ה-PayPal שלכם. אם אין לכם חשבון, תצטרכו ליצור אחד.
-// בלוח הבקרה של המפתחים, לחצו על "My Apps & Credentials" (האפליקציות והאישורים שלי).
-// תחת "REST API apps", לחצו על "Create App" (צור אפליקציה).
-// תנו שם לאפליקציה שלכם ובחרו את החשבון (אם יש לכם מספר חשבונות PayPal).
-// לחצו על "Create App" (צור אפליקציה).
-// אחרי יצירת האפליקציה, תראו את ה-Client ID שלכם ואת ה-Secret. אתם צריכים להשתמש ב-Client ID בקוד שלכם.
-// לאחר שקיבלתם את ה-Client ID, החליפו את YOUR_CLIENT_ID בקוד ב-Client ID שלכם. לדוגמה:
+// secret: EBmxh8uI1KFwfFNMZEatL0bMSlcTeo0uB0mjqG7Mqf42EeM007iTfH0nVGCTF5KOJ9kU-GYiYK5JqgGi
