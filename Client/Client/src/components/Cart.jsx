@@ -12,14 +12,16 @@ function Cart() {
     const { cart, setCart } = useContext(CartContext)
 
 
-    return(<>
+    return (<>
         {user && cart.length > 0 && cart.items.map((gown, i) => {
-            return <div>
-                <img height={100} src={gown.img} alt="gown image" onClick={() => navigate(`../models/${gown.model}`
-                ,{ state: { model: {model: gown.model, image: gown.img}, eventDate: eventDate } }
-                )}/>
+            return <div key={i}>
+                <img height={100} src={gown.img} alt="gown image" onClick={() =>
+                    navigate(`../models/${gown.model}`, {
+                        state: { model: { model: gown.model, image: gown.img }, eventDate: eventDate }
+                    })} />
                 {gown.model} size: {gown.size} amount: {gown.qty}
-            </div>})}
+            </div>
+        })}
         {user && cart.length == 0 && <h3>your cart is empty</h3>}
         {!user && <h3><a className='no_background' href='./login'>log in here</a> to see your cart items</h3>}
     </>)
