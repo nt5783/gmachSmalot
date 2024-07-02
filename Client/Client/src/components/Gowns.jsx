@@ -20,7 +20,8 @@ function Gowns() {
   const eventDate = state.eventDate;
   const [message, setMessage] = useState('')
   const [visible, setVisible] = useState(false)
-  const [addGownForm, setAddGownForm] = useState(false)
+  const [showForm, setShowForm] = useState('')
+  const [amountToOrder, setAmountToOrder] = useState(1)
 
 
 
@@ -72,7 +73,7 @@ function Gowns() {
       return { user: username, length: prevCart.length + 1, items: updatedItems };
     })
     setMessage(`gown model: ${gown.model}, size: ${gown.size} was added to cart successfully`)
-    const updatedGowns = gowns.map((gownItem, index) => {
+    const updatedGowns = gowns.map((gownItem, i) => {
       if (gownItem === gown) return { ...gownItem, available: gownItem.available - 1 }
       return gownItem
     })
@@ -85,8 +86,8 @@ function Gowns() {
     <>
       {console.log("gowns")}
       {console.log(gowns)}
-      {user.isManager == 1 && <button onClick={() => setAddGownForm(prev => !prev)}>add new Gown</button>}
-      {addGownForm && <AddGown model={model.model} formOn={setAddGownForm} />}
+      {user.isManager == 1 && <button onClick={() => setShowForm(prev => prev == 'add' ? '' : 'add')}>add new Gown</button>}
+      {showForm == 'add' && <AddGown model={model.model} formOn={setShowForm} />}
       {visible && <div className='successMessage' style={{ background: "green" }}>{message}</div>}
       <img height={200} src={model.image} />
       {model.model}
@@ -100,9 +101,23 @@ function Gowns() {
       {selectedGown !== null && (
         <div>
           <span>Available amount: {gowns[selectedGown].available}</span>
+
+
+
+          {/* <form onSubmit={}>
+            <label htmlFor='amount' >amount:</label>
+            <input name='amount' type='number' min="1" defaultValue={1}></input>
+            <button type="submit">Add to cart</button>
+            <button type="submit">Order now</button>
+        </form> */}
+
+
+          <label htmlFor='amount' >amount:</label>
+          <input type="number" name='amount' min="1" defaultValue={1} onChange={setAmountToOrder} />
           <button onClick={() => AddGownToCart(gowns[selectedGown])}>Add to cart</button>
-          <button>Order now</button>
-          {user.isManager==1 &&<UpdateGown gown={gowns[selectedGown]}/>}
+          <button onClick={() => navigate('/order', { state: { amount: amountToOrder, gownId: gowns[selectedGown].gownId, eventDate: eventDate } })}>Order now</button>
+          {user.isManager == 1 && <button onClick={() => setShowForm(prev => prev == 'update' ? '' : 'update')}>update Gown</button>}
+          {showForm == 'update' && <UpdateGown gown={gowns[selectedGown]} formOn={setShowForm} />}
         </div>
       )}
     </>

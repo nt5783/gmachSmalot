@@ -134,7 +134,8 @@ export default function AddModel({ formOn, setMessage }) {
             <input type="button" value="Cancel" onClick={() => formOn(false)} />
             <input type="submit" value="Add Model" /><br />
         </form>
-        
+
+        {/* שכל הטפסים יהיו אחד */}
         <button onClick={() => setAdditional(prev => prev == 'colors' ? '' : 'colors')}>add color</button>
         {additional == 'colors' && <form onSubmit={addColor}>
             <label htmlFor='color' >color name:</label>
