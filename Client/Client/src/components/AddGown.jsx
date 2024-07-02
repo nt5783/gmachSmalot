@@ -49,7 +49,7 @@ export default function AddGown({ model, formOn }) {
         const newGown = { ...data, model: model }
         console.log(newGown)
         // setMessage("adding gown model" + data.model + " ,length: " + data.length + " ,in size " + data.size)
-        formOn(false)
+        formOn('')
         let res = fetchfunc('gowns', 'POST', newGown)
     }
 
@@ -66,7 +66,7 @@ export default function AddGown({ model, formOn }) {
 
             <label>Amount:<input id='amount' type="number" min="1" name="amount" required {...register("amount")} /></label><br />
 
-            <input type="button" value="Cancel" onClick={() => formOn(false)} />
+            <input type="button" value="Cancel" onClick={() => formOn('')} />
             <input type="submit" value="Submit" /><br />
 
         </form>
