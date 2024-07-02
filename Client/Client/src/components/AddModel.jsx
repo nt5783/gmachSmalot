@@ -10,6 +10,7 @@ export default function AddModel({ formOn, setMessage }) {
     const { register, handleSubmit, setValue } = useForm()
     const [colors, setColors] = useState([])
     const [seasons, setSeasons] = useState([])
+    const [lengths, setLengths] = useState([])
     const [imageData, setImageData] = useState(null);
 
     async function getData(table, setfunc) {
@@ -22,6 +23,7 @@ export default function AddModel({ formOn, setMessage }) {
     useEffect(() => {
         getData('colors', setColors)
         getData('seasons', setSeasons)
+        getData('lengths', setLengths)
     }, [])
 
     function addModel(data) {
@@ -34,6 +36,19 @@ export default function AddModel({ formOn, setMessage }) {
         // setMessage("adding model code " + data.model + " color: " + data.color + " for " + data.season)
         formOn(false)
         let res = fetchfunc('models', 'POST', formData)
+    }
+
+    async function addLength(event) {
+        event.preventDefault();
+        const newLength = event.target[0].value.trim();
+        if (newLength && !lengths.find((length) => length.length === newLength)) {
+            // //להוסיף בדיקה שעבד
+            try {
+                await fetchfunc('lengths', 'POST', { length: newLength });
+                await getData('lengths', setLengths);
+            } catch (error) { alert('Error adding length:', error) }
+        }
+        setAdditional('')
     }
 
     async function addColor(event) {
@@ -85,17 +100,25 @@ export default function AddModel({ formOn, setMessage }) {
     return (<>
         <form onSubmit={handleSubmit((data => addModel(data)))}>
             <label>Model:<input className='number_without' type="number" name="model" required {...register("model")} /></label><br />
+
             <label>Color:
                 <select name="color" required {...register("color")}>
                     <option disabled selected></option>
                     {colors.map((color, i) => <option key={i} value={color.colorId}>{color.color}</option>)}
                 </select></label>
             <br />
+
             <label>Season:<select name="season" required {...register("season")}>
                 <option disabled selected></option>
                 {seasons.map((season, i) => <option key={i} value={season.seasonId}>{season.season}</option>)}
             </select></label><br />
             <label>
+
+                <label>Length:<select name="length" required {...register("length")}>
+                    <option disabled selected></option>
+                    {lengths.map((length, i) => <option key={i} value={length.lengthId}>{length.length}</option>)}
+                </select></label><br />
+
                 Image:
                 <Dropzone
                     getUploadParams={getUploadParams}
@@ -111,16 +134,25 @@ export default function AddModel({ formOn, setMessage }) {
             <input type="button" value="Cancel" onClick={() => formOn(false)} />
             <input type="submit" value="Add Model" /><br />
         </form>
+        
         <button onClick={() => setAdditional(prev => prev == 'colors' ? '' : 'colors')}>add color</button>
         {additional == 'colors' && <form onSubmit={addColor}>
             <label htmlFor='color' >color name:</label>
             <input name='color' type='text' required></input>
             <button type="submit">Add</button>
         </form>}
+
         <button onClick={() => setAdditional(prev => prev == 'seasons' ? '' : 'seasons')}>add season</button>
         {additional == 'seasons' && <form onSubmit={addSeason}>
             <label htmlFor='season' >season name:</label>
             <input name='season' type='text' required></input>
+            <button type="submit">Add</button>
+        </form>}
+
+        <button onClick={() => setAdditional(prev => prev == 'lengths' ? '' : 'lengths')}>add length</button>
+        {additional == 'lengths' && <form onSubmit={addLength}>
+            <label htmlFor='length' >length:</label>
+            <input name='length' type='text' required></input>
             <button type="submit">Add</button>
         </form>}
     </>)

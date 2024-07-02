@@ -63,7 +63,7 @@ function Gowns() {
       if (gownIndex == -1)
         return {
           user: username, length: prevCart.length + 1, items: [
-            ...prevCart.items, { id: gownId, model: gown.model, size: gown.size, length: gown.length, img: model.image, qty: 1 }]
+            ...prevCart.items, { id: gownId, model: gown.model, size: gown.size, img: model.image, qty: 1 }]
         };
       const updatedItems = prevCart.items.map((item, index) => {
         if (index === gownIndex) return { ...item, qty: item.qty + 1 };
@@ -94,7 +94,7 @@ function Gowns() {
       <span>Size: </span>
       {gowns.length > 0 && <div className='size_buttons'>{gowns.map((gown, i) => (
         // <div key={i}>
-        <button disabled={gown.available < 1} onClick={() => gownSelected(i)}>{gown.size}</button>
+        <button key={i} disabled={gown.available < 1} onClick={() => gownSelected(i)}>{gown.size}</button>
         // </div>
       ))}</div>}
       {selectedGown !== null && (
@@ -102,8 +102,8 @@ function Gowns() {
           <span>Available amount: {gowns[selectedGown].available}</span>
           <button onClick={() => AddGownToCart(gowns[selectedGown])}>Add to cart</button>
           <button>Order now</button>
+          {user.isManager==1 &&<UpdateGown gown={gowns[selectedGown]}/>}
         </div>
-        // &&user.isManager==1 &&<UpdateGown gown={gowns[selectedGown]}/>
       )}
     </>
   );

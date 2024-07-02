@@ -30,7 +30,6 @@ export class GownController {
 
     async addGown(req, res, next) {
         try {
-            console.log("aaa")
             console.log(req.body)
             const resultItem = await gownService.addGown(req.body);
             res.status(200).json(resultItem.insertId);

@@ -1,6 +1,6 @@
 
 function getGownsQuery(queryparams) {
-    let firstPartOfQuery = 'SELECT gownId,model,amount,size,length FROM gowns NATURAL JOIN sizes NATURAL JOIN lengths '
+    let firstPartOfQuery = 'SELECT gownId,model,amount,size FROM gowns NATURAL JOIN sizes '
     if (queryparams.hasOwnProperty('date')) {
         const date = new Date(queryparams.date)
         const firstDate = new Date(date);
@@ -33,15 +33,15 @@ function getGownsQuery(queryparams) {
 
         console.log(formattedFirstDate, formattedSecondDate);
 
-        firstPartOfQuery = `select gownId, model, size, length, amount, X.amount - QuantityOccupied as available
-        from lengths NATURAL JOIN sizes NATURAL JOIN gowns g1 NATURAL LEFT OUTER JOIN
+        firstPartOfQuery = `select gownId, model, size,  amount, X.amount - QuantityOccupied as available
+        from sizes NATURAL JOIN gowns g1 NATURAL LEFT OUTER JOIN
         (select *,COUNT(*) as QuantityOccupied
         from gowns g NATURAL JOIN orders o
         where eventDate BETWEEN '${formatDate(firstDate)}' AND '${formatDate(secondDate)}'
         group by gownId) X`
     }
     const fields = Object.keys(queryparams).filter(param => {
-        return param == 'model' || param == 'size' || param == 'length' || param == 'amount';
+        return param == 'model' || param == 'size' || param == 'amount';
     });
     let conditions = "WHERE "
     fields.forEach(field => conditions += field + " = '" + queryparams[field] + "' AND ")
@@ -55,12 +55,12 @@ function getGownsQuery(queryparams) {
 
 function getGownByIdQuery() {
     // const query = `SELECT * FROM gowns WHERE id = ?`;
-    const query = `SELECT gownId,model,amount,size,length FROM gowns NATURAL JOIN sizes NATURAL JOIN lengths WHERE gownId = ?`;
+    const query = `SELECT gownId,model,amount,size FROM gowns NATURAL JOIN sizes WHERE gownId = ?`;
     return query
 }
 
 function addGownQuery() {
-    const query = `INSERT INTO gowns (gownId, model, sizeId, lengthId, amount) VALUES (null ,? ,? ,? ,?)`;
+    const query = `INSERT INTO gowns (gownId, model, sizeId, amount) VALUES (null ,? ,? ,?)`;
     return query
 }
 

@@ -26,12 +26,15 @@ CREATE TABLE `models` (
   `model` int NOT NULL,
   `colorId` int NOT NULL,
   `seasonId` int NOT NULL,
+  `lengthId` int NOT NULL,
   `image` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
   `isInUse` tinyint DEFAULT '1',
   PRIMARY KEY (`model`),
   KEY `season_idx` (`seasonId`),
   KEY `color_idx` (`colorId`),
+  KEY `length_idx` (`lengthId`),
   CONSTRAINT `color` FOREIGN KEY (`colorId`) REFERENCES `colors` (`colorId`),
+  CONSTRAINT `length` FOREIGN KEY (`lengthId`) REFERENCES `lengths` (`lengthId`),
   CONSTRAINT `season` FOREIGN KEY (`seasonId`) REFERENCES `seasons` (`seasonId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -42,7 +45,7 @@ CREATE TABLE `models` (
 
 LOCK TABLES `models` WRITE;
 /*!40000 ALTER TABLE `models` DISABLE KEYS */;
-INSERT INTO `models` VALUES (22,12,2,NULL,1),(54,6,2,NULL,1),(55,2,1,NULL,1),(121,12,2,NULL,1),(123,4,3,NULL,1),(132,4,3,NULL,1),(316,1,1,'316.JPG',1),(321,1,1,NULL,1),(332,9,2,'332.JPG',1),(344,9,1,NULL,1),(345,12,2,NULL,1),(364,9,2,NULL,1),(401,2,2,'401.JPG',1),(417,10,2,'417.JPG',1),(426,2,2,'426.JPG',1),(444,1,1,NULL,1),(456,12,2,NULL,1),(555,1,2,NULL,1),(567,16,3,NULL,1),(606,2,2,'606.JPG',1),(607,4,3,'607.JPG',1),(609,10,3,'609.JPG',1),(610,13,3,'610.JPG',1),(612,4,3,NULL,1),(613,4,3,NULL,1),(666,9,2,NULL,1),(675,6,2,NULL,1),(777,4,2,NULL,1),(1222,2,3,NULL,1),(1311,12,2,NULL,1),(4321,12,2,NULL,1),(4444,12,2,NULL,1),(7777,9,2,NULL,1),(66666,9,3,NULL,1);
+INSERT INTO `models` VALUES (316,1,1,1,'316.JPG',1),(332,9,2,1,'332.JPG',1),(401,2,2,1,'401.JPG',1),(417,10,2,1,'417.JPG',1),(426,2,2,1,'426.JPG',1),(606,2,2,1,'606.JPG',1),(607,4,3,1,'607.JPG',1),(609,10,3,1,'609.JPG',1),(610,13,3,1,'610.JPG',1),(612,4,3,1,NULL,1),(613,4,3,1,NULL,1);
 /*!40000 ALTER TABLE `models` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-01 20:49:32
+-- Dump completed on 2024-07-02 19:39:40

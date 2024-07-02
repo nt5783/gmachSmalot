@@ -7,7 +7,6 @@ export default function UpdateGown({ gown }) {
     const { register, handleSubmit } = useForm()
     const [additional, setAdditional] = useState('')
     const [sizes, setSizes] = useState([])
-    const [lengths, setLengths] = useState([])
 
     async function getData(table, setfunc) {
         const res = fetchNoParamsfunc(table, 'GET');
@@ -18,7 +17,6 @@ export default function UpdateGown({ gown }) {
 
     useEffect(() => {
         getData('sizes', setSizes)
-        getData('lengths', setLengths)
     }, [])
 
     // function addProperty(event, property) {
@@ -32,19 +30,6 @@ export default function UpdateGown({ gown }) {
     //     setColors(prev => [...prev, newColor])
     //     setAdditional('')
     // }
-
-    async function addLength(event) {
-        event.preventDefault();
-        const newLength = event.target[0].value.trim();
-        if (newLength && !lengths.find((length) => length.length === newLength)) {
-            // //להוסיף בדיקה שעבד
-            try {
-                await fetchfunc('lengths', 'POST', { length: newLength });
-                await getData('lengths', setLengths);
-            } catch (error) { alert('Error adding length:', error) }
-        }
-        setAdditional('')
-    }
 
     async function addSize(event) {
         event.preventDefault();
@@ -74,18 +59,11 @@ export default function UpdateGown({ gown }) {
             {/* temporary */}
             {/* <label>Model:<input className='number_without' type="number" name="model" required {...register("model")} /></label><br /> */}
 
-            {/* <label>Size:<input type="number" name="size" required {...register("size")} defaultValue={gown.size}/></label><br />
-
-            <label>Length:<input type="number" name="length" required {...register("length")} defaultValue={gown.size}/></label><br /> */}
+            {/* <label>Size:<input type="number" name="size" required {...register("size")} defaultValue={gown.size}/></label><br />*/}
 
             <label>Size:<select name="size" defaultValue={gown.size} required {...register("size")}>
                 {/* <option disabled selected></option> */}
                 {sizes.map((size, i) => <option key={i} value={size.sizeId}>{size.size}</option>)}
-            </select></label><br />
-
-            <label>Length:<select name="length" defaultValue={gown.length} required {...register("length")}>
-                {/* <option disabled selected></option> */}
-                {lengths.map((length, i) => <option key={i} value={length.lengthId}>{length.length}</option>)}
             </select></label><br />
 
             <label>Amount:<input id='amount' type="number" min="1" name="amount" defaultValue={gown.amo} required {...register("amount")} /></label><br />
@@ -95,12 +73,6 @@ export default function UpdateGown({ gown }) {
 
         </form>
 
-        <button onClick={() => setAdditional(prev => prev == 'lengths' ? '' : 'lengths')}>add length</button>
-        {additional == 'lengths' && <form onSubmit={addLength}>
-            <label htmlFor='length' >length:</label>
-            <input name='length' type='text' required></input>
-            <button type="submit">Add</button>
-        </form>}
         <button onClick={() => setAdditional(prev => prev == 'sizes' ? '' : 'sizes')}>add size</button>
         {additional == 'sizes' && <form onSubmit={addSize}>
             <label htmlFor='size' >size:</label>

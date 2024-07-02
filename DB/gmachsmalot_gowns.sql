@@ -26,14 +26,11 @@ CREATE TABLE `gowns` (
   `gownId` int NOT NULL AUTO_INCREMENT,
   `model` int NOT NULL,
   `sizeId` int NOT NULL,
-  `lengthId` int NOT NULL,
   `amount` int NOT NULL,
   PRIMARY KEY (`gownId`),
   UNIQUE KEY `id_UNIQUE` (`gownId`),
   KEY `model_idx` (`model`),
   KEY `size_idx` (`sizeId`),
-  KEY `length_idx` (`lengthId`),
-  CONSTRAINT `length` FOREIGN KEY (`lengthId`) REFERENCES `lengths` (`lengthId`),
   CONSTRAINT `model` FOREIGN KEY (`model`) REFERENCES `models` (`model`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `size` FOREIGN KEY (`sizeId`) REFERENCES `sizes` (`sizeId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
@@ -45,7 +42,7 @@ CREATE TABLE `gowns` (
 
 LOCK TABLES `gowns` WRITE;
 /*!40000 ALTER TABLE `gowns` DISABLE KEYS */;
-INSERT INTO `gowns` VALUES (1,316,18,1,2),(2,316,19,1,2),(3,316,20,1,6),(5,417,17,1,4),(6,417,18,1,5),(7,417,19,1,3),(8,316,21,1,4),(9,417,20,1,2),(10,316,22,1,2),(11,316,23,1,2),(14,606,20,1,1),(15,316,24,1,1),(16,316,25,1,4),(17,316,26,1,3),(18,316,27,1,4),(19,316,28,1,4),(20,417,21,1,4);
+INSERT INTO `gowns` VALUES (1,316,18,2),(2,316,19,2),(3,316,20,6),(5,417,17,4),(6,417,18,5),(7,417,19,3),(8,316,21,4),(9,417,20,2),(10,316,22,2),(11,316,23,2),(14,606,20,1),(15,316,24,1),(16,316,25,4),(17,316,26,3),(18,316,27,4),(19,316,28,4),(20,417,21,4);
 /*!40000 ALTER TABLE `gowns` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -58,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-01 20:49:32
+-- Dump completed on 2024-07-02 19:39:39
