@@ -6,6 +6,8 @@ import { UserContext } from '../App'
 // import { AppContext } from "../App";
 import 'react-calendar/dist/Calendar.css'
 import { fetchNoParamsfunc, fetchImg } from '../fetch'
+import AddGown from './AddGown'
+import UpdateGown from './UpdateGown'
 
 function Gowns() {
   const navigate = useNavigate();
@@ -18,31 +20,32 @@ function Gowns() {
   const eventDate = state.eventDate;
   const [message, setMessage] = useState('')
   const [visible, setVisible] = useState(false)
+  const [addGownForm, setAddGownForm] = useState(false)
+
 
 
   console.log('state gowns')
   if (state) console.log(state)
 
-    useEffect(() => {
-        if (!message) {
-            setVisible(false)
-            return
-        }
-        setVisible(true)
-        const timer = setTimeout(() => {
-            setVisible(false)
-            setMessage('')
-        }, 5000);
-        return () => clearTimeout(timer);
-    }, [message])
+  useEffect(() => {
+    if (!message) {
+      setVisible(false)
+      return
+    }
+    setVisible(true)
+    const timer = setTimeout(() => {
+      setVisible(false)
+      setMessage('')
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [message])
 
   useEffect(() => {
     async function getData() {
       const res = eventDate ? fetchNoParamsfunc(`gowns?model=${model.model}&date=${eventDate}`, 'GET') : fetchNoParamsfunc(`gowns?model=${model.model}`, 'GET');
       const data = await res;
-      if (data.length > 0) {
+      if (data.length > 0)
         setGowns(data)
-      }
     }
     getData()
   }, [])
@@ -53,46 +56,45 @@ function Gowns() {
 
   function AddGownToCart(gown) {
     const gownId = gown.gownId;
-    if (!user) navigate('/login', {state: {model: model, message: 'you must log in to your account', eventDate: eventDate}})
+    if (!user) navigate('/login', { state: { model: model, message: 'you must log in to your account', eventDate: eventDate } })
     else setCart(prevCart => {
-        const gownIndex = prevCart.items.findIndex(item => item.id === gownId);
-        const username = user.username
-        if (gownIndex !== -1) {
-            const updatedItems = prevCart.items.map((item, index) => {
-                if (index === gownIndex) {
-                    return {
-                        ...item,
-                        qty: item.qty + 1
-                    };
-                }
-                return item;
-            });
-            return { user: username, length: prevCart.length + 1, items: updatedItems };
-        } else {
-            return {
-                user: username,
-                length: prevCart.length + 1,
-                items: [
-                    ...prevCart.items,
-                    { id: gownId, model: gown.model, size: gown.size, length: gown.length, img: model.image, qty: 1 }
-                ]
-            };
-        }
+      const gownIndex = prevCart.items.findIndex(item => item.id === gownId);
+      const username = user.username
+      if (gownIndex == -1)
+        return {
+          user: username, length: prevCart.length + 1, items: [
+            ...prevCart.items, { id: gownId, model: gown.model, size: gown.size, length: gown.length, img: model.image, qty: 1 }]
+        };
+      const updatedItems = prevCart.items.map((item, index) => {
+        if (index === gownIndex) return { ...item, qty: item.qty + 1 };
+        return item;
+      });
+      return { user: username, length: prevCart.length + 1, items: updatedItems };
     })
     setMessage(`gown model: ${gown.model}, size: ${gown.size} was added to cart successfully`)
-    // setGowns(prev => )
-}
+    const updatedGowns = gowns.map((gownItem, index) => {
+      if (gownItem === gown) return { ...gownItem, available: gownItem.available - 1 }
+      return gownItem
+    })
+    setGowns(updatedGowns)
+    setSelectedGown(null)
+    // setGowns(prev => [...prev, { ...gowns[selectedGown], available: gowns[selectedGown].available - 1 }])
+  }
 
   return (
     <>
-     {visible && <div className='successMessage' style={{ background: "green" }}>{message}</div>}
+      {console.log("gowns")}
+      {console.log(gowns)}
+      {user.isManager == 1 && <button onClick={() => setAddGownForm(prev => !prev)}>add new Gown</button>}
+      {addGownForm && <AddGown model={model.model} formOn={setAddGownForm} />}
+      {visible && <div className='successMessage' style={{ background: "green" }}>{message}</div>}
       <img height={200} src={model.image} />
       {model.model}
       <br />
       <span>Size: </span>
       {gowns.length > 0 && <div className='size_buttons'>{gowns.map((gown, i) => (
         // <div key={i}>
-          <button disabled={gown.available < 1} onClick={() => gownSelected(i)}>{gown.size}</button>
+        <button disabled={gown.available < 1} onClick={() => gownSelected(i)}>{gown.size}</button>
         // </div>
       ))}</div>}
       {selectedGown !== null && (
@@ -101,6 +103,7 @@ function Gowns() {
           <button onClick={() => AddGownToCart(gowns[selectedGown])}>Add to cart</button>
           <button>Order now</button>
         </div>
+        // &&user.isManager==1 &&<UpdateGown gown={gowns[selectedGown]}/>
       )}
     </>
   );

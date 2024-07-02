@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { fetchfunc, fetchNoParamsfunc } from "../fetch"
 
-export default function AddGown({ formOn, setMessage }) {
+export default function AddGown({ model, formOn }) {
     const { register, handleSubmit } = useForm()
     const [additional, setAdditional] = useState('')
     const [sizes, setSizes] = useState([])
@@ -61,17 +61,18 @@ export default function AddGown({ formOn, setMessage }) {
 
 
     function addGown(data) {
-        console.log(data)
+        const newGown = { ...data, model: model }
+        console.log(newGown)
         // setMessage("adding gown model" + data.model + " ,length: " + data.length + " ,in size " + data.size)
         formOn(false)
-        let res = fetchfunc('gowns', 'POST', data)
+        let res = fetchfunc('gowns', 'POST', newGown)
     }
 
 
     return (<>
         <form onSubmit={handleSubmit((data => addGown(data)))}>
             {/* temporary */}
-            <label>Model:<input className='number_without' type="number" name="model" required {...register("model")} /></label><br />
+            {/* <label>Model:<input className='number_without' type="number" name="model" required {...register("model")} /></label><br /> */}
 
             <label>Size:<select name="size" required {...register("size")}>
                 <option disabled selected></option>

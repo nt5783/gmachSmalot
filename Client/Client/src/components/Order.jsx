@@ -63,7 +63,7 @@ export default Order;
 // import React from 'react';
 // import { PayPalButton } from 'react-paypal-button-v2';
 
-// function PayPalPayment({ totalAmount, onPaymentSuccess }) {
+// function Order({ totalAmount, onPaymentSuccess }) {
 //   const paypalOptions = {
 //     clientId: 'YOUR_PAYPAL_CLIENT_ID',
 //     currency: 'USD', // Change currency as needed
@@ -89,7 +89,7 @@ export default Order;
 //   );
 // }
 
-// export default PayPalPayment;
+// export default Order;
 
 
 // secret: EBmxh8uI1KFwfFNMZEatL0bMSlcTeo0uB0mjqG7Mqf42EeM007iTfH0nVGCTF5KOJ9kU-GYiYK5JqgGi

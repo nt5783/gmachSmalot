@@ -21,7 +21,7 @@
   /* Adjust timing as needed */
 }
 
-@keyframes backgroundAnimation {
+/* @keyframes backgroundAnimation {
   0% {
     background-image: url('img/001.jpg');
   }
@@ -37,7 +37,7 @@
   100% {
     background-image: url('img/004.jpg');
   }
-}
+} */
 
 
 /* a {
