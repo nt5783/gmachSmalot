@@ -1,6 +1,6 @@
 
 import { executeQuery } from './db.js';
-import { getSeasonsQuery, getSeasonByIdQuery, addSeasonQuery, deleteSeasonQuery, updateSeasonQuery } from './querySeason.js'
+import { getSeasonsQuery, getSeasonByIdQuery, addSeasonQuery, deleteSeasonQuery, updateSeasonQuery } from './seasonQuery.js'
 
 export class SeasonService {
 

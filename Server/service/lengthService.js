@@ -1,6 +1,6 @@
 
 import { executeQuery } from './db.js';
-import { getLengthsQuery, getLengthByIdQuery, addLengthQuery, deleteLengthQuery, updateLengthQuery } from './queryLength.js'
+import { getLengthsQuery, getLengthByIdQuery, addLengthQuery, deleteLengthQuery, updateLengthQuery } from './lengthQuery.js'
 
 export class LengthService {
 

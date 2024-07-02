@@ -1,6 +1,6 @@
 
 import { executeQuery } from './db.js';
-import { getSizesQuery, getSizeByIdQuery, addSizeQuery, deleteSizeQuery, updateSizeQuery } from './querySize.js'
+import { getSizesQuery, getSizeByIdQuery, addSizeQuery, deleteSizeQuery, updateSizeQuery } from './sizeQuery.js'
 
 export class SizeService {
 
