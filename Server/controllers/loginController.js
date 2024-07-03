@@ -1,6 +1,7 @@
-import { UserService } from "../service/userService.js";
-const loginService = new UserService();
+import { UserService } from "../service/userService.js"
 import jwt from 'jsonwebtoken'
+
+const loginService = new UserService()
 
 export class LoginController {
 
@@ -12,9 +13,8 @@ export class LoginController {
                 const token = jwt.sign(
                     { userId: resultItems[0].userId, admin: resultItems[0].isManager },
                     process.env.RANDOM_TOKEN_SECRET,
-                    { expiresIn: '20m' })
+                    { expiresIn: '20h' })
                 delete resultItems[0].userId
-                // delete resultItems[0].isManager
                 return res.status(200).json({ token: token, data: resultItems[0] })
             }
         }
