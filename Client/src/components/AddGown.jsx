@@ -46,7 +46,8 @@ export default function AddGown({ model, formOn }) {
 
 
     function addGown(data) {
-        const newGown = { ...data, model: model }
+        const newGown = {model: model, size: data.size, amount: data.amount}
+        console.log('newGown')
         console.log(newGown)
         // setMessage("adding gown model" + data.model + " ,length: " + data.length + " ,in size " + data.size)
         formOn('')
