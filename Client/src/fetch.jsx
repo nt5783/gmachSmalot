@@ -1,30 +1,6 @@
 import React from "react"
 import { json } from "react-router-dom"
 
-async function fetchfunc(url, method, body, thenfunc) {
-    const allCookies = document.cookie;
-    console.log(allCookies);
-    const token = document.cookie;
-    console.log(token);
-    try {
-        const response = await fetch(`http://localhost:8080/${url}`, {
-            method: method,
-            body: JSON.stringify(body),
-            headers: { 'Authorization': `Bearer ${token}`, 'content-Type': 'application/json; charset=UTF-8' },
-        })
-        const json = await response.json()
-        const data = await json
-        const user = typeof data != 'undefined' ? data : null
-        if (!data) {
-            throw "data does'nt exist!"
-        }
-        return { status: response.status, data: user }
-    }
-    catch (e) {
-        return e
-    }
-}
-
 async function loginfetchfunc(url, method, body, thenfunc) {
     try {
         const response = await fetch(`http://localhost:8080/${url}`, {
@@ -50,6 +26,32 @@ async function loginfetchfunc(url, method, body, thenfunc) {
     }
 }
 
+async function fetchfunc(url, method, body, thenfunc) {
+    const allCookies = document.cookie;
+    console.log(allCookies);
+    const token = document.cookie;
+    console.log(token);
+    try {
+        const response = await fetch(`http://localhost:8080/${url}`, {
+            method: method,
+            body: JSON.stringify(body),
+            headers: { 'Authorization': `Bearer ${token}`, 'content-Type': 'application/json; charset=UTF-8' },
+        })
+        const json = await response.json()
+        const data = await json
+        const user = typeof data != 'undefined' ? data : null
+        if (!data) {
+            throw "data does'nt exist!"
+        }
+        console.log('response.status')
+        console.log(response.status)
+        return { status: response.status, data: user }
+    }
+    catch (e) {
+        return e
+    }
+}
+
 async function fetchNoParamsfunc(url, method) {
     const token = document.cookie;
     try {
@@ -61,6 +63,9 @@ async function fetchNoParamsfunc(url, method) {
         if (!data) {
             throw "data does'nt exist!"
         }
+        
+        console.log('response.status')
+        console.log(response.status)
         return data;
     }
     catch (e) {

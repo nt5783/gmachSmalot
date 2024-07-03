@@ -5,7 +5,7 @@ export class LengthController {
     async getLengths(req, res, next) {
         try {
             const resultItems = await lengthService.getLengths(req.query);
-            return res.status(200).json(resultItems);
+            return res.json(resultItems);
         }
         catch (ex) {
             const err = {}
@@ -18,7 +18,7 @@ export class LengthController {
     async getLengthById(req, res, next) {
         try {
             const resultItem = await lengthService.getLengthById(req.params.id);
-            res.status(200).json(resultItem);
+            res.json(resultItem);
         }
         catch (ex) {
             const err = {}
@@ -32,7 +32,7 @@ export class LengthController {
         try {
             console.log(req.body)
             const resultItem = await lengthService.addLength(req.body);
-            res.status(200).json(resultItem.insertId);
+            res.json(resultItem.insertId);
         }
         catch (ex) {
             const err = {}
@@ -45,7 +45,7 @@ export class LengthController {
     async deleteLength(req, res, next) {
         try {
             await lengthService.deleteLength(req.params.id)
-            res.status(200).json(req.params.id);
+            res.json(req.params.id);
         }
         catch (ex) {
             const err = {}
@@ -60,7 +60,7 @@ export class LengthController {
             const result = await lengthService.updateLength(req.body, req.params.id);
             // if (result == null)
             //     throw ("this data cannot be updated")
-            res.status(200).json(req.params.id);
+            res.json(req.params.id);
         }
         catch (ex) {
             const err = {}

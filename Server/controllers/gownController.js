@@ -5,7 +5,7 @@ export class GownController {
     async getGowns(req, res, next) {
         try {
             const resultItems = await gownService.getGowns(req.query);
-            return res.status(200).json(resultItems);
+            return res.json(resultItems);
         }
         catch (ex) {
             const err = {}
@@ -18,7 +18,7 @@ export class GownController {
     async getGownById(req, res, next) {
         try {
             const resultItem = await gownService.getGownById(req.params.id);
-            res.status(200).json(resultItem);
+            res.json(resultItem);
         }
         catch (ex) {
             const err = {}
@@ -32,7 +32,7 @@ export class GownController {
         try {
             console.log(req.body)
             const resultItem = await gownService.addGown(req.body);
-            res.status(200).json(resultItem.insertId);
+            res.json(resultItem.insertId);
         }
         catch (ex) {
             const err = {}
@@ -45,7 +45,7 @@ export class GownController {
     async deleteGown(req, res, next) {
         try {
             await gownService.deleteGown(req.params.id)
-            res.status(200).json(req.params.id);
+            res.json(req.params.id);
         }
         catch (ex) {
             const err = {}
@@ -60,7 +60,7 @@ export class GownController {
             const result = await gownService.updateGown(req.body, req.params.id);
             // if (result == null)
             //     throw ("this data cannot be updated")
-            res.status(200).json(req.params.id);
+            res.json(req.params.id);
         }
         catch (ex) {
             const err = {}

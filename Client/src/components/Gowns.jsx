@@ -57,17 +57,16 @@
 //     if (!user) navigate('/login', { state: { model: model, message: 'you must log in to your account', eventDate: eventDate } });
 //     else setCart(prevCart => {
 //       const gownIndex = prevCart.items.findIndex(item => item.id === gownId);
-//       const username = user.username;
 //       if (gownIndex == -1)
 //         return {
-//           user: username, length: prevCart.length + 1, items: [
+//            length: prevCart.length + 1, items: [
 //             ...prevCart.items, { id: gownId, model: gown.model, size: gown.size, img: model.image, qty: 1 }]
 //         };
 //       const updatedItems = prevCart.items.map((item, index) => {
 //         if (index === gownIndex) return { ...item, qty: item.qty + 1 };
 //         return item;
 //       });
-//       return { user: username, length: prevCart.length + 1, items: updatedItems };
+//       return {  length: prevCart.length + 1, items: updatedItems };
 //     })
 //     setMessage(`gown model: ${gown.model}, size: ${gown.size} was added to cart successfully`);
 //     const updatedGowns = gowns.map((gownItem, i) => {
@@ -81,7 +80,7 @@
 //   return (
 //     <>
 //       <div style={{ display: "flex", flexDirection: "column" }}>
-//         {user.isManager == 1 && <button style={{ background: "#fdcc9d" }} onClick={() => setShowForm(prev => prev == 'add' ? '' : 'add')}>Add new Gown</button>}
+//         {isManager && <button style={{ background: "#fdcc9d" }} onClick={() => setShowForm(prev => prev == 'add' ? '' : 'add')}>Add new Gown</button>}
 //         {showForm == 'add' && <AddGown model={model.model} formOn={setShowForm} />}
 //         {visible && <div className='successMessage' style={{ background: "#fdcc9d" }}>{message}</div>}
 //         <div style={{ display: "flex", flexDirection: "row" }}>
@@ -101,7 +100,7 @@
 //             <input type="number" name='amount' min="1" defaultValue={1} onChange={(e) => setAmountToOrder(e.target.value)} />
 //             <button style={{ background: "#fdcc9d", margin: 5 }} onClick={() => AddGownToCart(gowns[selectedGown])}>Add to cart</button>
 //             <button style={{ background: "#fdcc9d", margin: 5 }} onClick={() => navigate('/order', { state: { amount: amountToOrder, gownId: gowns[selectedGown].gownId, eventDate: eventDate } })}>Order now</button>
-//             {user.isManager == 1 && <button style={{ background: "#fdcc9d", margin: 5 }} onClick={() => setShowForm(prev => prev == 'update' ? '' : 'update')}>Update Gown</button>}
+//             {isManager == 1 && <button style={{ background: "#fdcc9d", margin: 5 }} onClick={() => setShowForm(prev => prev == 'update' ? '' : 'update')}>Update Gown</button>}
 //             {showForm == 'update' && <UpdateGown gown={gowns[selectedGown]} formOn={setShowForm} />}
 //           </div>
 //         )}
@@ -119,8 +118,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useForm } from "react-hook-form"
-import { CartContext } from '../App'
-import { UserContext } from '../App'
+import { CartContext, ManagerContext, UserContext } from '../App'
 // import { AppContext } from "../App";
 import 'react-calendar/dist/Calendar.css'
 import { fetchNoParamsfunc } from '../fetch'
@@ -128,7 +126,8 @@ import AddGown from './AddGown'
 import UpdateGown from './UpdateGown'
 
 function Gowns() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const { isManager } = useContext(ManagerContext)
   const { user } = useContext(UserContext)
   const { cart, setCart } = useContext(CartContext)
   const [gowns, setGowns] = useState([])
@@ -180,17 +179,16 @@ function Gowns() {
     if (!user) navigate('/login', { state: { model: model, message: 'you must log in to your account', eventDate: eventDate } })
     else setCart(prevCart => {
       const gownIndex = prevCart.items.findIndex(item => item.id === gownId);
-      const username = user.username
       if (gownIndex == -1)
         return {
-          user: username, length: prevCart.length + 1, items: [
+          length: prevCart.length + 1, items: [
             ...prevCart.items, { id: gownId, model: gown.model, size: gown.size, img: model.image, qty: 1 }]
         };
       const updatedItems = prevCart.items.map((item, index) => {
         if (index === gownIndex) return { ...item, qty: item.qty + 1 };
         return item;
       });
-      return { user: username, length: prevCart.length + 1, items: updatedItems };
+      return { length: prevCart.length + 1, items: updatedItems };
     })
     setMessage(`gown model: ${gown.model}, size: ${gown.size} was added to cart successfully`)
     const updatedGowns = gowns.map((gownItem, i) => {
@@ -206,8 +204,10 @@ function Gowns() {
     <>
       {console.log("gowns")}
       {console.log(gowns)}
-      {user.isManager == 1 && <button onClick={() => setShowForm(prev => prev == 'add' ? '' : 'add')}>add new Gown</button>}
-      {showForm == 'add' && <AddGown model={model.model} formOn={setShowForm} />}
+      {isManager && <button onClick={() => setShowForm(prev => prev == 'add' ? '' : 'add')}>add new Gown</button>}
+      {showForm == 'add' && <AddGown gowns={gowns} model={model.model} formOn={setShowForm} />}
+      <br />
+      <br />
       {visible && <div className='successMessage' style={{ background: "green" }}>{message}</div>}
       <img height={200} src={model.image} />
       {model.model}
@@ -221,7 +221,7 @@ function Gowns() {
       {selectedGown !== null && (
         <div>
           <span>Available amount: {gowns[selectedGown].available}</span>
-<br />
+          <br />
 
 
           {/* <form onSubmit={}>
@@ -237,7 +237,7 @@ function Gowns() {
           <input disabled={eventDate == null} type="number" name='amount' min="1" max={gowns[selectedGown].available} defaultValue={1} onChange={setAmountToOrder} />
           <button disabled={eventDate == null} onClick={() => AddGownToCart(gowns[selectedGown])}>Add to cart</button>
           <button disabled={eventDate == null} onClick={() => navigate('/order', { state: { amount: amountToOrder, gownId: gowns[selectedGown].gownId, eventDate: eventDate } })}>Order now</button>
-          {user.isManager == 1 && <button onClick={() => setShowForm(prev => prev == 'update' ? '' : 'update')}>update Gown</button>}
+          {isManager && <button onClick={() => setShowForm(prev => prev == 'update' ? '' : 'update')}>update Gown</button>}
           {showForm == 'update' && <UpdateGown gown={gowns[selectedGown]} formOn={setShowForm} />}
         </div>
       )}

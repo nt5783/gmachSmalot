@@ -5,7 +5,7 @@ export class SizeController {
     async getSizes(req, res, next) {
         try {
             const resultItems = await sizeService.getSizes(req.query);
-            return res.status(200).json(resultItems);
+            return res.json(resultItems);
         }
         catch (ex) {
             const err = {}
@@ -18,7 +18,7 @@ export class SizeController {
     async getSizeById(req, res, next) {
         try {
             const resultItem = await sizeService.getSizeById(req.params.id);
-            res.status(200).json(resultItem);
+            res.json(resultItem);
         }
         catch (ex) {
             const err = {}
@@ -32,7 +32,7 @@ export class SizeController {
         try {
             console.log(req.body)
             const resultItem = await sizeService.addSize(req.body);
-            res.status(200).json(resultItem.insertId);
+            res.json(resultItem.insertId);
         }
         catch (ex) {
             const err = {}
@@ -45,7 +45,7 @@ export class SizeController {
     async deleteSize(req, res, next) {
         try {
             await sizeService.deleteSize(req.params.id)
-            res.status(200).json(req.params.id);
+            res.json(req.params.id);
         }
         catch (ex) {
             const err = {}
@@ -60,7 +60,7 @@ export class SizeController {
             const result = await sizeService.updateSize(req.body, req.params.id);
             // if (result == null)
             //     throw ("this data cannot be updated")
-            res.status(200).json(req.params.id);
+            res.json(req.params.id);
         }
         catch (ex) {
             const err = {}
