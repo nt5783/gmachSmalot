@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken'
 
 export function verifyToken(req, res, next) {
-    const authorizationHeader = req.header('Authorization')
-    console.log('req')
-    console.log(req.headers)
-    console.log('authorizationHeader')
-    console.log(authorizationHeader)
+    // const authorizationHeader = req.header('Authorization')
+    // console.log('req')
+    // console.log(req.headers)
+    // console.log('authorizationHeader')
+    // console.log(authorizationHeader)
     // const tokenParts = authorizationHeader.split(' ')
     // const tokenVar = tokenParts[1]
     // const token = tokenVar.split('=')[1]

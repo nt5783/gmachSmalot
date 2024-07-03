@@ -1,6 +1,6 @@
 import { executeQuery } from './db.js';
 import { sha256 } from 'js-sha256'
-import { getUserQuery, setUserQuery, getPasswordQuery, setPasswordQuery } from './userQuery.js'
+import { getUserQuery, setUserQuery, getPasswordQuery, setPasswordQuery } from '../queries/userQuery.js'
 
 
 export class UserService {

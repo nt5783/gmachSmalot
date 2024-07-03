@@ -1,7 +1,7 @@
 
 import { executeQuery } from './db.js';
 import 'dotenv/config'
-import { getModelQuery, getModelByIdQuery, addModelQuery, deleteModelQuery, updateModelQuery } from './modelQuery.js'
+import { getModelQuery, getModelByIdQuery, addModelQuery, deleteModelQuery, updateModelQuery } from '../queries/modelQuery.js'
 
 export class ModelService {
 

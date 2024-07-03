@@ -1,6 +1,6 @@
 
 import { executeQuery } from './db.js';
-import { getColorsQuery, getColorByIdQuery, addColorQuery, deleteColorQuery, updateColorQuery } from './colorQuery.js'
+import { getColorsQuery, getColorByIdQuery, addColorQuery, deleteColorQuery, updateColorQuery } from '../queries/colorQuery.js'
 
 export class ColorService {
 

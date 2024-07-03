@@ -1,6 +1,6 @@
 
 import { executeQuery } from './db.js';
-import { getGownsQuery, getGownByIdQuery, addGownQuery, deleteGownQuery, updateGownQuery } from './gownQuery.js'
+import { getGownsQuery, getGownByIdQuery, addGownQuery, deleteGownQuery, updateGownQuery } from '../queries/gownQuery.js'
 
 export class GownService {
 
