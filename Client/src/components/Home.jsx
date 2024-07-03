@@ -25,7 +25,7 @@ function Home() {
     return (<>
         <div className="home_navigate">
             {/* <a href="" title="smart cart icons"/> */}
-            <NavLink to="./cart">
+            <NavLink className="cart_link" to="./cart">
                 {cart.length}<img height={'50px'} src={cartIcon} alt="cart icon" /></NavLink>
             {user && <span>{user.username}</span>}
             {user ? <button onClick={logout}>logout</button> :
