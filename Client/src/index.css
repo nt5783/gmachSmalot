@@ -158,7 +158,7 @@ a:hover {
 
 /* models.css */
 
-/* body {
+body {
   font-family: Arial, sans-serif;
   background-color: #ffffff;
   margin: 0;
@@ -235,7 +235,7 @@ img {
   .model_item {
     flex: 1 0 100%;
   }
-} */
+}
 
 
 
@@ -243,7 +243,7 @@ img {
 
 /* home.css */
 
-/* body {
+body {
   font-family: Arial, sans-serif;
   background-color: #ffffff;
   margin: 0;
@@ -297,8 +297,7 @@ img {
 .home_navigate img {
   margin-left: 10px;
   height: 30px;
-} */
-
+}
 /* .home_navigate .cart_link {
   display:
-} */
+}
