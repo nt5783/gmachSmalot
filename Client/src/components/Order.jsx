@@ -7,9 +7,10 @@ import { fetchfunc } from '../fetch';
 const Order = () => {
     const { user } = useContext(UserContext)
     const { state } = useLocation();
-    // console.log(state.amount)
+    console.log("state")
+    console.log(state)
     const [isAgreementChecked, setIsAgreementChecked] = useState(false);
-    // const [eventDate, setEventDate] = useState(state.eventDate)
+    const [eventDate, setEventDate] = useState(state.eventDate)
     // amount: amountToOrder, gownId: gowns[selectedGown].gownId, eventDate: eventDate
     // const cost=100 * state.amount
     // console.log(cost)
@@ -26,7 +27,7 @@ const Order = () => {
     }
 
     return (<>
-        {console.log("eventDate")}
+        {/* {console.log("eventDate")} */}
         {/* {console.log(eventDate)} */}
 
         {/* {!eventDate && לנווט ללוח שנה} */}
@@ -37,7 +38,7 @@ const Order = () => {
         <PayPalScriptProvider options={{ "client-id": "ATjqmx7s7BZKVhYLfEngKieXUDvP8D7zQzw8Wz7OrDRWi8lgaKLNh3LRRyIgDu8mYH4KtROFhK5YxWMv" }}>
             <div>
                 <h2>Gown Order</h2>
-                {/* <p>Price: {100 * state.amount} ILS</p> */}
+                <p>Price: {100 * state.amount} ILS</p>
 
                 <div>
                     <input type="checkbox" id="agreement" checked={isAgreementChecked} onChange={handleAgreementChange} />

@@ -1,3 +1,11 @@
+.warning{
+  background-color: rgb(250, 215, 215);
+}
+
+
+
+
+
 /* סטייל כללי לעיצוב נקי ומקצועי */
 /* body {
   font-family: Arial, sans-serif;
@@ -214,11 +222,11 @@ button:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-img {
+/* img {
   max-width: 100%;
   height: auto;
   border-radius: 5px;
-}
+} */
 
 .filter_by {
   text-align: center;
@@ -242,14 +250,6 @@ img {
 
 
 /* home.css */
-
-body {
-  font-family: Arial, sans-serif;
-  background-color: #ffffff;
-  margin: 0;
-  padding: 0;
-  color: #333;
-}
 
 .home_navigate {
   display: flex;

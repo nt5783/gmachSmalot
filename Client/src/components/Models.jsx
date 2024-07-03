@@ -36,8 +36,8 @@ function Models() {
         {addModelForm && <AddModel formOn={setAddModelForm} />}
         {eventDate != null ? <div>the models with gowns available for your event: {eventDate.getDate()}/{eventDate.getMonth()}/{eventDate.getFullYear()}
             <a className='no_background' href='./eventCalendar'> change date</a></div>
-            : <><div>pay attention that the gown may not be available for the date of your event.</div>
-                <div>to view only models with gowns available for the date of your event <a className='no_background' href='./eventCalendar'>pick a date here</a></div></>}
+            : <><div className='warning'>pay attention that the gown may not be available for the date of your event.</div>
+                <div className='warning'>to view only models with gowns available for the date of your event <a className='no_background' href='./eventCalendar'>pick a date here</a></div></>}
         {models.length > 0 && <div className='filter_by'>
 
         </div>}
