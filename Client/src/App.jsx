@@ -14,54 +14,58 @@ import Order from './components/Order'
 import './App.css'
 
 export const UserContext = createContext()
-export const CartContext = createContext()
 export const ManagerContext = createContext()
-
+export const CartContext = createContext()
+export const FavoritesContext = createContext()
+export const DateContext = createContext()
 
 function App() {
   // const [isLoading, setIsLoading] = useState(true)
   const [isManager, setIsManager] = useState(false)
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
-  const [cart, setCart] = useState(!user ? { user: null, length: 0, items: [] } : JSON.parse(localStorage.getItem(`cart${user.username}`)) ? JSON.parse(localStorage.getItem(`cart${user.username}`)) : { user: user.username, length: 0, items: [] })
+  const [date, setDate] = useState(user && localStorage.getItem(`date${user.username}`) ? JSON.parse(localStorage.getItem(`date${user.username}`)) : JSON.parse(localStorage.getItem(`date`)))
+  const [cart, setCart] = useState(user && localStorage.getItem(`cart${user.username}`) ? JSON.parse(localStorage.getItem(`cart${user.username}`)) :{ length: 0, items: [] })
+  const [favorites, setFavorites] = useState(!user ? [] :
+    JSON.parse(localStorage.getItem(`favorites${user.username}`)) ? JSON.parse(localStorage.getItem(`favorites${user.username}`)) :
+      [])
+
   // const [error, setError] = useState(false)
-  // const [cart, setCart] = useLocalStorageState<CartProps>('cart', {})
+
+  console.log('date')
+  console.log(date)
 
 
   return (
     <div className='App'>
-      <ManagerContext.Provider value={{ isManager, setIsManager }}>
-        <UserContext.Provider value={{ user, setUser }}>
+      <UserContext.Provider value={{ user, setUser }}>
+        <ManagerContext.Provider value={{ isManager, setIsManager }}>
           <CartContext.Provider value={{ cart, setCart }}>
-            <Router>
-              <Routes>
-                <Route path="/" element={<Home />}>
-                  <Route path="cart" element={<Cart />} />
-                  <Route path="order" element={<Order />} />
-                  <Route path="about" element={<About />} />
-                  <Route path="login" element={<Login />} />
-                  <Route path="signup" element={<Signup />} />
-                  <Route path="manager" element={<Manager />} />
-                  {/* <Route path="gowns" element={<Gowns />} />
-          <Route path="models" element={<Models />} /> */}
-                  <Route path="models">
-                    <Route index element={<Models />} />
-                    <Route path=":id" element={<Gowns />} />
-                  </Route>
-                  <Route path="eventCalendar" element={<EventCalendar />} />
-                </Route>
-              </Routes>
-            </Router>
+            <FavoritesContext.Provider value={{ favorites, setFavorites }}>
+              <DateContext.Provider value={{ date, setDate }}>
+                <Router>
+                  <Routes>
+                    <Route path="/" element={<Home />}>
+                      <Route path="cart" element={<Cart />} />
+                      <Route path="order" element={<Order />} />
+                      <Route path="about" element={<About />} />
+                      <Route path="login" element={<Login />} />
+                      <Route path="signup" element={<Signup />} />
+                      <Route path="manager" element={<Manager />} />
+                      <Route path="eventCalendar" element={<EventCalendar />} />
+                      <Route path="models">
+                        <Route index element={<Models />} />
+                        <Route path=":id" element={<Gowns />} />
+                      </Route>
+                    </Route>
+                  </Routes>
+                </Router>
+              </DateContext.Provider>
+            </FavoritesContext.Provider>
           </CartContext.Provider>
-        </UserContext.Provider>
-      </ManagerContext.Provider>
+        </ManagerContext.Provider>
+      </UserContext.Provider>
     </div>
   )
 }
-
-{/* <Route path="posts">
-                <Route index element={<Posts />} />
-                <Route path=":id" element={<SinglePost />}>
-                  <Route path="comments" element={<Comments />} />
-                </Route> */}
 
 export default App
