@@ -23,8 +23,20 @@ export class GownService {
     }
 
     async addGown(newGown) {
-        const queryGown = addGownQuery();
-        const result = await executeQuery(queryGown, Object.values(newGown));
+        let result;
+        const queryIsExsistGown = getGownsQuery({ model: newGown.model, sizeId: newGown.size })
+        const isExsistGown = await executeQuery(queryIsExsistGown);
+        console.log("querisExsistGown")
+        console.log(isExsistGown)
+        console.log(newGown)
+        if (isExsistGown.length > 0) {
+            const queryUpdate = updateGownQuery(['amount'])
+            result = await executeQuery(queryUpdate, [isExsistGown.gownId, isExsistGown.amount + newGown.amount]);
+        }
+        else {
+            const queryGown = addGownQuery();
+            result = await executeQuery(queryGown, Object.values(newGown));
+        }
         return result;
     }
 

@@ -2,8 +2,9 @@ import React from "react"
 import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { fetchfunc, fetchNoParamsfunc } from "../fetch"
+import { Dialog } from 'primereact/dialog';
 
-export default function AddGown({ model, formOn }) {
+export default function AddGown({ gowns, model, formOn }) {
     const { register, handleSubmit } = useForm()
     const [additional, setAdditional] = useState('')
     const [sizes, setSizes] = useState([])
@@ -46,7 +47,12 @@ export default function AddGown({ model, formOn }) {
 
 
     function addGown(data) {
-        const newGown = {model: model, size: data.size, amount: data.amount}
+        console.log('data')
+        console.log(data)
+        // if(gowns.find((gown)=>gown.sizeId==data.size))
+        //to finish
+
+        const newGown = { model: model, size: data.size, amount: data.amount }
         console.log('newGown')
         console.log(newGown)
         // setMessage("adding gown model" + data.model + " ,length: " + data.length + " ,in size " + data.size)
@@ -55,28 +61,34 @@ export default function AddGown({ model, formOn }) {
     }
 
 
+    function handleChangeSize(){
+
+    }
+
+
     return (<>
-        <form onSubmit={handleSubmit((data => addGown(data)))}>
-            {/* temporary */}
-            {/* <label>Model:<input className='number_without' type="number" name="model" required {...register("model")} /></label><br /> */}
+        <Dialog visible={true} onHide={() => formOn('')}>
+            <form onSubmit={handleSubmit((data => addGown(data)))}>
 
-            <label>Size:<select name="size" required {...register("size")}>
-                <option disabled selected></option>
-                {sizes.map((size, i) => <option key={i} value={size.sizeId}>{size.size}</option>)}
-            </select></label><br />
+                Model: {model}
+                <br />
 
-            <label>Amount:<input id='amount' type="number" min="1" name="amount" required {...register("amount")} /></label><br />
+                <label>Size:<select name="size" required {...register("size")}>
+                    <option disabled selected></option>
+                    {sizes.map((size, i) => <option key={i} value={size.sizeId}>{size.size}</option>)}
+                </select></label>
+                <button onClick={() => setAdditional(prev => prev == 'sizes' ? '' : 'sizes')}>add size</button>
+                <br />
+                <label>Amount:<input id='amount' type="number" min="1" name="amount" required {...register("amount")} /></label><br />
 
-            <input type="button" value="Cancel" onClick={() => formOn('')} />
-            <input type="submit" value="Submit" /><br />
+                <input type="submit" value="Submit" /><br />
+            </form>
 
-        </form>
-
-        <button onClick={() => setAdditional(prev => prev == 'sizes' ? '' : 'sizes')}>add size</button>
-        {additional == 'sizes' && <form onSubmit={addSize}>
-            <label htmlFor='size' >size:</label>
-            <input name='size' type='text' required></input>
-            <button type="submit">Add</button>
-        </form>}
+            {additional == 'sizes' && <Dialog visible={true} onHide={setAdditional('')}><form onSubmit={addSize}>
+                <label htmlFor='size' >size:</label>
+                <input name='size' type='text' required></input>
+                <button type="submit">Add</button>
+            </form></Dialog>}
+        </Dialog>
     </>)
 }

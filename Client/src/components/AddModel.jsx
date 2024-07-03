@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { fetchfunc, fetchNoParamsfunc } from "../fetch"
 import 'react-dropzone-uploader/dist/styles.css'
 import Dropzone from 'react-dropzone-uploader'
+import { Dialog } from "primereact/dialog"
 
 export default function AddModel({ formOn, setMessage }) {
     const [additional, setAdditional] = useState('')
@@ -35,7 +36,10 @@ export default function AddModel({ formOn, setMessage }) {
         console.log(formData)
         // setMessage("adding model code " + data.model + " color: " + data.color + " for " + data.season)
         formOn(false)
-        let res = fetchfunc('models', 'POST', formData)
+        try {
+            fetchfunc('models', 'POST', formData)
+        } catch (e) { alert(e) }
+
     }
 
     async function addLength(event) {
@@ -98,63 +102,65 @@ export default function AddModel({ formOn, setMessage }) {
     // };
 
     return (<>
-        <form onSubmit={handleSubmit((data => addModel(data)))}>
-            <label>Model:<input className='number_without' type="number" name="model" required {...register("model")} /></label><br />
+        <Dialog visible={true} onHide={() => formOn(false)}>
+            <form onSubmit={handleSubmit((data => addModel(data)))}>
+                <label>Model:<input className='number_without' type="number" name="model" required {...register("model")} /></label><br />
 
-            <label>Color:
-                <select name="color" required {...register("color")}>
+                <label>Color:
+                    <select name="color" required {...register("color")}>
+                        <option disabled selected></option>
+                        {colors.map((color, i) => <option key={i} value={color.colorId}>{color.color}</option>)}
+                    </select></label>
+                <button onClick={() => setAdditional(prev => prev == 'colors' ? '' : 'colors')}>add color</button><br />
+
+                <label>Season:<select name="season" required {...register("season")}>
                     <option disabled selected></option>
-                    {colors.map((color, i) => <option key={i} value={color.colorId}>{color.color}</option>)}
+                    {seasons.map((season, i) => <option key={i} value={season.seasonId}>{season.season}</option>)}
                 </select></label>
-            <br />
+                <button onClick={() => setAdditional(prev => prev == 'seasons' ? '' : 'seasons')}>add season</button><br />
+                <label>
 
-            <label>Season:<select name="season" required {...register("season")}>
-                <option disabled selected></option>
-                {seasons.map((season, i) => <option key={i} value={season.seasonId}>{season.season}</option>)}
-            </select></label><br />
-            <label>
+                    <label>Length:<select name="length" required {...register("length")}>
+                        <option disabled selected></option>
+                        {lengths.map((length, i) => <option key={i} value={length.lengthId}>{length.length}</option>)}
+                    </select></label>
+                    <button onClick={() => setAdditional(prev => prev == 'lengths' ? '' : 'lengths')}>add length</button><br />
 
-                <label>Length:<select name="length" required {...register("length")}>
-                    <option disabled selected></option>
-                    {lengths.map((length, i) => <option key={i} value={length.lengthId}>{length.length}</option>)}
-                </select></label><br />
+                    Image:
+                    <Dropzone
+                        getUploadParams={getUploadParams}
+                        onChangeStatus={handleChangeStatus}
+                        accept="image/*"
+                        maxFiles={1}
+                        styles={{
+                            dropzone: { width: 400, height: 200, border: '2px dashed #007bff', borderRadius: '5px' },
+                            dropzoneActive: { borderColor: 'green' },
+                        }} />
+                </label>
 
-                Image:
-                <Dropzone
-                    getUploadParams={getUploadParams}
-                    onChangeStatus={handleChangeStatus}
-                    accept="image/*"
-                    maxFiles={1}
-                    styles={{
-                        dropzone: { width: 400, height: 200, border: '2px dashed #007bff', borderRadius: '5px' },
-                        dropzoneActive: { borderColor: 'green' },
-                    }} />
-            </label>
+                <input type="submit" value="Add Model" /><br />
+            </form>
 
-            <input type="button" value="Cancel" onClick={() => formOn(false)} />
-            <input type="submit" value="Add Model" /><br />
-        </form>
+            {/* שכל הטפסים יהיו אחד */}
 
-        {/* שכל הטפסים יהיו אחד */}
-        <button onClick={() => setAdditional(prev => prev == 'colors' ? '' : 'colors')}>add color</button>
-        {additional == 'colors' && <form onSubmit={addColor}>
-            <label htmlFor='color' >color name:</label>
-            <input name='color' type='text' required></input>
-            <button type="submit">Add</button>
-        </form>}
+            {additional == 'colors' && <Dialog visible={true} onHide={() => setAdditional('')}><form onSubmit={addColor}>
+                <label htmlFor='color' >color name:</label>
+                <input name='color' type='text' required></input>
+                <button type="submit">Add</button>
+            </form></Dialog>}
 
-        <button onClick={() => setAdditional(prev => prev == 'seasons' ? '' : 'seasons')}>add season</button>
-        {additional == 'seasons' && <form onSubmit={addSeason}>
-            <label htmlFor='season' >season name:</label>
-            <input name='season' type='text' required></input>
-            <button type="submit">Add</button>
-        </form>}
 
-        <button onClick={() => setAdditional(prev => prev == 'lengths' ? '' : 'lengths')}>add length</button>
-        {additional == 'lengths' && <form onSubmit={addLength}>
-            <label htmlFor='length' >length:</label>
-            <input name='length' type='text' required></input>
-            <button type="submit">Add</button>
-        </form>}
+            {additional == 'seasons' && <Dialog visible={true} onHide={() => setAdditional('')}><form onSubmit={addSeason}>
+                <label htmlFor='season' >season name:</label>
+                <input name='season' type='text' required></input>
+                <button type="submit">Add</button>
+            </form></Dialog>}
+
+            {additional == 'lengths' && <Dialog visible={true} onHide={() => setAdditional('')}><form onSubmit={addLength}>
+                <label htmlFor='length' >length:</label>
+                <input name='length' type='text' required></input>
+                <button type="submit">Add</button>
+            </form></Dialog>}
+        </Dialog >
     </>)
 }

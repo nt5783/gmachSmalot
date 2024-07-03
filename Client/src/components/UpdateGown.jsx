@@ -2,6 +2,7 @@ import React from "react"
 import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { fetchfunc, fetchNoParamsfunc } from "../fetch"
+import { Dialog } from 'primereact/dialog';
 
 export default function UpdateGown({ gown, formOn }) {
     const { register, handleSubmit } = useForm()
@@ -42,31 +43,31 @@ export default function UpdateGown({ gown, formOn }) {
     }
 
 
-    return (<>
-    {console.log("gown")}
-    {console.log(gown)}
-        <form onSubmit={handleSubmit((data => updateGown(data)))}>
-            {/* temporary */}
-            {/* <label>Model:<input className='number_without' type="number" name="model" required {...register("model")} /></label><br /> */}
+    return (
+        <Dialog visible={true} onHide={() => formOn('')}>
+            {console.log(gown)}
+            <form onSubmit={handleSubmit((data => updateGown(data)))}>
+                {/* temporary */}
+                {/* <label>Model:<input className='number_without' type="number" name="model" required {...register("model")} /></label><br /> */}
 
-            {/* <label>Size:<input type="number" name="size" required {...register("size")} defaultValue={gown.size}/></label><br />*/}
+                {/* <label>Size:<input type="number" name="size" required {...register("size")} defaultValue={gown.size}/></label><br />*/}
 
-            <label>Size:<select name="size" required {...register("size")}>
-                {sizes.map((size, i) => (<option key={i} selected={size.size === gown.size}  value={size.size}>{size.size}</option>))}
-            </select></label><br />
-{/* לא עובד משום מה */}
-            <label>Amount:<input id='amount' type="number" min="1" name="amount" defaultValue={gown.amount} required {...register("amount")} /></label><br />
+                <label>Size:<select name="size" defaultValue={gown.size} required {...register("size")}>
+                    {sizes.map((size, i) => (<option key={i} value={size.size}>{size.size}</option>))}
+                </select></label>
+                <button onClick={() => setAdditional(prev => prev == 'sizes' ? '' : 'sizes')}>add size</button><br />
+                {/* לא עובד משום מה selected={size.size === gown.size} */}
+                <label>Amount:<input id='amount' type="number" min="1" name="amount" defaultValue={gown.amount} required {...register("amount")} /></label><br />
 
-            <input type="button" value="Cancel" onClick={() => formOn('')} />
-            <input type="submit" value="Submit" /><br />
+                <input type="button" value="Cancel" onClick={() => formOn('')} />
+                <input type="submit" value="Submit" /><br />
 
-        </form>
+            </form>
 
-        <button onClick={() => setAdditional(prev => prev == 'sizes' ? '' : 'sizes')}>add size</button>
-        {additional == 'sizes' && <form onSubmit={addSize}>
-            <label htmlFor='size' >size:</label>
-            <input name='size' type='text' required></input>
-            <button type="submit">Add</button>
-        </form>}
-    </>)
+            {additional == 'sizes' && <Dialog visible={true} onHide={setAdditional('')}><form onSubmit={addSize}>
+                <label htmlFor='size' >size:</label>
+                <input name='size' type='text' required></input>
+                <button type="submit">Add</button>
+            </form></Dialog>}
+        </Dialog>)
 }

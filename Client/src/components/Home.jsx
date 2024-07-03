@@ -3,6 +3,7 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom"
 import { UserContext } from "../App"
 import { CartContext } from "../App"
 import cartIcon from '../icons/cart.png'
+import logo from '../icons/gown logo png.png'
 
 
 function Home() {
@@ -23,6 +24,7 @@ function Home() {
     }
 
     return (<>
+        <img height={80} src={logo} alt="" />
         <div className="home_navigate">
             {/* <a href="" title="smart cart icons"/> */}
             <NavLink className="cart_link" to="./cart">

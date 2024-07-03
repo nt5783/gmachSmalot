@@ -1,6 +1,6 @@
 
 function getGownsQuery(queryparams) {
-    let firstPartOfQuery = 'SELECT gownId,model,amount,size FROM gowns NATURAL JOIN sizes '
+    let firstPartOfQuery = 'SELECT gownId,model,amount,size,sizeId FROM gowns NATURAL JOIN sizes '
     if (queryparams.hasOwnProperty('date')) {
         const date = new Date(queryparams.date)
         const firstDate = new Date(date);
@@ -33,7 +33,7 @@ function getGownsQuery(queryparams) {
 
         console.log(formattedFirstDate, formattedSecondDate);
 
-        firstPartOfQuery = `select gownId, model, size,  amount, X.amount - QuantityOccupied as available
+        firstPartOfQuery = `select gownId, model, size, sizeId, amount, X.amount - QuantityOccupied as available
         from sizes NATURAL JOIN gowns g1 NATURAL LEFT OUTER JOIN
         (select *,COUNT(*) as QuantityOccupied
         from gowns g NATURAL JOIN orders o
@@ -41,7 +41,7 @@ function getGownsQuery(queryparams) {
         group by gownId) X`
     }
     const fields = Object.keys(queryparams).filter(param => {
-        return param == 'model' || param == 'size' || param == 'amount';
+        return param == 'model' || param == 'sizeId' || param == 'amount';
     });
     let conditions = "WHERE "
     fields.forEach(field => conditions += field + " = '" + queryparams[field] + "' AND ")
