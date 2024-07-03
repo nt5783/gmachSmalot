@@ -5,7 +5,7 @@ import { CartContext } from '../App'
 import { UserContext } from '../App'
 // import { AppContext } from "../App";
 import 'react-calendar/dist/Calendar.css'
-import { fetchNoParamsfunc, fetchImg } from '../fetch'
+import { fetchNoParamsfunc } from '../fetch'
 import AddGown from './AddGown'
 import UpdateGown from './UpdateGown'
 

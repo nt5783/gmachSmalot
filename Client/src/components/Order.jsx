@@ -2,13 +2,14 @@ import React, { useState, useEffect, useContext } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import { UserContext } from '../App'
+import { fetchfunc } from '../fetch';
 
 const Order = () => {
     const { user } = useContext(UserContext)
     const { state } = useLocation();
-    console.log(state.amount)
+    // console.log(state.amount)
     const [isAgreementChecked, setIsAgreementChecked] = useState(false);
-    const [eventDate, setEventDate] = useState(state.eventDate)
+    // const [eventDate, setEventDate] = useState(state.eventDate)
     // amount: amountToOrder, gownId: gowns[selectedGown].gownId, eventDate: eventDate
     // const cost=100 * state.amount
     // console.log(cost)
@@ -16,18 +17,27 @@ const Order = () => {
         setIsAgreementChecked(e.target.checked);
     };
 
+    async function createGownOrder() {
+        console.log("state")
+        console.log(state)
+        // try {
+        //     fetchfunc('orders','POST',{eventDate:eventDate,userId:user.userId,gownId:gown.gownId})
+        // }catch{}
+    }
+
     return (<>
         {console.log("eventDate")}
-        {console.log(eventDate)}
+        {/* {console.log(eventDate)} */}
 
         {/* {!eventDate && לנווט ללוח שנה} */}
 
         {/* {!eventDate && <div><label htmlFor="eventDate">Chose your Event Date:</label>
             <input type="date" name="eventDate" onChange={setEventDate}></input></div>} */}
-        {eventDate && <PayPalScriptProvider options={{ "client-id": "ATjqmx7s7BZKVhYLfEngKieXUDvP8D7zQzw8Wz7OrDRWi8lgaKLNh3LRRyIgDu8mYH4KtROFhK5YxWMv" }}>
+        {/* {eventDate &&  */}
+        <PayPalScriptProvider options={{ "client-id": "ATjqmx7s7BZKVhYLfEngKieXUDvP8D7zQzw8Wz7OrDRWi8lgaKLNh3LRRyIgDu8mYH4KtROFhK5YxWMv" }}>
             <div>
                 <h2>Gown Order</h2>
-                <p>Price: {100 * state.amount} ILS</p>
+                {/* <p>Price: {100 * state.amount} ILS</p> */}
 
                 <div>
                     <input type="checkbox" id="agreement" checked={isAgreementChecked} onChange={handleAgreementChange} />
@@ -36,6 +46,7 @@ const Order = () => {
 
                 {isAgreementChecked ? (
                     <PayPalButtons
+                        onClick={createGownOrder}
                         createOrder={(data, actions) => {
                             return actions.order.create({
                                 purchase_units: [{ amount: { currency_code: 'ILS', value: '100.00' } }]
@@ -57,7 +68,8 @@ const Order = () => {
                     <p>Please agree to the terms and conditions to proceed with the payment.</p>
                 )}
             </div>
-        </PayPalScriptProvider>}
+        </PayPalScriptProvider>
+        {/* } */}
     </>);
 };
 

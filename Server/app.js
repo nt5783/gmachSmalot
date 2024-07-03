@@ -11,6 +11,7 @@ import { colorRouter } from './router/colorRouter.js';
 import { seasonRouter } from './router/seasonRouter.js';
 import { sizeRouter } from './router/sizeRouter.js';
 import { lengthRouter } from './router/lengthRouter.js';
+import { orderRouter } from './router/orderRouter.js';
 import multer from 'multer';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -27,6 +28,7 @@ app.use('/colors', colorRouter)
 app.use('/seasons', seasonRouter)
 app.use('/sizes', sizeRouter)
 app.use('/lengths', lengthRouter)
+app.use('/order',orderRouter)
 app.use("/img", express.static(__dirname + '/img'));
 app.use(logErrors);
 
