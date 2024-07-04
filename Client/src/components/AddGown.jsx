@@ -11,7 +11,7 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 
 export default function AddGown({ gowns, model, formOn }) {
-    const { register, handleSubmit } = useForm();
+    const { register, watch, handleSubmit, setValue } = useForm();
     const [additional, setAdditional] = useState('');
     const [sizes, setSizes] = useState([]);
 
@@ -39,32 +39,38 @@ export default function AddGown({ gowns, model, formOn }) {
     }
 
     function addGown(data) {
-        console.log('data')
+        console.log('data po po')
         console.log(data)
-        // if(gowns.find((gown)=>gown.sizeId==data.size))
-        //to finish
-
+        if (gowns.find((gown) => gown.sizeId == data.size))
+            if (!confirm(`gowns from model ${model} in size ${data.size}(?) already exist. Do you want to add to them the amount you put in?`))
+                return;
         const newGown = { model: model, size: data.size, amount: data.amount }
         console.log('newGown')
         console.log(newGown)
         // setMessage("adding gown model" + data.model + " ,length: " + data.length + " ,in size " + data.size)
         formOn('')
-        let res = fetchfunc('gowns', 'POST', newGown)
+        fetchfunc('gowns', 'POST', newGown)
     }
 
+    const onSizeChange = (e) => {
+        setValue('size', e.value);
+    };
+// addGown(data)
     return (
         <>
             <Dialog visible={true} onHide={() => formOn('')} className="add-gown-dialog">
-                <form onSubmit={handleSubmit((data) => addGown(data))} className="add-gown-form">
+                <form onSubmit={handleSubmit((data) => console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhh"))} className="add-gown-form">
                     <div className="field">
                         <label>Model: {model}</label>
                     </div>
                     <div className="field">
                         <span className="p-float-label">
-                            <Dropdown
+                            <Dropdown required
                                 id="size"
-                                {...register("size", { required: true })}
+                                // {...register("size", { required: true })}
                                 options={sizes.map(size => ({ label: size.size, value: size.sizeId }))}
+                                value={watch('size')}
+                                onChange={onSizeChange}
                                 placeholder="Select a size"
                             />
                             <label htmlFor="size">Size</label>
@@ -73,12 +79,14 @@ export default function AddGown({ gowns, model, formOn }) {
                     </div>
                     <div className="field">
                         <span className="p-float-label">
-                            {/* מחקתי: min={1}  */}
-                            <InputNumber id="amount" {...register("amount", { required: true, min: 1 })}/>
+                            <InputNumber id="amount" {...register("amount", { required: true, min: 1 })} min={1} />
                             <label htmlFor="amount">Amount</label>
                         </span>
                     </div>
-                    <Button type="submit" label="Submit" className="p-button-success" />
+                    <div className="p-dialog-footer pb-0">
+                <Button type="submit" label="Submit" className="p-button-success" />
+          </div>
+                  
                 </form>
             </Dialog>
             {additional === 'sizes' && (
