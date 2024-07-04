@@ -1,7 +1,9 @@
 # gmachSmalot
 end to end project - gowns gemach
 
+cart number doubled on load!!
 on login - set cart and date!! (for cart items in header)
+message does'nt show!! like on add gown to cart
 
 להחליט שכל הגט יהיו ברבים עם S
 שהמנהל יוכל לראות את כל ההזמנות הקיימות לדגם מסויים

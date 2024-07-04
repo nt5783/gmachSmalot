@@ -64,29 +64,43 @@ function Gowns() {
   }
 
   function AddGownToCart(gown) {
+    console.log('amountToOrder')
+    console.log(amountToOrder)
+    const qty =  amountToOrder.valueOf();
+    console.log('qty')
+    console.log(qty)
     const gownId = gown.gownId;
     if (!user) navigate('/login', { state: { model: model, message: 'you must log in to your account', eventDate: eventDate } });
     else
-      setCart((prevCart) => {
-        const gownIndex = prevCart.items.findIndex((item) => item.id === gownId);
-        if (gownIndex == -1)
-          return {
-            length: prevCart.length + 1,
-            items: [...prevCart.items, { id: gownId, model: gown.model, size: gown.size, img: model.image, qty: 1 }],
-          };
-        const updatedItems = prevCart.items.map((item, index) => {
-          if (index === gownIndex) return { ...item, qty: item.qty + 1 };
-          return item;
-        });
-        return { length: prevCart.length + 1, items: updatedItems };
-      });
+      // setCart((prevCart) => {
+      //   const gownIndex = prevCart.items.findIndex((item) => item.id === gownId);
+      //   if (gownIndex == -1)
+      //     return {
+      //       length: prevCart.length  + 1 - 1+ amountToOrder,
+      //       items: [...prevCart.items, { gownId: gownId, model: gown.model, size: gown.size, img: model.image, qty: amountToOrder - 1 + 1 }],
+      //     };
+      //   const updatedItems = prevCart.items.map((item, index) => {
+      //     if (index === gownIndex) return { ...item, qty: item.qty + 1 - 1 + amountToOrder };
+      //     return item;
+      //   });
+      //   return { length: prevCart.length  + 1 - 1+ amountToOrder, items: updatedItems };
+      // });
     setMessage(`gown model: ${gown.model}, size: ${gown.size} was added to cart successfully`);
-    const updatedGowns = gowns.map((gownItem) => {
-      if (gownItem === gown) return { ...gownItem, available: gownItem.available - 1 };
-      return gownItem;
-    });
-    setGowns(updatedGowns);
+    // const updatedGowns = gowns.map((gownItem) => {
+    //   if (gownItem === gown) return { ...gownItem, available: gownItem.available - 1 };
+    //   return gownItem;
+    // });
+    // setGowns(updatedGowns);
     setSelectedGown(null);
+  }
+
+  function handleOrder() {
+    if (amountToOrder > 0) {
+      let gownToOrder = gowns[selectedGown]
+      console.log(amountToOrder)
+      gownToOrder.qty = amountToOrder - 1 + 1
+      navigate('/order', { state: { gowns: [gownToOrder] } })
+    }
   }
 
   //כשנבחרה מידה שיראה את המידה הבחורה
@@ -146,7 +160,7 @@ function Gowns() {
                 label="Order now"
                 icon="pi pi-shopping-bag"
                 disabled={eventDate == null}
-                onClick={() => { amountToOrder > 0 && navigate('/order', { state: { amount: amountToOrder, gown: gowns[selectedGown] } }) }}
+                onClick={handleOrder}
               />
               {user && user.isManager === 1 && (
                 <Button

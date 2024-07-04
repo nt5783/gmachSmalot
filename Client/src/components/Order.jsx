@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import { UserContext, DateContext } from '../App';
 import { fetchfunc } from '../fetch';
+import { useEffect } from 'react';
 
 const Order = () => {
     const { user } = useContext(UserContext)
@@ -11,9 +12,18 @@ const Order = () => {
     console.log("state")
     console.log(state)
     console.log(date)
-    const {amount,gown}=state
+    const { gowns } = state
+    const [price, setPrice] = useState(0)
+    const GOWN_PRICE = 100
 
     const [isAgreementChecked, setIsAgreementChecked] = useState(false);
+
+    useEffect(() => {
+        let p = 0
+        gowns.map((gown) => p += gown.qty * GOWN_PRICE)
+        console.log('p', p)
+        setPrice(p)
+    }, [])
     // amount: amountToOrder, gownId: gowns[selectedGown].gownId, eventDate: eventDate
     // const cost=100 * state.amount
     // console.log(cost)
@@ -22,32 +32,39 @@ const Order = () => {
         setIsAgreementChecked(e.target.checked);
     };
 
+    function orderGowns(){
+        gowns.map((gown) => createGownOrder(gown))
+    }
 
-    async function createGownOrder() {
+
+    async function createGownOrder(gown) {
         console.log("state /\/")
         console.log(state)
-        console.log({eventDate:date,userId:user.userId,gownId:gown.gownId})
+        console.log({ eventDate: date, userId: user.userId, gownId: gown.gownId })
         try {
-            for (let i = 0; i < amount; i++) {
-                await fetchfunc('orders','POST',{eventDate:date,userId:user.userId,gownId:gown.gownId})
+            for (let i = 0; i < gown.qty; i++) {
+                await fetchfunc('orders', 'POST', { eventDate: date, userId: user.userId, gownId: gown.gownId })
             }
-        }catch{}
+        } catch { }
     }
-                {/* {console.log("eventDate")} */}
-        {/* {console.log(eventDate)} */}
+    {/* {console.log("eventDate")} */ }
+    {/* {console.log(eventDate)} */ }
 
-        {/* {!eventDate && לנווט ללוח שנה} */}
+    {/* {!eventDate && לנווט ללוח שנה} */ }
 
-        {/* {!eventDate && <div><label htmlFor="eventDate">Chose your Event Date:</label>
+    {/* {!eventDate && <div><label htmlFor="eventDate">Chose your Event Date:</label>
             <input type="date" name="eventDate" onChange={setEventDate}></input></div>} */}
-        {/* {eventDate &&  */}
+    {/* {eventDate &&  */{
+
+    } }
     return (
         <PayPalScriptProvider options={{ "client-id": "ATjqmx7s7BZKVhYLfEngKieXUDvP8D7zQzw8Wz7OrDRWi8lgaKLNh3LRRyIgDu8mYH4KtROFhK5YxWMv" }}>
             <div className="order-container">
                 <h2>Gown Order</h2>
-                <h3>Model: {gown.model} <br /> Size: {gown.size} <br /> Amount: {amount}</h3>
-                <p>Price: {100 * state.amount} ILS</p>
-
+                {gowns.map((gown) => (<><h3>Model: {gown.model} <br /> Size: {gown.size} <br /> Amount: {gown.qty}</h3>
+                </>
+                ))}
+                <p>Price: {price} ILS</p>
                 <div className="agreement-checkbox">
                     <input type="checkbox" id="agreement" checked={isAgreementChecked} onChange={handleAgreementChange} />
                     {/* לטפל בקישור */}
@@ -77,7 +94,7 @@ const Order = () => {
                     <p>Please agree to the terms and conditions to proceed with the payment.</p>
                 )}
             </div>
-            <button onClick={createGownOrder}>order</button>
+            <button onClick={orderGowns}>order</button>
         </PayPalScriptProvider>
     );
 };
