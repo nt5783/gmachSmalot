@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { CartContext, ManagerContext, UserContext } from '../App';
+import { CartContext, ManagerContext, UserContext, DateContext } from '../App';
 import 'react-calendar/dist/Calendar.css';
 import { fetchNoParamsfunc } from '../fetch';
 import AddGown from './AddGown';
@@ -18,6 +18,7 @@ function Gowns() {
   const navigate = useNavigate();
   const { isManager } = useContext(ManagerContext);
   const { user } = useContext(UserContext);
+  const { date } = useContext(DateContext);
   const { cart, setCart } = useContext(CartContext);
   const [gowns, setGowns] = useState([]);
   const [selectedGown, setSelectedGown] = useState(null);
@@ -28,6 +29,9 @@ function Gowns() {
   const [visible, setVisible] = useState(false);
   const [showForm, setShowForm] = useState('');
   const [amountToOrder, setAmountToOrder] = useState(1);
+  
+  // const newDate = date? new Date(date): null;
+  // const [ eventDate, setEventDate] = useState(newDate);
 
   useEffect(() => {
     if (!message) {
@@ -54,6 +58,7 @@ function Gowns() {
   }, []);
 
   function gownSelected(i) {
+    setAmountToOrder(1)
     setSelectedGown((prev) => (prev === i ? i : i)); // Toggle selected gown
   }
 
@@ -112,7 +117,7 @@ function Gowns() {
             <div>
               <span>Available amount: {gowns[selectedGown].available}</span>
               <br />
-              {eventDate == null && <span className="warning">you are in display mode. you have to pick a date</span>}
+              {eventDate == null && <span className="warning">you are in display mode. you have to pick a date <a className="no-background" href="../eventCalendar">pick a date here</a></span>}
               <br />
               <label htmlFor="amount">amount:</label>
               <input
@@ -121,7 +126,7 @@ function Gowns() {
                 name="amount"
                 min="1"
                 max={gowns[selectedGown].available}
-                defaultValue={1}
+                value={amountToOrder}
                 onChange={(e) => setAmountToOrder(e.target.value)}
               />
               <Button
