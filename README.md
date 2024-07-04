@@ -61,6 +61,7 @@ we add sizeId in gowns what about models?
 שגיאות בלוגין וסינאפ
 
 No available options אם בחרת תאריך ואתה לא משתמש
+להסתכל בדרישות הפרויקט
 
 
 
