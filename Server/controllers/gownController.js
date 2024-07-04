@@ -5,11 +5,13 @@ export class GownController {
     async getGowns(req, res, next) {
         try {
             const resultItems = await gownService.getGowns(req.query);
+            if (resultItems.length == 0)
+                throw new Error({ statusCode: 404 })
             return res.json(resultItems);
         }
         catch (ex) {
             const err = {}
-            err.statusCode = 500;
+            err.statusCode = ex.statusCode ?? 500;
             err.message = ex;
             next(err)
         }
@@ -18,11 +20,13 @@ export class GownController {
     async getGownById(req, res, next) {
         try {
             const resultItem = await gownService.getGownById(req.params.id);
+            if (resultItem.length == 0)
+                throw new Error({ statusCode: 404 })
             res.json(resultItem);
         }
         catch (ex) {
             const err = {}
-            err.statusCode = 500;
+            err.statusCode = ex.statusCode ?? 500;
             err.message = ex;
             next(err)
         }
@@ -36,7 +40,7 @@ export class GownController {
         }
         catch (ex) {
             const err = {}
-            err.statusCode = 500;
+            err.statusCode = ex.statusCode ?? 500;
             err.message = ex;
             next(err)
         }
@@ -49,7 +53,7 @@ export class GownController {
         }
         catch (ex) {
             const err = {}
-            err.statusCode = 500;
+            err.statusCode = ex.statusCode ?? 500;
             err.message = ex;
             next(err)
         }
@@ -64,7 +68,8 @@ export class GownController {
         }
         catch (ex) {
             const err = {}
-            err.statusCode = ex == "this data cannot be updated" ? 409 : 500;
+            // err.statusCode = ex == "this data cannot be updated" ? 409 : 500;
+            err.statusCode = ex.statusCode ?? 500;
             err.message = ex;
             next(err)
         }
