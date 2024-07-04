@@ -50,12 +50,12 @@ function InvitationCalendar() {
       {date && (
         <Message
           severity="info"
-          text={`You have the date ${eventDate.getDate()}/${eventDate.getMonth()}/${eventDate.getFullYear()} picked.`}
+          text={`You have the date ${eventDate.getDate()}/${eventDate.getMonth() + 1}/${eventDate.getFullYear()} picked.`}
           className="date-message"
         />
       )}
       {date && (
-        <Button className="p-button-secondary p-button-text clear-date-button" label="Pick a new date here" onClick={clearDate} />
+        <Button className="p-button-secondary p-button-text clear-date-button" label="Pick a new date" onClick={clearDate} />
       )}
       {!date && (
         <div className="calendar-container">
