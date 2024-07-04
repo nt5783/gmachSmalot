@@ -14,7 +14,6 @@ export class LoginController {
                     { userId: resultItems[0].userId, admin: resultItems[0].isManager },
                     process.env.RANDOM_TOKEN_SECRET,
                     { expiresIn: '20h' })
-                delete resultItems[0].userId
                 return res.json({ token, data: resultItems[0] })
             }
         }

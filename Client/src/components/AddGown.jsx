@@ -48,7 +48,10 @@ export default function AddGown({ gowns, model, formOn }) {
         console.log(data)
         if (gowns.find((gown) => gown.sizeId == data.size))
             if (!confirm(`gowns from model ${model} in size ${data.size}(?) already exist. Do you want to add to them the amount you put in?`))
-                return;
+                {
+                    formOn('')
+                    return;
+                }
         const newGown = { model: model, size: data.size, amount: data.amount }
         console.log('newGown')
         console.log(newGown)
@@ -64,11 +67,11 @@ export default function AddGown({ gowns, model, formOn }) {
     const onSizeChange = (e) => {
         setValue('size', e.value);
     };
-    // addGown(data)
+    
     return (
         <>
             <Dialog visible={true} onHide={() => formOn('')} className="add-gown-dialog">
-                <form onSubmit={handleSubmit((data) => console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhh"))} className="add-gown-form">
+                <form onSubmit={handleSubmit((data) => addGown(data))} className="add-gown-form">
                     <div className="field">
                         <label>Model: {model}</label>
                     </div>
@@ -92,9 +95,7 @@ export default function AddGown({ gowns, model, formOn }) {
                             <label htmlFor="amount">Amount</label>
                         </span>
                     </div>
-                    <div className="p-dialog-footer pb-0">
-                        <Button type="submit" label="Submit" className="p-button-success" />
-                    </div>
+                    <Button type="submit" label="Submit" className="p-button-success" />
 
                 </form>
             </Dialog>

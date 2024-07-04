@@ -15,7 +15,7 @@ function Home() {
     const { user, setUser } = useContext(UserContext);
     const { cart } = useContext(CartContext);
     const [cartAmount, setCartAmount] = useState(cart.length);
-    
+
     console.log('cart')
     console.log(cart)
 
@@ -38,7 +38,7 @@ function Home() {
                 <img height={80} src={logo} alt="logo" className="logo" />
                 <div className="home_navigate">
                     {/* <NavLink className="cart_link" to="./cart">{cart.length}<img height={'50px'} src={cartIcon} alt="cart icon" /></NavLink> */}
-                    {user && <span className="user-name">{user.username}</span>}
+                    {user && <span className="user-name">{user.username} {user.isManager ? 'manager' : ''}</span>}
                     {user ? (<Button label="Logout" className="logout-button" onClick={logout} />)
                         : (<NavLink to="./login" className="nav-button">Login</NavLink>)}
                     <NavLink className="cart_link" to="./cart">

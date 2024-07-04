@@ -7,19 +7,43 @@ function getModelQuery(queryparams) {
         const date = new Date(queryparams.date)
         const firstDate = new Date(date);
         const secondDate = new Date(date);
-        // firstDate.setDate(date.getDate() - 2);  
-        // secondDate.setDate(date.getDate() + 2);
+        
+        // const addBusinessDays = (date, days) => {
+        //     for (let i = 0; i < days; i++) {
+        //         date.setDate(date.getDate() + 1);
+        //         // Skip Fridays (day 5) and Saturdays (day 6)
+        //         if (date.getDay() === 5) {
+        //             date.setDate(date.getDate() + 2); // Skip to Monday
+        //         } else if (date.getDay() === 6) {
+        //             date.setDate(date.getDate() + 1); // Skip to Sunday
+        //         }
+        //     }
+        // };
+
         const addBusinessDays = (date, days) => {
+            const isNegative = days < 0;
+            days = Math.abs(days);
+        
             for (let i = 0; i < days; i++) {
-                date.setDate(date.getDate() + 1);
-                // Skip Fridays (day 5) and Saturdays (day 6)
-                if (date.getDay() === 5) {
-                    date.setDate(date.getDate() + 2); // Skip to Monday
-                } else if (date.getDay() === 6) {
-                    date.setDate(date.getDate() + 1); // Skip to Sunday
+                if (isNegative) {
+                    date.setDate(date.getDate() - 1);
+                    if (date.getDay() === 5) {
+                        date.setDate(date.getDate() - 1);
+                    } else if (date.getDay() === 6) {
+                        date.setDate(date.getDate() - 2);
+                    }
+                } else {
+                    date.setDate(date.getDate() + 1);
+                    if (date.getDay() === 5) {
+                        date.setDate(date.getDate() + 2);
+                    } else if (date.getDay() === 6) {
+                        date.setDate(date.getDate() + 1);
+                    }
                 }
             }
         };
+        
+        
         addBusinessDays(firstDate, -2);
         addBusinessDays(secondDate, 2);
         const formatDate = (date) => {

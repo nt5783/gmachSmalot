@@ -12,7 +12,11 @@ export class SignupController {
                     //  return res.status(409).json(resultItems);
                     throw new Error({ statusCode: 409 })
                 }
-                return res.json(resultItems);
+                const token = jwt.sign(
+                    { userId: resultItems[0].userId, admin: resultItems[0].isManager },
+                    process.env.RANDOM_TOKEN_SECRET,
+                    { expiresIn: '20h' })
+                return res.json({ token, data: resultItems[0] })
             }
         }
         catch (ex) {

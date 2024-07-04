@@ -24,12 +24,12 @@ function Gowns() {
   const [selectedGown, setSelectedGown] = useState(null);
   const { state } = useLocation();
   const model = state.model;
-  const eventDate = state.eventDate;
   const [message, setMessage] = useState('');
   const [visible, setVisible] = useState(false);
   const [showForm, setShowForm] = useState('');
   const [amountToOrder, setAmountToOrder] = useState(1);
-  
+  const eventDate = date ? new Date(date) : null;
+
   // const newDate = date? new Date(date): null;
   // const [ eventDate, setEventDate] = useState(newDate);
 
@@ -88,9 +88,12 @@ function Gowns() {
     setSelectedGown(null);
   }
 
+  //כשנבחרה מידה שיראה את המידה הבחורה
   return (
     <>
-      {isManager && (
+      {console.log("gowns")}
+      {console.log(gowns)}
+      {user && user.isManager === 1 && (
         <Button label="Add New Gown" icon="pi pi-plus" onClick={() => setShowForm((prev) => (prev === 'add' ? '' : 'add'))} />
       )}
       {showForm === 'add' && <AddGown gowns={gowns} model={model.model} formOn={setShowForm} />}
@@ -115,9 +118,12 @@ function Gowns() {
           )}
           {selectedGown !== null && (
             <div>
+              <span>Size: {gowns[selectedGown].size}</span>
+              <br />
               <span>Available amount: {gowns[selectedGown].available}</span>
               <br />
-              {eventDate == null && <span className="warning">you are in display mode. you have to pick a date <a className="no-background" href="../eventCalendar">pick a date here</a></span>}
+              <br />
+              {eventDate == null && <div><span className="warning">you are in display mode. you have to pick a date <a className="no-background" href="../eventCalendar">pick a date here</a></span></div>}
               <br />
               <label htmlFor="amount">amount:</label>
               <input
@@ -139,9 +145,9 @@ function Gowns() {
                 label="Order now"
                 icon="pi pi-shopping-bag"
                 disabled={eventDate == null}
-                onClick={() => navigate('/order', { state: { amount: amountToOrder, gownId: gowns[selectedGown].gownId } })}
+                onClick={() => { amountToOrder > 0 && navigate('/order', { state: { amount: amountToOrder, gown: gowns[selectedGown] } }) }}
               />
-              {isManager && (
+              {user && user.isManager === 1 && (
                 <Button
                   label="Update Gown"
                   icon="pi pi-refresh"
@@ -213,7 +219,7 @@ export default Gowns;
 // //   }, [])
 
 // //   function gownSelected(i) {
-// //     setSelectedGown((prev) => (prev === i ? i : i)); 
+// //     setSelectedGown((prev) => (prev === i ? i : i));
 // //   }
 
 // //   function AddGownToCart(gown) {

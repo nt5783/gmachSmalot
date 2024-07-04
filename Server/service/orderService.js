@@ -18,6 +18,12 @@ export class OrderService {
     }
 
     async addOrder(newOrder) {
+        const formatDate = (date) => {
+            return date.toISOString().slice(0, 10);
+        };
+        const date=new Date(newOrder.eventDate)
+        newOrder.eventDate = formatDate(date)
+        console.log(newOrder)
         const queryOrder = addOrderQuery();
         const result = await executeQuery(queryOrder, Object.values(newOrder));
         return result;
