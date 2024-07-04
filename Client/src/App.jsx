@@ -21,10 +21,10 @@ export const DateContext = createContext()
 
 function App() {
   // const [isLoading, setIsLoading] = useState(true)
-  const [isManager, setIsManager] = useState(false)
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
+  const [isManager, setIsManager] = useState(user && user.isManager ? true : false)
   const [date, setDate] = useState(user && localStorage.getItem(`date${user.username}`) ? JSON.parse(localStorage.getItem(`date${user.username}`)) : JSON.parse(localStorage.getItem(`date`)))
-  const [cart, setCart] = useState(user && localStorage.getItem(`cart${user.username}`) ? JSON.parse(localStorage.getItem(`cart${user.username}`)) :{ length: 0, items: [] })
+  const [cart, setCart] = useState(user && localStorage.getItem(`cart${user.username}`) ? JSON.parse(localStorage.getItem(`cart${user.username}`)) : { length: 0, items: [] })
   const [favorites, setFavorites] = useState(!user ? [] :
     JSON.parse(localStorage.getItem(`favorites${user.username}`)) ? JSON.parse(localStorage.getItem(`favorites${user.username}`)) :
       [])
@@ -33,6 +33,8 @@ function App() {
 
   console.log('date')
   console.log(date)
+  console.log('isManager')
+  console.log(isManager)
 
 
   return (

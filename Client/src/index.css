@@ -342,7 +342,17 @@ body {
 
 
 
+/* models */
 
+.models-header{
+  display: flex;
+  justify-content: space-between;
+}
+
+/* .p-panel-header{
+  display: flex;
+  justify-content: space-between;
+} */
 
 .models-page {
   padding: 20px;
