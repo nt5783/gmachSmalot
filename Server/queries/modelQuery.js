@@ -1,5 +1,5 @@
 
-function getModelQuery(queryparams) {
+function getModelsQuery(queryparams) {
     console.log(queryparams)
     let query;
     if (queryparams.hasOwnProperty('date')) {
@@ -102,5 +102,5 @@ function updateModelQuery(keys) {
 }
 
 export {
-    getModelQuery, getModelByIdQuery, addModelQuery, deleteModelQuery, updateModelQuery
+    getModelsQuery, getModelByIdQuery, addModelQuery, deleteModelQuery, updateModelQuery
 }

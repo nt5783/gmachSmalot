@@ -46,15 +46,16 @@ function Gowns() {
     return () => clearTimeout(timer);
   }, [message]);
 
+  async function getGowns() {
+    const res = eventDate
+      ? fetchNoParamsfunc(`gowns?model=${model.model}&date=${eventDate}`, 'GET')
+      : fetchNoParamsfunc(`gowns?model=${model.model}`, 'GET');
+    const data = await res;
+    if (data.length > 0) setGowns(data);
+  }
+
   useEffect(() => {
-    async function getData() {
-      const res = eventDate
-        ? fetchNoParamsfunc(`gowns?model=${model.model}&date=${eventDate}`, 'GET')
-        : fetchNoParamsfunc(`gowns?model=${model.model}`, 'GET');
-      const data = await res;
-      if (data.length > 0) setGowns(data);
-    }
-    getData();
+    getGowns();
   }, []);
 
   function gownSelected(i) {
@@ -96,7 +97,7 @@ function Gowns() {
       {user && user.isManager === 1 && (
         <Button label="Add New Gown" icon="pi pi-plus" onClick={() => setShowForm((prev) => (prev === 'add' ? '' : 'add'))} />
       )}
-      {showForm === 'add' && <AddGown gowns={gowns} model={model.model} formOn={setShowForm} />}
+      {showForm === 'add' && <AddGown gowns={gowns} model={model.model} formOn={setShowForm} getGowns={getGowns} />}
       {visible && <Messages severity="success" text={message} />}
 
       <div className="gown-container">

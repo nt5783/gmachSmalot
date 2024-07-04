@@ -1,12 +1,12 @@
 
 import { executeQuery } from './db.js';
 import 'dotenv/config'
-import { getModelQuery, getModelByIdQuery, addModelQuery, deleteModelQuery, updateModelQuery } from '../queries/modelQuery.js'
+import { getModelsQuery, getModelByIdQuery, addModelQuery, deleteModelQuery, updateModelQuery } from '../queries/modelQuery.js'
 
 export class ModelService {
 
-    async getModel(queryparams) {
-        const queryModel = getModelQuery(queryparams);
+    async getModels(queryparams) {
+        const queryModel = getModelsQuery(queryparams);
         const result = await executeQuery(queryModel);
         for (let i = 0; i < result.length; i++) {
             if (!result[i].image)

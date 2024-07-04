@@ -7,7 +7,7 @@ const modelRouter = express.Router();
 const modelcontroller = new ModelController()
 
 modelRouter.get("/:id", modelcontroller.getModelById)
-modelRouter.get("/", modelcontroller.getModel)
+modelRouter.get("/", modelcontroller.getModels)
 modelRouter.post("/", authVerifyToken, modelcontroller.addModel)
 modelRouter.delete("/:id", authVerifyToken, modelcontroller.deleteModel)
 modelRouter.patch("/:id", authVerifyToken, modelcontroller.updateModel)

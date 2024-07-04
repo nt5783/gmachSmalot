@@ -10,7 +10,7 @@ import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 
-export default function AddGown({ gowns, model, formOn }) {
+export default function AddGown({ gowns, model, formOn,getGowns }) {
     const { register, watch, handleSubmit, setValue } = useForm();
     const [additional, setAdditional] = useState('');
     const [sizes, setSizes] = useState([]);
@@ -43,7 +43,7 @@ export default function AddGown({ gowns, model, formOn }) {
         setAdditional('');
     }
 
-    function addGown(data) {
+    async function addGown(data) {
         console.log('data po po')
         console.log(data)
         if (gowns.find((gown) => gown.sizeId == data.size))
@@ -58,7 +58,8 @@ export default function AddGown({ gowns, model, formOn }) {
         // setMessage("adding gown model" + data.model + " ,length: " + data.length + " ,in size " + data.size)
         formOn('')
         try {
-            fetchfunc('gowns', 'POST', newGown)
+            await fetchfunc('gowns', 'POST', newGown)
+            await getGowns();
         } catch (error) {
             alert('Error adding gown: ', error)
         }
@@ -67,7 +68,7 @@ export default function AddGown({ gowns, model, formOn }) {
     const onSizeChange = (e) => {
         setValue('size', e.value);
     };
-    
+
     return (
         <>
             <Dialog visible={true} onHide={() => formOn('')} className="add-gown-dialog">

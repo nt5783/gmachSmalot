@@ -45,7 +45,7 @@ const Order = () => {
         <PayPalScriptProvider options={{ "client-id": "ATjqmx7s7BZKVhYLfEngKieXUDvP8D7zQzw8Wz7OrDRWi8lgaKLNh3LRRyIgDu8mYH4KtROFhK5YxWMv" }}>
             <div className="order-container">
                 <h2>Gown Order</h2>
-                <h3>Model: {gown.model} - Size: {gown.size} - Amount: {amount}</h3>
+                <h3>Model: {gown.model} <br /> Size: {gown.size} <br /> Amount: {amount}</h3>
                 <p>Price: {100 * state.amount} ILS</p>
 
                 <div className="agreement-checkbox">
