@@ -33,22 +33,17 @@ app.use("/img", express.static(__dirname + '/img'));
 app.use(logErrors);
 
 
-// app.use(bodyParser.json());
-
-// הגדרת multer להעלאת קבצים
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'img'); // שמירת הקבצים בתיקיית img
+        cb(null, 'img');
     },
     filename: (req, file, cb) => {
         cb(null, file.originalname);
     },
 });
 
-
 const upload = multer({ storage });
 
-// טיפול בבקשת העלאה
 app.post('/upload', upload.single('file'), (req, res) => {
     res.status(200).json({ message: 'File uploaded successfully', file: req.file });
 });

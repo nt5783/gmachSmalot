@@ -1,15 +1,17 @@
 import { SizeService } from '../service/sizeService.js'
-            const sizeService = new SizeService();
+const sizeService = new SizeService();
 
 export class SizeController {
     async getSizes(req, res, next) {
         try {
             const resultItems = await sizeService.getSizes(req.query);
+            if (resultItems.length == 0)
+                throw new Error({ statusCode: 404 })
             return res.json(resultItems);
         }
         catch (ex) {
             const err = {}
-            err.statusCode = 500;
+            err.statusCode = ex.statusCode ?? 500;
             err.message = ex;
             next(err)
         }
@@ -18,11 +20,13 @@ export class SizeController {
     async getSizeById(req, res, next) {
         try {
             const resultItem = await sizeService.getSizeById(req.params.id);
+            if (resultItem.length == 0)
+                throw new Error({ statusCode: 404 })
             res.json(resultItem);
         }
         catch (ex) {
             const err = {}
-            err.statusCode = 500;
+            err.statusCode = ex.statusCode ?? 500;
             err.message = ex;
             next(err)
         }
@@ -36,7 +40,7 @@ export class SizeController {
         }
         catch (ex) {
             const err = {}
-            err.statusCode = 500;
+            err.statusCode = ex.statusCode ?? 500;
             err.message = ex;
             next(err)
         }
@@ -49,7 +53,7 @@ export class SizeController {
         }
         catch (ex) {
             const err = {}
-            err.statusCode = 500;
+            err.statusCode = ex.statusCode ?? 500;
             err.message = ex;
             next(err)
         }
@@ -64,7 +68,8 @@ export class SizeController {
         }
         catch (ex) {
             const err = {}
-            err.statusCode = ex == "this data cannot be updated" ? 409 : 500;
+            err.statusCode = ex.statusCode ?? 500;
+            // err.statusCode = ex == "this data cannot be updated" ? 409 : 500;
             err.message = ex;
             next(err)
         }

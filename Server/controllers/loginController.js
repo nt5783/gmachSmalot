@@ -19,7 +19,7 @@ export class LoginController {
         }
         catch (ex) {
             const err = {}
-            err.statusCode = 500
+            err.statusCode = ex.statusCode ?? 500;
             err.message = ex
             next(err)
         }

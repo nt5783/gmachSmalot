@@ -5,11 +5,13 @@ export class ModelController {
     async getModels(req, res, next) {
         try {
             const resultItems = await modelService.getModels(req.query);
+            if (resultItems.length == 0)
+                throw new Error({ statusCode: 404 })
             return res.json(resultItems);
         }
         catch (ex) {
             const err = {}
-            err.statusCode = 500;
+            err.statusCode = ex.statusCode ?? 500;
             err.message = ex;
             next(err)
         }
@@ -18,11 +20,13 @@ export class ModelController {
     async getModelById(req, res, next) {
         try {
             const resultItem = await modelService.getModelById(req.params.id);
+            if (resultItem.length == 0)
+                throw new Error({ statusCode: 404 })
             res.json(resultItem);
         }
         catch (ex) {
             const err = {}
-            err.statusCode = 500;
+            err.statusCode = ex.statusCode ?? 500;
             err.message = ex;
             next(err)
         }
@@ -35,7 +39,7 @@ export class ModelController {
         }
         catch (ex) {
             const err = {}
-            err.statusCode = 500;
+            err.statusCode = ex.statusCode ?? 500;
             err.message = ex;
             next(err)
         }
@@ -48,7 +52,7 @@ export class ModelController {
         }
         catch (ex) {
             const err = {}
-            err.statusCode = 500;
+            err.statusCode = ex.statusCode ?? 500;
             err.message = ex;
             next(err)
         }
@@ -63,7 +67,8 @@ export class ModelController {
         }
         catch (ex) {
             const err = {}
-            err.statusCode = ex == "this data cannot be updated" ? 409 : 500;
+            // err.statusCode = ex == "this data cannot be updated" ? 409 : 500;
+            err.statusCode = ex.statusCode ?? 500;
             err.message = ex;
             next(err)
         }
