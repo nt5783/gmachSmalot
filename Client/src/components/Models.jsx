@@ -25,14 +25,14 @@ function Models() {
     const newDate = date ? new Date(date) : null;
     const [eventDate, setEventDate] = useState(newDate);
 
-    async function getData() {
+    async function getModels() {
         const res = date ? fetchNoParamsfunc(`models?date=${eventDate}`, 'GET') : fetchNoParamsfunc(`models`, 'GET');
         const data = await res;
         if (data.length > 0) setModels(data);
     }
 
     useEffect(() => {
-        getData();
+        getModels();
     }, [date]);
 
     function handleClearDate() {
@@ -57,7 +57,7 @@ function Models() {
     const itemTemplate = (model) => {
         return (
             // onMouseOver={}
-            <Card className='model_item' onClick={() => navigate(`./${model.model}`, { state: { model: model, eventDate: eventDate } })}>
+            <Card className='model_item' onClick={() => navigate(`./${model.model}`, { state: { model: model} })}>
                 {user && user.isManager === 1 && <img onClick={(event) => { event.stopPropagation(); deleteModel(model.model) }} src={trash} />}
                 <h3>{model.model}</h3>
                 <img height={400} src={model.image} alt={model.model} />
@@ -77,7 +77,9 @@ function Models() {
 
     return (
         <div className="models-page">
-            {addModelForm && <AddModel formOn={setAddModelForm} />}
+            {console.log("models")}
+            {console.log(models)}
+            {addModelForm && <AddModel formOn={setAddModelForm} getModels={getModels} />}
             <Panel header={modelsHeader}
             className="models-panel">
                 {date != null ? (

@@ -61,9 +61,8 @@ function Login() {
                 </div> */}
                 <div className="field">
                     <span className="p-float-label">
-                        <InputText id="password" type='password' {...register('password', { required: true })}/>                        
+                        <InputText id="password" type='password' {...register('password', { required: true })}/>
                         <label htmlFor='password' >password</label>
-                        {/* <input name='password' type='password' required {...register('password')} toggleMask></input> */}
                     </span>
                 </div>
 

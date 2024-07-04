@@ -11,6 +11,7 @@ const Order = () => {
     console.log("state")
     console.log(state)
     console.log(date)
+    const {amount,gown}=state
 
     const [isAgreementChecked, setIsAgreementChecked] = useState(false);
     // amount: amountToOrder, gownId: gowns[selectedGown].gownId, eventDate: eventDate
@@ -21,12 +22,16 @@ const Order = () => {
         setIsAgreementChecked(e.target.checked);
     };
 
+
     async function createGownOrder() {
-        console.log("state")
+        console.log("state /\/")
         console.log(state)
-        // try {
-        //     fetchfunc('orders','POST',{eventDate:eventDate,userId:user.userId,gownId:gown.gownId})
-        // }catch{}
+        console.log({eventDate:date,userId:user.userId,gownId:gown.gownId})
+        try {
+            for (let i = 0; i < amount; i++) {
+                await fetchfunc('orders','POST',{eventDate:date,userId:user.userId,gownId:gown.gownId})
+            }
+        }catch{}
     }
                 {/* {console.log("eventDate")} */}
         {/* {console.log(eventDate)} */}
@@ -40,6 +45,7 @@ const Order = () => {
         <PayPalScriptProvider options={{ "client-id": "ATjqmx7s7BZKVhYLfEngKieXUDvP8D7zQzw8Wz7OrDRWi8lgaKLNh3LRRyIgDu8mYH4KtROFhK5YxWMv" }}>
             <div className="order-container">
                 <h2>Gown Order</h2>
+                <h3>Model: {gown.model} <br /> Size: {gown.size} <br /> Amount: {amount}</h3>
                 <p>Price: {100 * state.amount} ILS</p>
 
                 <div className="agreement-checkbox">
@@ -50,7 +56,7 @@ const Order = () => {
 
                 {isAgreementChecked ? (
                     <PayPalButtons
-                        onClick={createGownOrder}
+                        // onClick={createGownOrder}
                         createOrder={(data, actions) => {
                             return actions.order.create({
                                 purchase_units: [{ amount: { currency_code: 'ILS', value: '100.00' } }]
@@ -71,6 +77,7 @@ const Order = () => {
                     <p>Please agree to the terms and conditions to proceed with the payment.</p>
                 )}
             </div>
+            <button onClick={createGownOrder}>order</button>
         </PayPalScriptProvider>
     );
 };

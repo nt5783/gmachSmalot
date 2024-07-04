@@ -16,7 +16,7 @@ import multer from 'multer';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
+console.log("newOrder")
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -28,7 +28,7 @@ app.use('/colors', colorRouter)
 app.use('/seasons', seasonRouter)
 app.use('/sizes', sizeRouter)
 app.use('/lengths', lengthRouter)
-app.use('/order',orderRouter)
+app.use('/orders',orderRouter)
 app.use("/img", express.static(__dirname + '/img'));
 app.use(logErrors);
 

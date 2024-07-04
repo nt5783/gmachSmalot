@@ -18,6 +18,7 @@ function getOrderByIdQuery() {
 }
 
 function addOrderQuery() {
+    console.log('hhhhhhhhh')
     const query = `INSERT INTO orders VALUES (null ,? ,? ,?)`;
     return query
 }

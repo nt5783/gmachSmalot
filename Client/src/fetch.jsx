@@ -37,9 +37,10 @@ async function fetchfunc(url, method, body, thenfunc) {
         const json = await response.json()
         const data = await json
         const user = typeof data != 'undefined' ? data : null
-        if (!data) {
-            throw "data does'nt exist!"
-        }
+        // לא תמיד מקבל דטה
+        // if (!data) {
+        //     throw "data does'nt exist!"
+        // }
         return { status: response.status, data: user }
     }
     catch (e) {

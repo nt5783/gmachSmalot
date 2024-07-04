@@ -2,9 +2,9 @@ import { ModelService } from '../service/modelService.js'
 const modelService = new ModelService();
 export class ModelController {
 
-    async getModel(req, res, next) {
+    async getModels(req, res, next) {
         try {
-            const resultItems = await modelService.getModel(req.query);
+            const resultItems = await modelService.getModels(req.query);
             return res.json(resultItems);
         }
         catch (ex) {
