@@ -42,10 +42,10 @@ gowns			לפי תאריך
 
 we add sizeId in gowns what about models?
 
-#ffcc99
-#e699ff
-#99ffff
-#ffffff
+#d4bfcc
+#fdcc9d
+#e1ddd5
+
 
 
 
