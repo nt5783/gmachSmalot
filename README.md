@@ -1,7 +1,7 @@
 # gmachSmalot
 end to end project - gowns gemach
 
-
+on login - set cart and date!! (for cart items in header)
 
 להפוך put ל patch
 להחליט שכל הגט יהיו ברבים עם S
