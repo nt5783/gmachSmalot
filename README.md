@@ -148,6 +148,39 @@ No available options אם בחרת תאריך ואתה לא משתמש
 
 
 
+
+
+
+
+
+
+
+
+controllers/userController.js:
+
+השכבה שבה נמצאים הבקרות. אחראי על קבלת בקשות HTTP והעברתן לשירותים המתאימים. יכול לזרוק שגיאות אם יש בעיה בקבלת או עיבוד הנתונים.
+queries/userQuery.js:
+
+מכיל את השאילתות למסד הנתונים. יכול לזרוק שגיאות אם יש בעיה בגישה למסד הנתונים או בשאילתות.
+services/userService.js:
+
+מכיל את הלוגיקה העסקית של היישום. יכול לזרוק שגיאות אם יש בעיה בביצוע הלוגיקה העסקית.
+routes/userRoutes.js:
+
+מכיל את הגדרות הנתיבים ומפנה את הבקשות לבקרות המתאימות. בדרך כלל לא ייזרקו ממנו שגיאות, אך הוא יכול להעביר שגיאות שקיבל מהבקרות.
+app.js:
+
+קובץ ההגדרות הראשי של האפליקציה, שבו מוגדרים כל הנתיבים והמאגדים. יכול לזרוק שגיאות כלליות הקשורות לאתחול האפליקציה, אך בדרך כלל הוא מכיל טיפול שגיאות גלובלי שמתמודד עם שגיאות שנזרקות במהלך הרצת האפליקציה.
+
+
+
+
+
+
+
+
+
+
 שאילתות
 SELECT model,womenImage,girlsImage,color,season FROM models NATURAL JOIN colors NATURAL JOIN seasons WHERE model = 610;
 SELECT gownId,model,amount,size,length FROM gowns NATURAL JOIN sizes NATURAL JOIN lengths WHERE gownId = 316
