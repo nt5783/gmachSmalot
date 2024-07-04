@@ -340,7 +340,9 @@ body {
 
 
 
-
+button{
+  margin: 5px;
+}
 
 /* models */
 
@@ -378,13 +380,14 @@ body {
 
 .model_item {
   cursor: pointer;
-  background-color: #ece5ff;
+  background-color: #d4bfcc;
   border: 1px solid #d4bfcc;
   margin: 10px;
   padding: 20px;
   border-radius: 5px;
   text-align: center;
   transition: transform 0.2s;
+  width: 450px;
 }
 
 .model_item:hover {
@@ -401,7 +404,7 @@ body {
 
 
 
-
+/* gowns */
 
 .gown-container {
   display: flex;
@@ -454,7 +457,7 @@ body {
 
 
 
-
+/* calendar */
 .date-message {
   background-color: #e1ddd5;
   color: #d4bfcc;
@@ -871,7 +874,7 @@ body {
 }
 
 h2, h4 {
-  color: #007bff;
+  color: #ac9aa5;
 }
 
 h4 {
