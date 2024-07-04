@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { loginfetchfunc } from '../fetch';
@@ -19,6 +19,7 @@ function Login() {
     const { state } = useLocation();
     const model = state ? state.model.model : null;
     const message = state ? state.message : null;
+    const [value, setValue] = useState('');
 
     async function loginUser(data) {
         let res = loginfetchfunc('login', 'POST', data);
@@ -45,12 +46,27 @@ function Login() {
                         <label htmlFor="username">Username</label>
                     </span>
                 </div>
-                <div className="field">
+                {/* feedback={false} */}
+                {/* <div className="field">
                     <span className="p-float-label">
-                        <Password id="password" {...register('password', { required: true })} toggleMask />
+                        <Password id="password" {...register('password', { required: true })}  toggleMask />
                         <label htmlFor="password">Password</label>
                     </span>
+                </div> */}
+                {/* <div className="field">
+                    <span className="p-float-label">
+                        <Password id="password" value={value} onChange={(e) => setValue(e.target.value)} required  toggleMask />
+                        <label htmlFor="password">Password</label>
+                    </span>
+                </div> */}
+                <div className="field">
+                    <span className="p-float-label">
+                        <InputText id="password" type='password' {...register('password', { required: true })}/>                        
+                        <label htmlFor='password' >password</label>
+                        {/* <input name='password' type='password' required {...register('password')} toggleMask></input> */}
+                    </span>
                 </div>
+
                 <Button type="submit" label="Submit" className="p-button-success" />
             </form>
             <Button label="New user? Sign up" className="navigate-link" onClick={() => navigate('../signup', { state: state })} />
