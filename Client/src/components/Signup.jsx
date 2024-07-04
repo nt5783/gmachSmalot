@@ -48,8 +48,11 @@ const Signup = () => {
                 </div>
                 <div className="field">
                     <span className="p-float-label">
-                        <Password id="password" {...register("password", { required: true })} toggleMask />
-                        <label htmlFor="password">Password</label>
+                        {/* <Password id="password" {...register("password", { required: true })} toggleMask />
+                        <label htmlFor="password">Password</label> */}
+                        {/* <input type="password" {...register("password")} placeholder="Password" /><br /><br /> */}
+                        <InputText id="password" type='password' {...register('password', { required: true })}/>                        
+                        <label htmlFor='password' >password</label>
                     </span>
                 </div>
                 <div className="field">
