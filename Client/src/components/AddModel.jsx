@@ -44,7 +44,8 @@ export default function AddModel({ formOn, setMessage }) {
         formOn(false);
         try {
             fetchfunc('models', 'POST', formData);
-        } catch (e) { alert(e) }
+        } catch (error) { alert('Error adding model: ', error) }
+        // } catch (e) { alert(e) }
     }
 
     async function addLength(event) {
@@ -54,7 +55,7 @@ export default function AddModel({ formOn, setMessage }) {
             try {
                 await fetchfunc('lengths', 'POST', { length: newLength });
                 await getData('lengths', setLengths);
-            } catch (error) { alert('Error adding length:', error) }
+            } catch (error) { alert('Error adding length: ', error) }
         }
         setAdditional('');
     }
@@ -66,7 +67,7 @@ export default function AddModel({ formOn, setMessage }) {
             try {
                 await fetchfunc('colors', 'POST', { color: newColor });
                 await getData('colors', setColors);
-            } catch (error) { alert('Error adding color:', error) }
+            } catch (error) { alert('Error adding color: ', error) }
         }
         setAdditional('');
     }
@@ -78,7 +79,7 @@ export default function AddModel({ formOn, setMessage }) {
             try {
                 await fetchfunc('seasons', 'POST', { season: newSeason });
                 await getData('seasons', setSeasons);
-            } catch (error) { alert('Error adding season:', error) }
+            } catch (error) { alert('Error adding season: ', error) }
         }
         setAdditional('');
     }
