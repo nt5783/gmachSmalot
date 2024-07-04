@@ -193,6 +193,7 @@ import Dropzone from 'react-dropzone-uploader';
 import { Dialog } from "primereact/dialog";
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
+import { InputNumber } from 'primereact/inputnumber';
 import { Dropdown } from 'primereact/dropdown';
 
 import 'primereact/resources/themes/saga-blue/theme.css';
@@ -289,7 +290,7 @@ export default function AddModel({ formOn, setMessage }) {
             <Dialog visible={true} onHide={() => formOn(false)}>
                 <form onSubmit={handleSubmit((data) => addModel(data))} className="add-model-form">
                     <label>Model:
-                        <InputText type="number" name="model" required {...register("model")} />
+                        <InputNumber name="model" required {...register("model")} />
                     </label>
                     <br />
 

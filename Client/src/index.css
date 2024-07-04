@@ -876,78 +876,71 @@ iframe {
 /* UpdateGown */
 
 
-.update-form {
+/* UpdateGown Component Styling */
+
+.update-gown-dialog {
+  width: 400px;
   padding: 20px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-top: 20px;
+  background-color: #e1ddd5;
+  color: #333;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.size-select {
-  margin-right: 10px;
+.update-form {
+  display: flex;
+  flex-direction: column;
 }
 
-.add-size-btn {
-  margin-top: 10px;
-  cursor: pointer;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
+.form-label {
+  margin-bottom: 10px;
+  font-weight: bold;
 }
 
-.add-size-btn:hover {
-  background-color: #0056b3;
-}
-
+.size-select,
 .amount-input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #d4bfcc;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.add-size-btn,
+.add-size-submit-btn {
+  padding: 8px 16px;
   margin-top: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #fdcc9d;
+  color: #333;
+  cursor: pointer;
 }
 
-.cancel-btn {
-  margin-top: 20px;
-  background-color: #6c757d;
-  color: #fff;
-  border: none;
-  padding: 8px 12px;
-  cursor: pointer;
-  border-radius: 5px;
-  margin-right: 10px;
-}
-
-.submit-btn {
-  margin-top: 20px;
-  background-color: #28a745;
-  color: #fff;
-  border: none;
-  padding: 8px 12px;
-  cursor: pointer;
-  border-radius: 5px;
+.add-size-btn:hover,
+.add-size-submit-btn:hover {
+  background-color: #ffb74d;
 }
 
 .add-size-dialog {
+  width: 300px;
   padding: 20px;
+  background-color: #e1ddd5;
+  color: #333;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .add-size-input {
-  margin-right: 10px;
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #d4bfcc;
+  border-radius: 4px;
+  background-color: #fff;
 }
 
-.add-size-submit-btn {
-  margin-top: 10px;
-  cursor: pointer;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-}
-
-.add-size-submit-btn:hover {
-  background-color: #0056b3;
-}
 
 
 

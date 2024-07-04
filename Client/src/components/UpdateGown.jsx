@@ -132,9 +132,9 @@ export default function UpdateGown({ gown, formOn }) {
     }
 
     return (
-        <Dialog visible={true} onHide={() => formOn('')}>
+        <Dialog visible={true} onHide={() => formOn('')} className="update-gown-dialog">
             <form onSubmit={handleSubmit((data) => updateGown(data))} className="update-form">
-                <label>Size:
+                <label className="form-label">Size:
                     <select name="size" defaultValue={gown.size} required {...register("size")} className="size-select">
                         {sizes.map((size, i) => (
                             <option key={i} value={size.size}>{size.size}</option>
@@ -145,19 +145,18 @@ export default function UpdateGown({ gown, formOn }) {
                     Add Size
                 </button>
                 <br />
-                <label>Amount:
+                <label className="form-label">Amount:
                     <input id="amount" type="number" min="1" name="amount" defaultValue={gown.amount} required {...register("amount")} className="amount-input" />
                 </label>
                 <br />
 
-                <input type="button" value="Cancel" onClick={() => formOn('')} className="cancel-btn" />
                 <input type="submit" value="Submit" className="submit-btn" />
             </form>
 
             {additional === 'sizes' && (
                 <Dialog visible={true} onHide={() => setAdditional('')} className="add-size-dialog">
                     <form onSubmit={addSize}>
-                        <label htmlFor="size">Size:</label>
+                        <label htmlFor="size" className="form-label">Size:</label>
                         <input name="size" type="text" required className="add-size-input" />
                         <button type="submit" className="add-size-submit-btn">Add</button>
                     </form>
@@ -166,3 +165,4 @@ export default function UpdateGown({ gown, formOn }) {
         </Dialog>
     );
 }
+
