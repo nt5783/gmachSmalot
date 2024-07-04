@@ -1,95 +1,4 @@
-// import React, { useContext, useEffect } from "react"
-// import { NavLink, Outlet, useNavigate } from "react-router-dom"
-// import { UserContext } from "../App"
-// import { CartContext } from "../App"
-// import cartIcon from '../icons/cart.png'
-// import logo from '../icons/gown logo png.png'
-
-
-// function Home() {
-//     const navigate = useNavigate();
-//     const { user, setUser } = useContext(UserContext)
-//     const { cart } = useContext(CartContext)
-
-//     useEffect(() => {
-//         if (!user) return
-//         localStorage.setItem(`cart${user.username}`, JSON.stringify(cart))
-//     }, [cart])
-
-//     function logout() {
-//         if (!user) return
-//         localStorage.removeItem('user')
-//         setUser(null)
-//         navigate('./')
-//     }
-
-//     return (<>
-//         <img height={80} src={logo} alt="" />
-//         <div className="home_navigate">
-//             {/* <a href="" title="smart cart icons"/> */}
-//             <NavLink className="cart_link" to="./cart">
-//                 {cart.length}<img height={'50px'} src={cartIcon} alt="cart icon" /></NavLink>
-//             {user && <span>{user.username}</span>}
-//             {user ? <button onClick={logout}>logout</button> :
-//                 <NavLink to="./login">
-//                     Login</NavLink>}
-//             <NavLink to="./manager">
-//                 Manager</NavLink>
-//         </div>
-//         <div className="home_navigate">
-//             <NavLink to="./about">
-//                 About</NavLink>
-//             <NavLink to="./models">
-//                 Models</NavLink>
-
-//             <NavLink to="./eventCalendar">
-//                 Event Calendar</NavLink>
-//         </div>
-//         {/* <h2>{user.user.username}</h2> */}
-//         <Outlet />
-//     </>)
-// }
-
-// export default Home
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { UserContext, CartContext } from "../App";
 import { Button } from 'primereact/button';
@@ -105,6 +14,10 @@ function Home() {
     const navigate = useNavigate();
     const { user, setUser } = useContext(UserContext);
     const { cart } = useContext(CartContext);
+    const [cartAmount, setCartAmount] = useState(cart.length);
+    
+    console.log('cart')
+    console.log(cart)
 
     useEffect(() => {
         if (!user) return;
@@ -114,6 +27,7 @@ function Home() {
     function logout() {
         if (!user) return;
         localStorage.removeItem('user');
+        setCartAmount(0);
         setUser(null);
         navigate('./');
     }
@@ -123,17 +37,17 @@ function Home() {
             <div className="header">
                 <img height={80} src={logo} alt="logo" className="logo" />
                 <div className="home_navigate">
-                    <NavLink className="cart_link" to="./cart">
-                        <Badge value={cart.length} className="cart-badge">
-                            <img height="50px" src={cartIcon} alt="cart icon" />
-                        </Badge>
-                    </NavLink>
+                    {/* <NavLink className="cart_link" to="./cart">{cart.length}<img height={'50px'} src={cartIcon} alt="cart icon" /></NavLink> */}
                     {user && <span className="user-name">{user.username}</span>}
-                    {user ? (
-                        <Button label="Logout" className="logout-button" onClick={logout} />
-                    ) : (
-                        <NavLink to="./login" className="nav-button">Login</NavLink>
-                    )}
+                    {user ? (<Button label="Logout" className="logout-button" onClick={logout} />)
+                        : (<NavLink to="./login" className="nav-button">Login</NavLink>)}
+                    <NavLink className="cart_link" to="./cart">
+                        {/* <Badge value={cart.length} className="cart-badge"></Badge> */}
+                        <img height="50px" src={cartIcon} alt="cart icon" />
+                        <span className="cart-amount">{cartAmount}</span>
+                    </NavLink>
+
+                    {/* ?למחוק */}
                     <NavLink to="./manager" className="nav-button">Manager</NavLink>
                 </div>
             </div>

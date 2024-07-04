@@ -196,10 +196,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
-
+//מומלץ לראות שהתוכן לא סותר את מציאות האתר
 function About() {
-    const navigate = useNavigate();
-
     return (
         <div className="about-container">
             <h2>GMAH Event Dresses Neve Ya'akov Jerusalem</h2>

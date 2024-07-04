@@ -342,10 +342,17 @@ body {
 
 
 
+/* models */
 
+.models-header{
+  display: flex;
+  justify-content: space-between;
+}
 
-
-
+/* .p-panel-header{
+  display: flex;
+  justify-content: space-between;
+} */
 
 .models-page {
   padding: 20px;
@@ -507,15 +514,22 @@ body {
 .cart_link {
   display: flex;
   align-items: center;
+  text-decoration: none;
 }
 
-.cart-badge {
+.cart-amount {
+  font-weight: bold;
+  color: #e1ddd5;
+  text-decoration: none;
+}
+
+/* .cart-badge {
   background-color: #fdcc9d;
   color: #fff;
   font-size: 1.2em;
   padding: 5px 10px;
   border-radius: 50%;
-}
+} */
 
 .user-name {
   font-weight: bold;

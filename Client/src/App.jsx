@@ -33,6 +33,8 @@ function App() {
 
   console.log('date')
   console.log(date)
+  console.log('cart')
+  console.log(cart)
 
 
   return (
