@@ -22,25 +22,25 @@ function Models() {
     const { date, setDate } = useContext(DateContext);
     const [models, setModels] = useState([]);
     const [addModelForm, setAddModelForm] = useState(false);
-    const { state } = useLocation();
-    let eventDate = new Date(date);
-    //? date.value : null;
+    const newDate = date? new Date(date): null;
+    const [ eventDate, setEventDate] = useState(newDate);
+
+    async function getData() {
+        const res = date ? fetchNoParamsfunc(`models?date=${eventDate}`, 'GET') : fetchNoParamsfunc(`models`, 'GET');
+        const data = await res;
+        if (data.length > 0) setModels(data);
+    }
 
     useEffect(() => {
-        console.log('date', date);
-        console.log('eventDate', eventDate);
-        async function getData() {
-            eventDate ? console.log(true) : console.log(false);
-            const res = eventDate ? fetchNoParamsfunc(`models?date=${eventDate}`, 'GET') : fetchNoParamsfunc(`models`, 'GET');
-            const data = await res;
-            if (data.length > 0) setModels(data);
-        }
         getData();
-    }, [state]);
+    }, [date]);
 
-    console.log('user', user);
-    console.log('models');
-    console.log( models);
+    function handleClearDate() {
+        setDate(null);
+        setEventDate(null)
+        localStorage.removeItem('date')
+        if (user) localStorage.removeItem(`date${user.username}`)
+    }
 
     async function deleteModel(model) {
         if (confirm('Are you sure you want to delete this model from the database?')) {
@@ -54,13 +54,14 @@ function Models() {
     const itemTemplate = (model) => {
         return (
             // onMouseOver={}
-            <Card className='model_item'  onClick={() => navigate(`./${model.model}`, { state: { model: model, eventDate: eventDate } })}>
+            <Card className='model_item' onClick={() => navigate(`./${model.model}`, { state: { model: model, eventDate: eventDate } })}>
                 {user && user.isManager === 1 && <img onClick={() => deleteModel(model.model)} src={trash} />}
                 <h3>{model.model}</h3>
                 <img height={400} src={model.image} alt={model.model} />
             </Card>
         );
     };
+
 
     return (
         <div className="models-page">
@@ -69,16 +70,15 @@ function Models() {
             )}
             {addModelForm && <AddModel formOn={setAddModelForm} />}
             <Panel header="Models" className="models-panel">
-                {eventDate != null ? (
+                {date != null ? (
                     <div className="event-info">
-                        <p>The models with gowns available for your event: {eventDate.getDate()}/{eventDate.getMonth() + 1}/{eventDate.getFullYear()}</p>
-                        <a className="no-background" href="./eventCalendar">Change date</a> or
-                        <a href="#" onClick={(event) => { event.preventDefault(); setDate(null); eventDate = null }}>clear date</a>
+                        <p>The models with gowns available for your event: <b>{eventDate.getDate()}/{eventDate.getMonth() + 1}/{eventDate.getFullYear()}. </b>
+                        <a className="no-background" href="./eventCalendar">Change date</a> or <a href="#" onClick={() => handleClearDate()}> clear date</a></p>
                     </div>
                 ) : (
                     <>
-                        <div className="warning">Pay attention that the gown may not be available for the date of your event.</div>
-                        <div className="warning">To view only models with gowns available for the date of your event <a className="no-background" href="./eventCalendar">pick a date here</a></div>
+                        <div className="warning">Pay attention that the gown may not be available for the date of your event.
+                        <br />To view only models with gowns available for the date of your event <a className="no-background" href="./eventCalendar">pick a date here</a></div>
                     </>
                 )}
                 {models.length > 0 && <div className="filter-by"></div>}
