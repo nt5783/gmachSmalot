@@ -19,10 +19,9 @@ async function loginfetchfunc(url, method, body, thenfunc) {
             }
             return { status: response.status, data: user }
         }
-
     }
     catch (e) {
-        return e
+        throw(e)
     }
 }
 
@@ -44,7 +43,7 @@ async function fetchfunc(url, method, body, thenfunc) {
         return { status: response.status, data: user }
     }
     catch (e) {
-        return e
+        throw(e)
     }
 }
 
@@ -62,7 +61,7 @@ async function fetchNoParamsfunc(url, method) {
         return data;
     }
     catch (e) {
-        return e
+        throw(e)
     }
 }
 

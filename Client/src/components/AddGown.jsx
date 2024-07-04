@@ -16,10 +16,15 @@ export default function AddGown({ gowns, model, formOn }) {
     const [sizes, setSizes] = useState([]);
 
     async function getData(table, setfunc) {
-        const res = fetchNoParamsfunc(table, 'GET');
-        const data = await res;
-        if (data.length > 0)
-            setfunc(data);
+        try {
+            const res = fetchNoParamsfunc(table, 'GET');
+            const data = await res;
+            if (data.length > 0)
+                setfunc(data);
+        } catch (error) {
+            alert('Error getting data: ', error)
+        }
+
     }
 
     useEffect(() => {
@@ -33,7 +38,7 @@ export default function AddGown({ gowns, model, formOn }) {
             try {
                 await fetchfunc('sizes', 'POST', { size: newSize });
                 await getData('sizes', setSizes);
-            } catch (error) { alert('Error adding size:', error); }
+            } catch (error) { alert('Error adding size: ', error); }
         }        //להוסיף בדיקה שעבד)
         setAdditional('');
     }
@@ -49,13 +54,17 @@ export default function AddGown({ gowns, model, formOn }) {
         console.log(newGown)
         // setMessage("adding gown model" + data.model + " ,length: " + data.length + " ,in size " + data.size)
         formOn('')
-        fetchfunc('gowns', 'POST', newGown)
+        try {
+            fetchfunc('gowns', 'POST', newGown)
+        } catch (error) {
+            alert('Error adding gown: ', error)
+        }
     }
 
     const onSizeChange = (e) => {
         setValue('size', e.value);
     };
-// addGown(data)
+    // addGown(data)
     return (
         <>
             <Dialog visible={true} onHide={() => formOn('')} className="add-gown-dialog">
@@ -84,9 +93,9 @@ export default function AddGown({ gowns, model, formOn }) {
                         </span>
                     </div>
                     <div className="p-dialog-footer pb-0">
-                <Button type="submit" label="Submit" className="p-button-success" />
-          </div>
-                  
+                        <Button type="submit" label="Submit" className="p-button-success" />
+                    </div>
+
                 </form>
             </Dialog>
             {additional === 'sizes' && (
