@@ -26,13 +26,15 @@ export class LengthService {
 
     async deleteLength(id) {
         const queryLength = deleteLengthQuery();
-        await executeQuery(queryLength, [id]);
+        const result = await executeQuery(queryLength, [id]);
+        return result;
     }
 
     async updateLength(updatedLength, id) {
         let data = Object.values(updatedLength);
         data.push(id)
         const queryLength = updateLengthQuery(Object.keys(updatedLength));
-        await executeQuery(queryLength, data);
+        const result = await executeQuery(queryLength, data);
+        return result;
     }
 }

@@ -84,9 +84,10 @@ function getModelByIdQuery() {
     return query
 }
 
-function addModelQuery() {
+function addModelQuery(keys) {
     // const query = `INSERT INTO models (${keys.map(key => key)}) VALUES (${values.map(value => `'${value}'`)})`;
     const query = `INSERT INTO models (model,colorId,seasonId,lengthId,image) VALUES (?,?,?,?,?)`;
+    // const query = `INSERT INTO models (${keys.map(key => key)}) VALUES (?,?,?,?,?)`;
     // const query = `INSERT INTO models VALUES (? ,? ,? ,? ,? , ?)`;
     return query
 }

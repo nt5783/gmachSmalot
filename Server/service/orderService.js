@@ -31,13 +31,15 @@ export class OrderService {
 
     async deleteOrder(id) {
         const queryOrder = deleteOrderQuery();
-        await executeQuery(queryOrder, [id]);
+        const result = await executeQuery(queryOrder, [id]);
+        return result;
     }
 
     async updateOrder(updatedOrder, id) {
         let data = Object.values(updatedOrder);
         data.push(id)
         const queryOrder = updateOrderQuery(Object.keys(updatedOrder));
-        await executeQuery(queryOrder, data);
+        const result = await executeQuery(queryOrder, data);
+        return result;
     }
 }

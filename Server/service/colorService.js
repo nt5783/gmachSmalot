@@ -25,13 +25,15 @@ export class ColorService {
 
     async deleteColor(id) {
         const queryColor = deleteColorQuery();
-        await executeQuery(queryColor, [id]);
+        const result = await executeQuery(queryColor, [id]);
+        return result;
     }
 
     async updateColor(updatedColor, id) {
         let data = Object.values(updatedColor);
         data.push(id)
         const queryColor = updateColorQuery(Object.keys(updatedColor));
-        await executeQuery(queryColor, data);
+        const result = await executeQuery(queryColor, data);
+        return result;
     }
 }

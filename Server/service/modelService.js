@@ -27,6 +27,8 @@ export class ModelService {
     }
 
     async addModel(newModel) {
+        console.log(newModel)
+        //שיהיה אפשר להכניס בכל סדר
         const queryModel = addModelQuery();
         const result = await executeQuery(queryModel, Object.values(newModel));
         return result;
@@ -34,14 +36,16 @@ export class ModelService {
 
     async deleteModel(id) {
         const queryModel = deleteModelQuery();
-        await executeQuery(queryModel, [id]);
+        const result = await executeQuery(queryModel, [id]);
+        return result;
     }
 
     async updateModel(updatedModel, id) {
         let data = Object.values(updatedModel);
         data.push(id)
         const queryModel = updateModelQuery(Object.keys(updatedModel), id);
-        await executeQuery(queryModel, data);
+        const result = await executeQuery(queryModel, data);
+        return result;
     }
 
 }

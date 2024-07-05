@@ -8,7 +8,7 @@ export class ModelController {
             if (resultItems.length == 0)
                 throw new Error({ statusCode: 404 })
             return res.json(resultItems);
-        }
+        }//מי זורק את EX?
         catch (ex) {
             const err = {}
             err.statusCode = ex.statusCode ?? 500;
@@ -34,6 +34,8 @@ export class ModelController {
 
     async addModel(req, res, next) {
         try {
+            if (!req.model || !req.color || !req.season || !req.length)
+                throw new Error({ statusCode: 400 })
             const resultItem = await modelService.addModel(req.body);
             res.json(resultItem.insertId);
         }
@@ -47,7 +49,10 @@ export class ModelController {
 
     async deleteModel(req, res, next) {
         try {
-            await modelService.deleteModel(req.params.id);
+            const result = await modelService.deleteModel(req.params.id);
+            console.log(result)
+            if (result.affectedRows === 0)
+                throw new Error({ statusCode: 404 })
             res.json(req.params.id);
         }
         catch (ex) {

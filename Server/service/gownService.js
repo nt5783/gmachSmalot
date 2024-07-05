@@ -42,13 +42,15 @@ export class GownService {
 
     async deleteGown(id) {
         const queryGown = deleteGownQuery();
-        await executeQuery(queryGown, [id]);
+        const result = await executeQuery(queryGown, [id]);
+        return result;
     }
 
     async updateGown(updatedGown, id) {
         let data = Object.values(updatedGown);
         data.push(id)
         const queryGown = updateGownQuery(Object.keys(updatedGown));
-        await executeQuery(queryGown, data);
+        const result = await executeQuery(queryGown, data);
+        return result;
     }
 }

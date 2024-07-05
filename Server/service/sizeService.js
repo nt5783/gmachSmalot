@@ -26,13 +26,15 @@ export class SizeService {
 
     async deleteSize(id) {
         const querySize = deleteSizeQuery();
-        await executeQuery(querySize, [id]);
+        const result =  await executeQuery(querySize, [id]);
+        return result;
     }
 
     async updateSize(updatedSize, id) {
         let data = Object.values(updatedSize);
         data.push(id)
         const querySize = updateSizeQuery(Object.keys(updatedSize));
-        await executeQuery(querySize, data);
+        const result = await executeQuery(querySize, data);
+        return result;
     }
 }

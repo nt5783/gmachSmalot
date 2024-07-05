@@ -26,13 +26,15 @@ export class SeasonService {
 
     async deleteSeason(id) {
         const querySeason = deleteSeasonQuery();
-        await executeQuery(querySeason, [id]);
+        const result = await executeQuery(querySeason, [id]);
+        return result;
     }
 
     async updateSeason(updatedSeason, id) {
         let data = Object.values(updatedSeason);
         data.push(id)
         const querySeason = updateSeasonQuery(Object.keys(updatedSeason));
-        await executeQuery(querySeason, data);
+        const result = await executeQuery(querySeason, data);
+        return result;
     }
 }
