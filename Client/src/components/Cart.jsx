@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { CartContext } from '../App';
-import { UserContext } from '../App';
+import { UserContext, CartContext, DateContext } from '../App';
 import { Button } from 'primereact/button';
 
 const Cart = () => {
@@ -10,6 +9,9 @@ const Cart = () => {
     const eventDate = state ? state.value : null;
     const { user } = useContext(UserContext);
     const { cart } = useContext(CartContext);
+    const { date } = useContext(DateContext);
+
+    console.log(cart.items)
 
     return (
         <div className="cart-container">
@@ -42,8 +44,8 @@ const Cart = () => {
             {cart.length > 0 && <Button
                 label="Order now"
                 icon="pi pi-shopping-bag"
-                disabled={eventDate == null}
-                onClick={() => navigate('/order', { state: { amount: amountToOrder, gownId: gowns[selectedGown].gownId } })}
+                disabled={date == null}
+                onClick={() => navigate('/order', { state: { gowns: cart.items} })}
             />}
         </div>
     );

@@ -19,9 +19,14 @@ function Home() {
     console.log('cart')
     console.log(cart)
 
+    let amount = 0
+
     useEffect(() => {
         if (!user) return;
         localStorage.setItem(`cart${user.username}`, JSON.stringify(cart));
+        cart.items.map((gown) => amount += gown.qty)
+        console.log(amount)
+        setCartAmount(amount)
     }, [cart]);
 
     function logout() {
@@ -45,6 +50,7 @@ function Home() {
                         {/* <Badge value={cart.length} className="cart-badge"></Badge> */}
                         <img height="50px" src={cartIcon} alt="cart icon" />
                         <span className="cart-amount">{cartAmount}</span>
+                        {/* <span className="cart-amount">{cart.length}</span> */}
                     </NavLink>
 
                     {/* ?למחוק */}
