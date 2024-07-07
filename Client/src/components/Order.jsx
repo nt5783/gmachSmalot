@@ -42,6 +42,7 @@ const Order = () => {
         console.log(state)
         console.log({ eventDate: date, userId: user.userId, gownId: gown.gownId })
         try {
+            //אמרו שאפשר לעשות בבקשה אחת
             for (let i = 0; i < gown.qty; i++) {
                 await fetchfunc('orders', 'POST', { eventDate: date, userId: user.userId, gownId: gown.gownId })
             }

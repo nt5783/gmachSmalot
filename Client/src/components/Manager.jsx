@@ -4,8 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import 'react-dropzone-uploader/dist/styles.css'
 import AddModel from './AddModel'
-import { fetchfunc } from '../fetch';
+import { fetchfunc, fetchNoParamsfunc } from '../fetch';
 import AddGown from './AddGown';
+import { Button } from 'primereact/button';
 // import { AppContext } from "../App";
 
 
@@ -55,6 +56,15 @@ function Manager() {
         }
     }
 
+    async function showOrders() {
+        const today=new Date()
+        const res = fetchNoParamsfunc('orders?', 'GET')
+        const orders= await res
+     if (orders.length > 0)
+    //   setGowns(data);
+    console.log(orders)
+    }
+
 
     return (<>
         <div>
@@ -64,6 +74,8 @@ function Manager() {
             {additional == "" && <button onClick={() => setAdditional("gown")}>Add New Gown</button>}
             {additional == "gown" && <AddGown formOn={setAdditional} setMessage={setMessage} />}
             {additional == "" && <button>search gown</button>}
+            <Button onClick={showOrders}>see all orders</Button>
+            {/* שיראה גם הזמנות ישנות */}
         </div>
     </>)
 }
