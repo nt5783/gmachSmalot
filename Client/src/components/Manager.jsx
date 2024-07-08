@@ -64,7 +64,7 @@ function Manager() {
         // const res = fetchNoParamsfunc(`orders?past`, 'GET')
         // const res = fetchNoParamsfunc(`orders?today`, 'GET')
         // const res = fetchNoParamsfunc(`orders?future&gownId=3`, 'GET')
-        const res = fetchNoParamsfunc(`orders`, 'GET')
+        // const res = fetchNoParamsfunc(`orders`, 'GET')
         const data = await res
         if (data.length > 0)
             // setOrders(data)

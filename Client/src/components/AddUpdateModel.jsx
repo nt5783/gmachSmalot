@@ -50,14 +50,14 @@ export default function AddModel({ formOn, getModels, models, action }) {
             await getModels();
         } catch (error) { alert('Error adding model: ', error); }
     }
-//לא עובד בגלל שכתוב צבע בלי אי די, להפוך שכן יהיה כתוב
+    //לא עובד בגלל שכתוב צבע בלי אי די, להפוך שכן יהיה כתוב
     async function updateModel(data) {
         let formData;
         if (!imageData) formData = { ...data, image: null };
         else formData = { ...data, image: imageData.name };
         let notNullFormData = Object.fromEntries(Object.entries(formData).filter(([_, v]) => v != null && v != undefined));
         console.log(notNullFormData);
-        const model=notNullFormData.model;
+        const model = notNullFormData.model;
         delete notNullFormData.model
         formOn(null);
         try {
@@ -114,7 +114,7 @@ export default function AddModel({ formOn, getModels, models, action }) {
 
     return (
         <>
-            <Dialog visible={true} onHide={() => formOn(false)}>
+            <Dialog visible={true} onHide={() => formOn(false)} header={action == 'add' ? 'Add New Model' : 'Update Model'}>
                 <form onSubmit={handleSubmit((data) => action == 'add' ? addModel(data) : updateModel(data))} className="add-model-form">
                     <label>Model:
                         {action == 'add' && <Controller
@@ -223,8 +223,8 @@ export default function AddModel({ formOn, getModels, models, action }) {
                     </label>
                     <br />
 
-            {action === 'add' &&<Button type="submit" label="Add Model" />}
-            {action === 'update' &&<Button type="submit" label="update Model" />}
+                    {action === 'add' && <Button type="submit" label="Add Model" />}
+                    {action === 'update' && <Button type="submit" label="update Model" />}
                 </form>
             </Dialog>
 

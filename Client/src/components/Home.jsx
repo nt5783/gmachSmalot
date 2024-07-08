@@ -48,8 +48,8 @@ function Home() {
                         : (<NavLink to="./login" className="nav-button">Login</NavLink>)}
                     <NavLink className="cart_link" to="./cart">
                         {/* <Badge value={cart.length} className="cart-badge"></Badge> */}
-                        <Button><img height="50px" src={cartIcon} alt="cart icon" />
-                        <span className="cart-amount">{cartAmount}</span></Button>
+                        <img height="50px" src={cartIcon} alt="cart icon" />
+                        <span className="cart-amount">{cartAmount}</span>
                         {/* <span className="cart-amount">{cart.length}</span> */}
                     </NavLink>
 
