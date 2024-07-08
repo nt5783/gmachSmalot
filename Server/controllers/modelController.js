@@ -34,7 +34,8 @@ export class ModelController {
 
     async addModel(req, res, next) {
         try {
-            if (!req.model || !req.color || !req.season || !req.length)
+
+            if (!req.body.model || !req.body.color || !req.body.season || !req.body.length)
                 throw new Error({ statusCode: 400 })
             const resultItem = await modelService.addModel(req.body);
             res.json(resultItem.insertId);

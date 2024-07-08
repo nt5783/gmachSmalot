@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import 'react-dropzone-uploader/dist/styles.css'
-import AddModel from './AddModel'
+import AddModel from './AddUpdateModel'
 import { fetchfunc, fetchNoParamsfunc } from '../fetch';
 import AddGown from './AddGown';
 import { Button } from 'primereact/button';
@@ -15,6 +15,7 @@ function Manager() {
     const [additional, setAdditional] = useState('')
     const [message, setMessage] = useState('')
     const [visible, setVisible] = useState(false)
+    const [orders, setOrders] = useState([])
     // const [, setAdditional] = useState('')
     // let img = new img[10]
 
@@ -55,14 +56,19 @@ function Manager() {
                 return
         }
     }
-
+//הגבלת גישה
+//לשקול להוסיף להזמנות כמות
     async function showOrders() {
-        const today=new Date()
-        const res = fetchNoParamsfunc('orders?', 'GET')
-        const orders= await res
-     if (orders.length > 0)
-    //   setGowns(data);
-    console.log(orders)
+        const today = new Date()
+        // const res = fetchNoParamsfunc(`orders?future`, 'GET')
+        // const res = fetchNoParamsfunc(`orders?past`, 'GET')
+        // const res = fetchNoParamsfunc(`orders?today`, 'GET')
+        // const res = fetchNoParamsfunc(`orders?future&gownId=3`, 'GET')
+        const res = fetchNoParamsfunc(`orders`, 'GET')
+        const data = await res
+        if (data.length > 0)
+            // setOrders(data)
+        console.log(data)
     }
 
 
@@ -76,6 +82,10 @@ function Manager() {
             {additional == "" && <button>search gown</button>}
             <Button onClick={showOrders}>see all orders</Button>
             {/* שיראה גם הזמנות ישנות */}
+            {/* {orders.map(order=>{
+                order.size
+                })}
+            <p>{orders}</p> */}
         </div>
     </>)
 }
