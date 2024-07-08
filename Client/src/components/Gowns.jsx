@@ -66,25 +66,25 @@ function Gowns() {
   function AddGownToCart(gown) {
     console.log('amountToOrder')
     console.log(amountToOrder)
-    const qty =  amountToOrder.valueOf();
+    const qty = amountToOrder.valueOf();
     console.log('qty')
-    console.log(qty)
+    console.log(Number(qty))
     const gownId = gown.gownId;
     if (!user) navigate('/login', { state: { model: model, message: 'you must log in to your account', eventDate: eventDate } });
     else
-      // setCart((prevCart) => {
-      //   const gownIndex = prevCart.items.findIndex((item) => item.id === gownId);
-      //   if (gownIndex == -1)
-      //     return {
-      //       length: prevCart.length  + 1 - 1+ amountToOrder,
-      //       items: [...prevCart.items, { gownId: gownId, model: gown.model, size: gown.size, img: model.image, qty: amountToOrder - 1 + 1 }],
-      //     };
-      //   const updatedItems = prevCart.items.map((item, index) => {
-      //     if (index === gownIndex) return { ...item, qty: item.qty + 1 - 1 + amountToOrder };
-      //     return item;
-      //   });
-      //   return { length: prevCart.length  + 1 - 1+ amountToOrder, items: updatedItems };
-      // });
+      setCart((prevCart) => {
+        const gownIndex = prevCart.items.findIndex((item) => item.gownId === gownId);
+        if (gownIndex == -1)
+          return {
+            qty: prevCart.qty + Number(amountToOrder),
+            items: [...prevCart.items, { gownId, model: gown.model, size: gown.size, img: model.image, qty: Number(amountToOrder) }],
+          };
+        const updatedItems = prevCart.items.map((item, index) => {
+          if (index === gownIndex) return { ...item, qty: item.qty + Number(amountToOrder) };
+          return item;
+        });
+        return { qty: prevCart.qty + Number(amountToOrder), items: updatedItems };
+      });
     setMessage(`gown model: ${gown.model}, size: ${gown.size} was added to cart successfully`);
     // const updatedGowns = gowns.map((gownItem) => {
     //   if (gownItem === gown) return { ...gownItem, available: gownItem.available - 1 };

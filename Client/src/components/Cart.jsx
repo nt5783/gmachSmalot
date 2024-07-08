@@ -15,7 +15,7 @@ const Cart = () => {
 
     return (
         <div className="cart-container">
-            {user && cart.length > 0 && (
+            {user && cart.qty > 0 && (
                 <>
                     <h2>Your Cart</h2>
                     <div className="cart-items">
@@ -41,9 +41,9 @@ const Cart = () => {
             {!user && (
                 <h3><a className='login-link' href='./login'>Log in</a> so you can manage your cart</h3>
             )}
-            {cart.length > 0 && <Button
-                label="Order now"
-                icon="pi pi-shopping-bag"
+            {cart.qty > 0 && <Button
+                label="Purchase now"
+                icon="pi pi-credit-card"
                 disabled={date == null}
                 onClick={() => navigate('/order', { state: { gowns: cart.items} })}
             />}

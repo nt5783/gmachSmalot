@@ -24,7 +24,7 @@ function App() {
   const [isManager, setIsManager] = useState(false)
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
   const [date, setDate] = useState(user && localStorage.getItem(`date${user.username}`) ? JSON.parse(localStorage.getItem(`date${user.username}`)) : JSON.parse(localStorage.getItem(`date`)))
-  const [cart, setCart] = useState(user && localStorage.getItem(`cart${user.username}`) ? JSON.parse(localStorage.getItem(`cart${user.username}`)) :{ length: 0, items: [] })
+  const [cart, setCart] = useState(user && localStorage.getItem(`cart${user.username}`) ? JSON.parse(localStorage.getItem(`cart${user.username}`)) :{ qty: 0, items: [] })
   const [favorites, setFavorites] = useState(!user ? [] :
     JSON.parse(localStorage.getItem(`favorites${user.username}`)) ? JSON.parse(localStorage.getItem(`favorites${user.username}`)) :
       [])

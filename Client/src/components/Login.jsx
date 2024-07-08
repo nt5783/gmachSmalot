@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { loginfetchfunc } from '../fetch';
-import { UserContext } from '../App';
+import { UserContext, CartContext } from '../App';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';
@@ -14,6 +14,7 @@ import 'primeicons/primeicons.css';
 
 function Login() {
     const { user, setUser } = useContext(UserContext);
+    const {cart} = useContext(CartContext)
     const navigate = useNavigate();
     const { register, handleSubmit } = useForm();
     const { state } = useLocation();
@@ -27,6 +28,7 @@ function Login() {
         if (user.status !== 200) return;
         localStorage.setItem("user", JSON.stringify(user.data.data));
         setUser(user.data.data);
+        console.log(cart)
         if (model) navigate(`../models/${model}`, { state: { model: state.model, eventDate: state.eventDate ? state.eventDate : null } });
         else navigate('../models');
     }

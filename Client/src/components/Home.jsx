@@ -14,20 +14,23 @@ function Home() {
     const navigate = useNavigate();
     const { user, setUser } = useContext(UserContext);
     const { cart } = useContext(CartContext);
-    const [cartAmount, setCartAmount] = useState(cart.length);
+    const [cartAmount, setCartAmount] = useState(cart.qty);
+   
 
     console.log('cart')
     console.log(cart)
-
-    let amount = 0
+    console.log('cartAmount')
+    console.log(cartAmount)
+    // let amount = 0
 
     useEffect(() => {
-        if (!user) return;
-        localStorage.setItem(`cart${user.username}`, JSON.stringify(cart));
-        cart.items.map((gown) => amount += gown.qty)
-        console.log(amount)
-        setCartAmount(amount)
-    }, [cart]);
+        setCartAmount((prev) => cart.qty)
+        // if (!user) return;
+        // localStorage.setItem(`cart${user.username}`, JSON.stringify(cart));
+        // cart.items.map((gown) => amount += gown.qty)
+        // console.log(amount)
+        // setCartAmount(amount)
+    }, []);
 
     function logout() {
         if (!user) return;
@@ -49,7 +52,7 @@ function Home() {
                     <NavLink className="cart_link" to="./cart">
                         {/* <Badge value={cart.length} className="cart-badge"></Badge> */}
                         <Button><img height="50px" src={cartIcon} alt="cart icon" />
-                        <span className="cart-amount">{cartAmount}</span></Button>
+                            <span className="cart-amount">{cartAmount}</span></Button>
                         {/* <span className="cart-amount">{cart.length}</span> */}
                     </NavLink>
 
