@@ -344,6 +344,14 @@ button{
   margin: 5px;
 }
 
+Button{
+  background-color: #fdcc9d;
+  border-width: 0;
+}
+Button:hover{
+  background-color: #f2b881;
+}
+
 /* models */
 
 .models-header{

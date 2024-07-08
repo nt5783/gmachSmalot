@@ -7,14 +7,15 @@ import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { InputNumber } from 'primereact/inputnumber';
 import { Dropdown } from 'primereact/dropdown';
+import { Message } from 'primereact/message';
 
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 
-export default function AddModel({ formOn, getModels }) {
+export default function AddModel({ formOn, getModels, models, action }) {
     const [additional, setAdditional] = useState('');
-    const { register, handleSubmit, setValue, control } = useForm();
+    const { register, handleSubmit, setValue, control, formState: { errors } } = useForm();
     const [colors, setColors] = useState([]);
     const [seasons, setSeasons] = useState([]);
     const [lengths, setLengths] = useState([]);
@@ -43,9 +44,24 @@ export default function AddModel({ formOn, getModels }) {
         if (!imageData) formData = { ...data, image: null };
         else formData = { ...data, image: imageData.name };
         console.log(formData);
-        formOn(false);
+        formOn(null);
         try {
             await fetchfunc('models', 'POST', formData);
+            await getModels();
+        } catch (error) { alert('Error adding model: ', error); }
+    }
+//לא עובד בגלל שכתוב צבע בלי אי די, להפוך שכן יהיה כתוב
+    async function updateModel(data) {
+        let formData;
+        if (!imageData) formData = { ...data, image: null };
+        else formData = { ...data, image: imageData.name };
+        let notNullFormData = Object.fromEntries(Object.entries(formData).filter(([_, v]) => v != null && v != undefined));
+        console.log(notNullFormData);
+        const model=notNullFormData.model;
+        delete notNullFormData.model
+        formOn(null);
+        try {
+            await fetchfunc(`models/${model}`, 'PATCH', notNullFormData);
             await getModels();
         } catch (error) { alert('Error adding model: ', error); }
     }
@@ -55,7 +71,7 @@ export default function AddModel({ formOn, getModels }) {
         const newItem = event.target[0].value.trim();
         const itemTypeKey = itemType.slice(0, -1);
         const { items, setItems } = itemsMap[itemType] || {};
-        
+
         if (!items) {
             console.error(`Invalid itemType: ${itemType}`);
             return;
@@ -87,8 +103,8 @@ export default function AddModel({ formOn, getModels }) {
     const renderAdditionalDialog = (type) => {
         return (
             <Dialog visible={true} onHide={() => setAdditional('')}>
- <form onSubmit={(e) => addItem(e, type)}>
- <label htmlFor={type}>{type.charAt(0).toUpperCase() + type.slice(1, -1)} Name:</label>
+                <form onSubmit={(e) => addItem(e, type)}>
+                    <label htmlFor={type}>{type.charAt(0).toUpperCase() + type.slice(1, -1)} Name:</label>
                     <InputText name={type} type="text" required />
                     <Button type="submit" label="Add" />
                 </form>
@@ -99,46 +115,73 @@ export default function AddModel({ formOn, getModels }) {
     return (
         <>
             <Dialog visible={true} onHide={() => formOn(false)}>
-                <form onSubmit={handleSubmit((data) => addModel(data))} className="add-model-form">
+                <form onSubmit={handleSubmit((data) => action == 'add' ? addModel(data) : updateModel(data))} className="add-model-form">
                     <label>Model:
-                        <Controller
+                        {action == 'add' && <Controller
                             name="model"
                             control={control}
                             render={({ field }) => (
                                 <InputNumber value={field.value} onChange={(e) => field.onChange(e.value)} required />
                             )}
-                        />
-                    </label>
-                    <br />
-
-                    <label>Color:
-                        <Controller
-                            name="color"
+                        />}
+                        {action == 'update' && <Controller
+                            name="model"
                             control={control}
                             render={({ field }) => (
-                                <Dropdown 
+                                <Dropdown
                                     value={field.value}
-                                    options={colors.map((color) => ({ label: color.color, value: color.colorId }))}
-                                    placeholder="Select a Color"
+                                    options={models.map((model) => ({ label: model.model, value: model.model }))}
+                                    placeholder="Select a Model"
                                     onChange={(e) => field.onChange(e.value)}
+                                    required
                                 />
+                                // {<input type="hidden" value={field.value || ''} required />}
                             )}
+                        />}
+                    </label>
+                    <br />
+                    {/* <div className="p-field"> */}
+                    <label>Color:
+                        <Controller
+                            name="colorId"
+                            control={control}
+                            // rules={{ required: action === 'add' ? 'This field is required' : false }}
+                            render={({ field }) => (
+                                <>
+                                    <Dropdown
+                                        value={field.value}
+                                        options={colors.map((color) => ({ label: color.color, value: color.colorId }))}
+                                        placeholder="Select a Color"
+                                        // placeholder={colors[1].color}
+                                        onChange={(e) => field.onChange(e.value)}
+                                    // defaultValue='pink'
+                                    // aria-required={action === 'add'}
+                                    />
+                                    {/* {action === 'add' && <input type="hidden" value={field.value || ''} required />} */}
+                                </>)}
                         />
                     </label>
+                    {/* {errors.color && <Message severity="error" text={errors.color.message} />} */}
+                    {/* </div> */}
                     <Button type="button" label="Add Color" onClick={() => setAdditional(prev => prev === 'colors' ? '' : 'colors')} />
                     <br />
 
                     <label>Season:
                         <Controller
-                            name="season"
+                            name="seasonId"
                             control={control}
+                            // rules={{ required: action === 'add' ? 'This field is required' : false }}
                             render={({ field }) => (
-                                <Dropdown 
-                                    value={field.value}
-                                    options={seasons.map((season) => ({ label: season.season, value: season.seasonId }))}
-                                    placeholder="Select a Season"
-                                    onChange={(e) => field.onChange(e.value)}
-                                />
+                                <>
+                                    <Dropdown
+                                        value={field.value}
+                                        options={seasons.map((season) => ({ label: season.season, value: season.seasonId }))}
+                                        placeholder="Select a Season"
+                                        onChange={(e) => field.onChange(e.value)}
+                                    // aria-required={action === 'add'}
+                                    />
+                                    {/* {action === 'add' && <input type="hidden" value={field.value || ''} required />} */}
+                                </>
                             )}
                         />
                     </label>
@@ -147,15 +190,20 @@ export default function AddModel({ formOn, getModels }) {
 
                     <label>Length:
                         <Controller
-                            name="length"
+                            name="lengthId"
                             control={control}
+                            // rules={{ required: action === 'add' ? 'This field is required' : false }}
                             render={({ field }) => (
-                                <Dropdown 
-                                    value={field.value}
-                                    options={lengths.map((length) => ({ label: length.length, value: length.lengthId }))}
-                                    placeholder="Select a Length"
-                                    onChange={(e) => field.onChange(e.value)}
-                                />
+                                <>
+                                    <Dropdown
+                                        value={field.value}
+                                        options={lengths.map((length) => ({ label: length.length, value: length.lengthId }))}
+                                        placeholder="Select a Length"
+                                        onChange={(e) => field.onChange(e.value)}
+                                    // aria-required={action === 'add'}
+                                    />
+                                    {/* {action === 'add' && <input type="hidden" value={field.value || ''} required />} */}
+                                </>
                             )}
                         />
                     </label>
@@ -175,7 +223,8 @@ export default function AddModel({ formOn, getModels }) {
                     </label>
                     <br />
 
-                    <Button type="submit" label="Add Model" />
+            {action === 'add' &&<Button type="submit" label="Add Model" />}
+            {action === 'update' &&<Button type="submit" label="update Model" />}
                 </form>
             </Dialog>
 

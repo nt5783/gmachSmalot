@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import 'react-calendar/dist/Calendar.css';
 import { fetchNoParamsfunc } from '../fetch';
 import { UserContext, DateContext } from '../App';
-import AddModel from './AddModel';
+import AddUpdateModel from './AddUpdateModel';
 import trash from '../icons/trash.png'
 
 import { Button } from 'primereact/button';
@@ -21,7 +21,8 @@ function Models() {
     const { user } = useContext(UserContext);
     const { date, setDate } = useContext(DateContext);
     const [models, setModels] = useState([]);
-    const [addModelForm, setAddModelForm] = useState(false);
+    //לאחד את השניים הבאים
+    const [addUpdateModelForm, setAddUpdateModelForm] = useState(null);
     const newDate = date ? new Date(date) : null;
     const [eventDate, setEventDate] = useState(newDate);
 
@@ -55,12 +56,16 @@ function Models() {
     }
 
     const itemTemplate = (model) => {
+        const [showModelDetails, setShowModelDetails] = useState(null);
+
         return (
-            // onMouseOver={}
-            <Card className='model_item' onClick={() => navigate(`./${model.model}`, { state: { model: model} })}>
+            <Card className='model_item' onMouseOut={() => setShowModelDetails(null)} onMouseOver={() => setShowModelDetails(model.model)} onClick={() => navigate(`./${model.model}`, { state: { model: model } })}>
                 {user && user.isManager === 1 && <img onClick={(event) => { event.stopPropagation(); deleteModel(model.model) }} src={trash} />}
                 <h3>{model.model}</h3>
                 <img height={400} src={model.image} alt={model.model} />
+                <div>
+                    {showModelDetails == model.model && <span>color: {model.color}, season: {model.season}</span>}
+                </div>
             </Card>
         );
     };
@@ -70,7 +75,10 @@ function Models() {
             <div className='models-header'>
                 <span>Models </span>
                 {user && user.isManager === 1 && (
-                    <Button label="Add New Model" icon="pi pi-plus" onClick={() => setAddModelForm(prev => !prev)} />)}
+                    <div>
+                        <Button label="Add New Model" icon="pi pi-plus" onClick={() => setAddUpdateModelForm(prev => prev === 'add' ? '' : 'add')} />
+                        <Button label="Update Model" icon="pi pi-pen-to-square" onClick={() => setAddUpdateModelForm(prev => prev === 'update' ? '' : 'update')} />
+                    </div>)}
             </div>
         )
     }
@@ -79,9 +87,9 @@ function Models() {
         <div className="models-page">
             {console.log("models")}
             {console.log(models)}
-            {addModelForm && <AddModel formOn={setAddModelForm} getModels={getModels} />}
+            {addUpdateModelForm && <AddUpdateModel formOn={setAddUpdateModelForm} getModels={getModels} models={models} action={addUpdateModelForm} />}
             <Panel header={modelsHeader}
-            className="models-panel">
+                className="models-panel">
                 {date != null ? (
                     <div className="event-info">
                         <p>The models with gowns available for your event: <b>{eventDate.getDate()}/{eventDate.getMonth() + 1}/{eventDate.getFullYear()}. </b>
