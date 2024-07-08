@@ -103,7 +103,6 @@ function Gowns() {
     }
   }
 
-  //כשנבחרה מידה שיראה את המידה הבחורה
   return (
     <>
       {console.log("gowns")}
@@ -118,6 +117,7 @@ function Gowns() {
         <img className="gown-image" src={model.image} alt={model.model} />
         <Panel header={model.model} className="gown-details">
           <span>Size: </span>
+          {/* sizes */}
           {gowns.length > 0 && (
             <div className="size-buttons">
               {gowns.map((gown, i) => (
@@ -129,8 +129,15 @@ function Gowns() {
                   className="p-button-outlined p-button-secondary"
                 />
               ))}
+               {user && user.isManager === 1 &&<Button
+                  label='Add Size'
+                  icon="pi pi-plus"
+                  // onClick={() => gownSelected(i)}
+                  className="p-button-outlined p-button-secondary"
+                />}
             </div>
           )}
+          {/*specific size gown */}
           {selectedGown !== null && (
             <div>
               <span>Size: {gowns[selectedGown].size}</span>
