@@ -76,6 +76,7 @@ function Gowns() {
         const gownIndex = prevCart.items.findIndex((item) => item.gownId === gownId);
         if (gownIndex == -1)
           return {
+        //יש עוד שיטה
             qty: prevCart.qty + Number(amountToOrder),
             items: [...prevCart.items, { gownId, model: gown.model, size: gown.size, img: model.image, qty: Number(amountToOrder) }],
           };
@@ -118,7 +119,7 @@ function Gowns() {
         <Panel header={model.model} className="gown-details">
           <span>Size: </span>
           {/* sizes */}
-          {gowns.length > 0 && (
+          {/* {gowns.length > 0 && ( */}
             <div className="size-buttons">
               {gowns.map((gown, i) => (
                 <Button
@@ -129,14 +130,14 @@ function Gowns() {
                   className="p-button-outlined p-button-secondary"
                 />
               ))}
-               {user && user.isManager === 1 &&<Button
-                  label='Add Size'
-                  icon="pi pi-plus"
-                  // onClick={() => gownSelected(i)}
-                  className="p-button-outlined p-button-secondary"
-                />}
+              {user && user.isManager === 1 && <Button
+                label='Add Size'
+                icon="pi pi-plus"
+                onClick={() => setShowForm((prev) => (prev === 'add' ? '' : 'add'))}
+                className="p-button-outlined p-button-secondary"
+              />}
             </div>
-          )}
+          {/* )} */}
           {/*specific size gown */}
           {selectedGown !== null && (
             <div>
