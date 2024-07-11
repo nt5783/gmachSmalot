@@ -24,13 +24,13 @@ function Home() {
     // let amount = 0
 
     useEffect(() => {
+        if (!user) return;
         setCartAmount((prev) => cart.qty)
-        // if (!user) return;
-        // localStorage.setItem(`cart${user.username}`, JSON.stringify(cart));
+        localStorage.setItem(`cart${user.username}`, JSON.stringify(cart));
         // cart.items.map((gown) => amount += gown.qty)
         // console.log(amount)
         // setCartAmount(amount)
-    }, []);
+    }, [cart]);
 
     function logout() {
         if (!user) return;
