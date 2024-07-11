@@ -11,6 +11,7 @@ import Models from './components/Models'
 import Cart from './components/Cart'
 import EventCalendar from './components/EventCalendar'
 import Order from './components/Order'
+import Favorites from './components/favorites'
 import './App.css'
 
 export const UserContext = createContext()
@@ -24,7 +25,7 @@ function App() {
   const [isManager, setIsManager] = useState(false)
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
   const [date, setDate] = useState(user && localStorage.getItem(`date${user.username}`) ? JSON.parse(localStorage.getItem(`date${user.username}`)) : JSON.parse(localStorage.getItem(`date`)))
-  const [cart, setCart] = useState(user && localStorage.getItem(`cart${user.username}`) ? JSON.parse(localStorage.getItem(`cart${user.username}`)) :{ qty: 0, items: [] })
+  const [cart, setCart] = useState(user && localStorage.getItem(`cart${user.username}`) ? JSON.parse(localStorage.getItem(`cart${user.username}`)) : { qty: 0, items: [] })
   const [favorites, setFavorites] = useState(!user ? [] :
     JSON.parse(localStorage.getItem(`favorites${user.username}`)) ? JSON.parse(localStorage.getItem(`favorites${user.username}`)) :
       [])
@@ -48,6 +49,7 @@ function App() {
                   <Routes>
                     <Route path="/" element={<Home />}>
                       <Route path="cart" element={<Cart />} />
+                      <Route path="favorites" element={<Favorites />} />
                       <Route path="order" element={<Order />} />
                       <Route path="about" element={<About />} />
                       <Route path="login" element={<Login />} />

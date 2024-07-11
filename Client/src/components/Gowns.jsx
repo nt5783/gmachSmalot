@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { CartContext, ManagerContext, UserContext, DateContext } from '../App';
+import { CartContext, ManagerContext, UserContext, DateContext, FavoritesContext } from '../App';
 import 'react-calendar/dist/Calendar.css';
 import { fetchNoParamsfunc } from '../fetch';
 import AddGown from './AddGown';
@@ -16,6 +16,7 @@ import 'primeicons/primeicons.css';
 
 function Gowns() {
   const navigate = useNavigate();
+  const { favorites, setFavorites } = useContext(FavoritesContext);
   const { isManager } = useContext(ManagerContext);
   const { user } = useContext(UserContext);
   const { date } = useContext(DateContext);
@@ -61,6 +62,14 @@ function Gowns() {
   function gownSelected(i) {
     setAmountToOrder(1)
     setSelectedGown((prev) => (prev === i ? i : i)); // Toggle selected gown
+  }
+
+  function addToFavorites(model) {
+    setFavorites((prev) => [...prev, model])
+  }
+
+  function removeFromFavorites(model) {
+    setFavorites((prev) => prev.filter(m => m != model))
   }
 
   function AddGownToCart(gown) {
@@ -109,34 +118,40 @@ function Gowns() {
     <>
       {console.log("gowns")}
       {console.log(gowns)}
+      {visible && <Message className="success-message" severity="success" text={message} />}
       {user && user.isManager === 1 && (
         <Button label="Add New Gown" icon="pi pi-plus" onClick={() => setShowForm((prev) => (prev === 'add' ? '' : 'add'))} />
       )}
       {showForm === 'add' && <AddGown gowns={gowns} model={model.model} formOn={setShowForm} getGowns={getGowns} />}
-      {visible && <Message className="success-message" severity="success" text={message} />}
 
       <div className="gown-container">
         <img className="gown-image" src={model.image} alt={model.model} />
         <Panel header={model.model} className="gown-details">
-          <span>Size: </span>
-          {/* sizes */}
-          {/* {gowns.length > 0 && ( */}
-          <div className="size-buttons">
-            {gowns.map((gown, i) => (
-              <Button
-                key={i}
-                label={gown.size}
-                disabled={gown.available < 1}
-                onClick={() => gownSelected(i)}
+          <div className='gown-favorite'>
+            {user && !favorites.includes(model.model) && <i className='pi pi-star' onClick={(event) => { event.stopPropagation(); addToFavorites(model.model) }} />}
+            {user && favorites.includes(model.model) && <i className='pi pi-star-fill' onClick={(event) => { event.stopPropagation(); removeFromFavorites(model.model) }} />}
+          </div>
+          <div>
+            <span>Size: </span>
+            {/* sizes */}
+            {/* {gowns.length > 0 && ( */}
+            <div className="size-buttons">
+              {gowns.map((gown, i) => (
+                <Button
+                  key={i}
+                  label={gown.size}
+                  disabled={gown.available < 1}
+                  onClick={() => gownSelected(i)}
+                  className="p-button-outlined p-button-secondary"
+                />
+              ))}
+              {user && user.isManager === 1 && <Button
+                label='Add Size'
+                icon="pi pi-plus"
+                onClick={() => setShowForm((prev) => (prev === 'add' ? '' : 'add'))}
                 className="p-button-outlined p-button-secondary"
-              />
-            ))}
-            {user && user.isManager === 1 && <Button
-              label='Add Size'
-              icon="pi pi-plus"
-              onClick={() => setShowForm((prev) => (prev === 'add' ? '' : 'add'))}
-              className="p-button-outlined p-button-secondary"
-            />}
+              />}
+            </div>
           </div>
           {/* )} */}
           {/*specific size gown */}

@@ -2,9 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import 'react-calendar/dist/Calendar.css';
 import { fetchNoParamsfunc } from '../fetch';
-import { UserContext, DateContext } from '../App';
+import { UserContext, DateContext, FavoritesContext } from '../App';
 import AddUpdateModel from './AddUpdateModel';
-import trash from '../icons/trash.png'
 
 import { Button } from 'primereact/button';
 import { DataView, DataViewLayoutOptions } from 'primereact/dataview';
@@ -19,12 +18,15 @@ import 'primeicons/primeicons.css';
 function Models() {
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
+    const { favorites, setFavorites } = useContext(FavoritesContext);
     const { date, setDate } = useContext(DateContext);
     const [models, setModels] = useState([]);
     //לאחד את השניים הבאים
     const [addUpdateModelForm, setAddUpdateModelForm] = useState(null);
     const newDate = date ? new Date(date) : null;
     const [eventDate, setEventDate] = useState(newDate);
+
+    console.log("favorites", favorites)
 
     async function getModels() {
         const res = date ? fetchNoParamsfunc(`models?date=${eventDate}`, 'GET') : fetchNoParamsfunc(`models`, 'GET');
@@ -55,12 +57,24 @@ function Models() {
         }
     }
 
+    function addToFavorites(model) {
+        setFavorites((prev) => [...prev, model])
+    }
+
+    function removeFromFavorites(model) {
+        setFavorites((prev) => prev.filter(m => m != model))
+    }
+
     const itemTemplate = (model) => {
         const [showModelDetails, setShowModelDetails] = useState(null);
 
         return (
             <Card className='model_item' onMouseOut={() => setShowModelDetails(null)} onMouseOver={() => setShowModelDetails(model.model)} onClick={() => navigate(`./${model.model}`, { state: { model: model } })}>
-                {user && user.isManager === 1 && <img onClick={(event) => { event.stopPropagation(); deleteModel(model.model) }} src={trash} />}
+                <div className='model-icons'>
+                    {user && user.isManager === 1 && <span onClick={(event) => { event.stopPropagation(); deleteModel(model.model) }} className="pi pi-trash" />}
+                    {user && !favorites.includes(model.model) && <span className='pi pi-star' onClick={(event) => { event.stopPropagation(); addToFavorites(model.model) }} />}
+                    {user && favorites.includes(model.model) && <span className='pi pi-star-fill' onClick={(event) => { event.stopPropagation(); removeFromFavorites(model.model) }} />}
+                </div>
                 <h3>{model.model}</h3>
                 <img height={400} src={model.image} alt={model.model} />
                 <div>
