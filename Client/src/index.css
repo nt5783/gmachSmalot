@@ -10,6 +10,7 @@ Button{
   background-color: #fdcc9d;
   border-width: 0;
 }
+
 Button:hover,button:hover,a:hover{
   background-color: #f2b881;
 }
@@ -75,6 +76,14 @@ Button:hover,button:hover,a:hover{
 
 
 /* gowns */
+.success-message {
+  background-color: green;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e1ddd5;
+}
 
 .gown-container {
   display: flex;
@@ -142,9 +151,10 @@ Button:hover,button:hover,a:hover{
 
 .calendar-container {
   display: flex;
+  /* height: 200px; */
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 70vh;
   background-color: #f9f9f9;
 }
 
@@ -188,6 +198,11 @@ Button:hover,button:hover,a:hover{
   display: flex;
   align-items: center;
   text-decoration: none;
+  background:none;
+}
+
+.cart_link:hover {
+  background: none;
 }
 
 .cart-amount {
@@ -628,8 +643,32 @@ iframe {
   background-color: #fff;
 }
 
+/* manager */
+/* .view-order {
+  display: flex;
+  justify-content: space-evenly;
+} */
 
 
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: left;
+}
+
+tr:nth-child(even) {
+  background-color: #fdcc9d;
+}
+
+th {
+  background-color: #d4bfcc;
+  color: white;
+}
 
 
 

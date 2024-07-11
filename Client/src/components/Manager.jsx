@@ -56,18 +56,18 @@ function Manager() {
                 return
         }
     }
-//הגבלת גישה
-//לשקול להוסיף להזמנות כמות
+    //הגבלת גישה
+    //לשקול להוסיף להזמנות כמות
     async function showOrders() {
         const today = new Date()
-        // const res = fetchNoParamsfunc(`orders?future`, 'GET')
+        const res = fetchNoParamsfunc(`orders?future`, 'GET')
         // const res = fetchNoParamsfunc(`orders?past`, 'GET')
         // const res = fetchNoParamsfunc(`orders?today`, 'GET')
         // const res = fetchNoParamsfunc(`orders?future&gownId=3`, 'GET')
         // const res = fetchNoParamsfunc(`orders`, 'GET')
         const data = await res
         if (data.length > 0)
-            // setOrders(data)
+            setOrders(data)
         console.log(data)
     }
 
@@ -82,10 +82,34 @@ function Manager() {
             {additional == "" && <button>search gown</button>}
             <Button onClick={showOrders}>see all orders</Button>
             {/* שיראה גם הזמנות ישנות */}
-            {/* {orders.map(order=>{
-                order.size
-                })}
-            <p>{orders}</p> */}
+            {orders.length > 0 &&
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Phone 1</th>
+                            <th>Phone 2</th>
+                            <th>Gown model</th>
+                            <th>Gown Size</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {orders.map((order) => (
+                            <tr className='view-order'>
+                                <td>{new Date(order.eventDate).toISOString().substring(0, 10)}</td>
+                                <td>{order.fullName}</td>
+                                <td>{order.email}</td>
+                                <td>{order.phone}</td>
+                                <td>{order.phone2}</td>
+                                <td>{order.model}</td>
+                                <td>{order.size}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>}
+            {/* <p>{orders}</p> */}
         </div>
     </>)
 }
