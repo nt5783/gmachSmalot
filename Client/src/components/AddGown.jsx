@@ -44,16 +44,16 @@ export default function AddGown({ gowns, model, formOn, getGowns }) {
     }
 
     async function addGown(data) {
-        let exsistingSize = null
+        let existingSize = null
         gowns.map((gown) => {
             if (gown.sizeId == data.size) {
-                exsistingSize = gown.size;
+                existingSize = gown.size;
                 return;
             }
         })
         // if (gowns.find((gown) => gown.sizeId == data.size))
-        if (exsistingSize != null)
-            if (!confirm(`gowns from model ${model} in size ${exsistingSize} already exist. Do you want to add to them the amount you put in?`)) {
+        if (existingSize != null)
+            if (!confirm(`gowns from model ${model} in size ${existingSize} already exist. Do you want to add to them the amount you put in?`)) {
                 formOn('')
                 return;
             }

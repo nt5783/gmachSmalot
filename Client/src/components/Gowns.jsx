@@ -8,7 +8,7 @@ import UpdateGown from './UpdateGown';
 
 import { Button } from 'primereact/button';
 import { Panel } from 'primereact/panel';
-import { Messages } from 'primereact/messages';
+import { Message } from 'primereact/message';
 
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
@@ -76,7 +76,7 @@ function Gowns() {
         const gownIndex = prevCart.items.findIndex((item) => item.gownId === gownId);
         if (gownIndex == -1)
           return {
-        //יש עוד שיטה
+            //יש עוד שיטה
             qty: prevCart.qty + Number(amountToOrder),
             items: [...prevCart.items, { gownId, model: gown.model, size: gown.size, img: model.image, qty: Number(amountToOrder) }],
           };
@@ -86,7 +86,8 @@ function Gowns() {
         });
         return { qty: prevCart.qty + Number(amountToOrder), items: updatedItems };
       });
-    setMessage(`gown model: ${gown.model}, size: ${gown.size} was added to cart successfully`);
+    if (amountToOrder > 1) setMessage(`${amountToOrder} Gowns Model: ${gown.model}, Size: ${gown.size} were added to cart successfully`);
+    else setMessage(`Gown Model: ${gown.model}, Size: ${gown.size} was added to cart successfully`);
     // const updatedGowns = gowns.map((gownItem) => {
     //   if (gownItem === gown) return { ...gownItem, available: gownItem.available - 1 };
     //   return gownItem;
@@ -112,7 +113,7 @@ function Gowns() {
         <Button label="Add New Gown" icon="pi pi-plus" onClick={() => setShowForm((prev) => (prev === 'add' ? '' : 'add'))} />
       )}
       {showForm === 'add' && <AddGown gowns={gowns} model={model.model} formOn={setShowForm} getGowns={getGowns} />}
-      {visible && <Messages severity="success" text={message} />}
+      {visible && <Message className="success-message" severity="success" text={message} />}
 
       <div className="gown-container">
         <img className="gown-image" src={model.image} alt={model.model} />
@@ -120,23 +121,23 @@ function Gowns() {
           <span>Size: </span>
           {/* sizes */}
           {/* {gowns.length > 0 && ( */}
-            <div className="size-buttons">
-              {gowns.map((gown, i) => (
-                <Button
-                  key={i}
-                  label={gown.size}
-                  disabled={gown.available < 1}
-                  onClick={() => gownSelected(i)}
-                  className="p-button-outlined p-button-secondary"
-                />
-              ))}
-              {user && user.isManager === 1 && <Button
-                label='Add Size'
-                icon="pi pi-plus"
-                onClick={() => setShowForm((prev) => (prev === 'add' ? '' : 'add'))}
+          <div className="size-buttons">
+            {gowns.map((gown, i) => (
+              <Button
+                key={i}
+                label={gown.size}
+                disabled={gown.available < 1}
+                onClick={() => gownSelected(i)}
                 className="p-button-outlined p-button-secondary"
-              />}
-            </div>
+              />
+            ))}
+            {user && user.isManager === 1 && <Button
+              label='Add Size'
+              icon="pi pi-plus"
+              onClick={() => setShowForm((prev) => (prev === 'add' ? '' : 'add'))}
+              className="p-button-outlined p-button-secondary"
+            />}
+          </div>
           {/* )} */}
           {/*specific size gown */}
           {selectedGown !== null && (

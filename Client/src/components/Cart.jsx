@@ -35,7 +35,7 @@ const Cart = () => {
                     </div>
                 </>
             )}
-            {user && cart.length === 0 && (
+            {user && cart.qty === 0 && (
                 <h3>Your cart is empty</h3>
             )}
             {!user && (
