@@ -10,7 +10,7 @@ import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 
-export default function AddGown({ gowns, model, formOn,getGowns }) {
+export default function AddGown({ gowns, model, formOn, getGowns }) {
     const { register, watch, handleSubmit, setValue } = useForm();
     const [additional, setAdditional] = useState('');
     const [sizes, setSizes] = useState([]);
@@ -44,17 +44,20 @@ export default function AddGown({ gowns, model, formOn,getGowns }) {
     }
 
     async function addGown(data) {
-        console.log('data po po')
-        console.log(data)
-        if (gowns.find((gown) => gown.sizeId == data.size))
-            if (!confirm(`gowns from model ${model} in size ${data.size}(?) already exist. Do you want to add to them the amount you put in?`))
-                {
-                    formOn('')
-                    return;
-                }
+        let exsistingSize = null
+        gowns.map((gown) => {
+            if (gown.sizeId == data.size) {
+                exsistingSize = gown.size;
+                return;
+            }
+        })
+        // if (gowns.find((gown) => gown.sizeId == data.size))
+        if (exsistingSize != null)
+            if (!confirm(`gowns from model ${model} in size ${exsistingSize} already exist. Do you want to add to them the amount you put in?`)) {
+                formOn('')
+                return;
+            }
         const newGown = { model: model, size: data.size, amount: data.amount }
-        console.log('newGown')
-        console.log(newGown)
         // setMessage("adding gown model" + data.model + " ,length: " + data.length + " ,in size " + data.size)
         formOn('')
         try {
@@ -71,8 +74,9 @@ export default function AddGown({ gowns, model, formOn,getGowns }) {
 
     return (
         <>
-            <Dialog visible={true} onHide={() => formOn('')} className="add-gown-dialog">
+            <Dialog visible={true} onHide={() => formOn('')} className="add-gown-dialog" header='Add New Size To This Model'>
                 <form onSubmit={handleSubmit((data) => addGown(data))} className="add-gown-form">
+                    <br />
                     <div className="field">
                         <label>Model: {model}</label>
                     </div>

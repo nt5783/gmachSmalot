@@ -1,6 +1,6 @@
 import { GownService } from '../service/gownService.js'
             const gownService = new GownService();
-
+//שולח שגיאה אם אין מידות אבל מבחינתי זה לא בעיה
 export class GownController {
     async getGowns(req, res, next) {
         try {

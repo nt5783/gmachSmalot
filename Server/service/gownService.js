@@ -30,8 +30,9 @@ export class GownService {
         console.log(isExsistGown)
         console.log(newGown)
         if (isExsistGown.length > 0) {
-            const queryUpdate = updateGownQuery(['amount'])
-            result = await executeQuery(queryUpdate, [isExsistGown.gownId, isExsistGown.amount + newGown.amount]);
+            const queryUpdate = updateGownQuery(["amount"])
+            const updatedAmount=+isExsistGown[0].amount + +newGown.amount;
+            result = await executeQuery(queryUpdate, [updatedAmount, isExsistGown[0].gownId]);
         }
         else {
             const queryGown = addGownQuery();
