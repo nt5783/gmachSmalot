@@ -20,6 +20,11 @@ function Manager() {
     // let img = new img[10]
 
 
+    useEffect(() => {
+        showOrders('today');
+    }, [])
+
+
 
     useEffect(() => {
         // CASE 1 :message is empty (meaning no errors). Adjust as needed
@@ -41,8 +46,6 @@ function Manager() {
         setAdditional('')
         console.log(data)
         fetchfunc()
-
-
     }
 
     const handleChange = (event) => {
@@ -58,30 +61,34 @@ function Manager() {
     }
     //הגבלת גישה
     //לשקול להוסיף להזמנות כמות
-    async function showOrders() {
-        const today = new Date()
-        const res = fetchNoParamsfunc(`orders?future`, 'GET')
-        // const res = fetchNoParamsfunc(`orders?past`, 'GET')
-        // const res = fetchNoParamsfunc(`orders?today`, 'GET')
-        // const res = fetchNoParamsfunc(`orders?future&gownId=3`, 'GET')
-        // const res = fetchNoParamsfunc(`orders`, 'GET')
-        const data = await res
-        if (data.length > 0)
-            setOrders(data)
-        console.log(data)
+    async function showOrders(when) {
+        try {
+            const res = fetchNoParamsfunc(`orders?${when}`, 'GET')
+            const data = await res
+            console.log('data')
+            // if (data.length > 0)
+            //     setOrders(data)
+            console.log(data)
+        }
+        catch (err){
+            console.log(err)
+        }
     }
 
 
     return (<>
         <div>
             {visible && <div style={{ background: "green" }}>{message}</div>}
-            {additional == "" && <button onClick={() => setAdditional("model")}>Add New Model</button>}
-            {additional == "model" && <AddModel formOn={setAdditional} setMessage={setMessage} />}
-            {additional == "" && <button onClick={() => setAdditional("gown")}>Add New Gown</button>}
-            {additional == "gown" && <AddGown formOn={setAdditional} setMessage={setMessage} />}
-            {additional == "" && <button>search gown</button>}
-            <Button onClick={showOrders}>see all orders</Button>
+            {/* {additional == "" && <button onClick={() => setAdditional("model")}>Add New Model</button>} */}
+            {/* {additional == "model" && <AddModel formOn={setAdditional} setMessage={setMessage} />} */}
+            {/* {additional == "" && <button onClick={() => setAdditional("gown")}>Add New Gown</button>} */}
+            {/* {additional == "gown" && <AddGown formOn={setAdditional} setMessage={setMessage} />} */}
+            {/* {additional == "" && <button>search gown</button>} */}
+            <Button onClick={() => showOrders('today')}>view today's orders</Button>
+            <Button onClick={() => showOrders('past')}>view all past orders</Button>
+            <Button onClick={() => showOrders('future')}>view all future orders</Button>
             {/* שיראה גם הזמנות ישנות */}
+            {/* להוסיף אופציה של מחיקת\עדכון הזמנה- כפתור כזה בעמודה בטבלה */}
             {orders.length > 0 &&
                 <table>
                     <thead>
