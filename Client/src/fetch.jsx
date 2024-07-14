@@ -36,6 +36,9 @@ async function fetchfunc(url, method, body, thenfunc) {
         })
         const json = await response.json()
         const data = await json
+        if (response.status == 401){
+            alert('Permission is denied\n' + data.message)
+        }
         const user = typeof data != 'undefined' ? data : null
         // לא תמיד מקבל דטה
         // if (!data) {
@@ -56,6 +59,9 @@ async function fetchNoParamsfunc(url, method) {
             headers: { 'Authorization': `Bearer ${token}`, 'content-Type': 'application/json; charset=UTF-8' },
         })
         const data = await response.json()
+        if (response.status == 401){
+            alert('Permission is denied\n' + data.message)
+        }
         if (!data) {
             throw "data does'nt exist!"
         }
