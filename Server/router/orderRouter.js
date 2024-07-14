@@ -7,9 +7,9 @@ const orderRouter = express.Router()
 const orderController = new OrderController()
 
 orderRouter.get("/:id", authVerifyToken, orderController.getOrderById)
-orderRouter.get("/", verifyToken, orderController.getOrders)
+orderRouter.get("/", authVerifyToken, orderController.getOrders)
 orderRouter.post("/", verifyToken, orderController.addOrder)
-orderRouter.delete("/", verifyToken, orderController.deleteOrder)
+orderRouter.delete("/", authVerifyToken, orderController.deleteOrder)
 export {
     orderRouter
 }
