@@ -4,8 +4,11 @@ end to end project - gowns gemach
 לפי ימי עסקים
 פתוח במוצש רק בחורף
 
+change fetchfunc in Signup!!
+error not autorized in add/update model many times
 
 באגים:
+
 cart number doubled on load!!
 on login - set cart and date!! (for cart items in header)
 message does'nt show!! like on add gown to cart
