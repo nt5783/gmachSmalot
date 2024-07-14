@@ -16,7 +16,7 @@ export class SignupController {
                 const token = jwt.sign(
                     { userId: resultItems[0].userId, admin: resultItems[0].isManager },
                     process.env.RANDOM_TOKEN_SECRET,
-                    { expiresIn: '20h' })
+                    { expiresIn: process.env.TOKEN_EXP })
                 return res.json({ token, data: resultItems[0] })
             }
         }
