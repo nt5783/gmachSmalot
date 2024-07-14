@@ -6,7 +6,7 @@ export class ColorController {
         try {
             const resultItems = await colorService.getColors(req.query);
             if (resultItems.length == 0)
-                throw new Error({ statusCode: 404 })
+                throw { statusCode: 404, message: "Colors not found" }
             return res.json(resultItems);
         }
         catch (ex) {
@@ -21,7 +21,7 @@ export class ColorController {
         try {
             const resultItem = await colorService.getColorById(req.params.id);
             if (resultItem.length == 0)
-                throw new Error({ statusCode: 404 })
+                throw { statusCode: 404, message: "Color not found" }
             res.json(resultItem);
         }
         catch (ex) {
@@ -34,41 +34,13 @@ export class ColorController {
 
     async addColor(req, res, next) {
         try {
-            console.log(req.body)
+            if (!req.body.color)
+                throw { statusCode: 400, message: "Invalid parameters" }
             const resultItem = await colorService.addColor(req.body);
             res.json(resultItem.insertId);
         }
         catch (ex) {
             const err = {}
-            err.statusCode = ex.statusCode ?? 500;
-            err.message = ex;
-            next(err)
-        }
-    }
-
-    async deleteColor(req, res, next) {
-        try {
-            await colorService.deleteColor(req.params.id)
-            res.json(req.params.id);
-        }
-        catch (ex) {
-            const err = {}
-            err.statusCode = ex.statusCode ?? 500;
-            err.message = ex;
-            next(err)
-        }
-    }
-
-    async updateColor(req, res, next) {
-        try {
-            const result = await colorService.updateColor(req.body, req.params.id);
-            // if (result == null)
-            //     throw ("this data cannot be updated")
-            res.json(req.params.id);
-        }
-        catch (ex) {
-            const err = {}
-            // err.statusCode = ex == "this data cannot be updated" ? 409 : 500;
             err.statusCode = ex.statusCode ?? 500;
             err.message = ex;
             next(err)
