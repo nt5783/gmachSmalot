@@ -4,7 +4,7 @@ import { CartContext, ManagerContext, UserContext, DateContext, FavoritesContext
 import 'react-calendar/dist/Calendar.css';
 import { fetchNoParamsfunc } from '../fetch';
 import AddGown from './AddGown';
-import UpdateGown from './UpdateGown';
+import UpdateGownsAmount from './UpdateGownsAmount';
 
 import { Button } from 'primereact/button';
 import { Panel } from 'primereact/panel';
@@ -114,10 +114,23 @@ function Gowns() {
     }
   }
 
+  async function deleteGown() {
+    //אם אנשים הזמינו?
+    if (confirm(`Are you sure you want to delete size ${gowns[selectedGown].size} from model ${gowns[selectedGown].model} from the database?`)) {
+      try {
+        await fetchNoParamsfunc(`gowns/${gowns[selectedGown].gownId}`, 'DELETE');
+        alert(`Gowns from size ${gowns[selectedGown].size} deleted successfully`)
+        await getGowns();
+        setSelectedGown(null)
+      } catch (e) { alert(e) }
+    }
+  }
+
   return (
     <>
       {console.log("gowns")}
       {console.log(gowns)}
+      {console.log(selectedGown)}
       {visible && <Message className="success-message" severity="success" text={message} />}
       {showForm === 'add' && <AddGown gowns={gowns} model={model.model} formOn={setShowForm} getGowns={getGowns} />}
 
@@ -154,7 +167,7 @@ function Gowns() {
           {/*specific size gown */}
           {selectedGown !== null && (
             <div>
-              <span>Size: {gowns[selectedGown].size}</span>
+              <span><b>Size: {gowns[selectedGown].size}</b></span>
               <br />
               <span>Available amount: {gowns[selectedGown].available}</span>
               {/* <br />
@@ -170,6 +183,20 @@ function Gowns() {
               />
               <button type='submit'>Apply changes</button>
                 </form>} */}
+              {user && user.isManager === 1 && (
+                <div>
+                  <Button
+                    label="Update this size inventory"
+                    icon="pi pi-pen-to-square"
+                    onClick={() => setShowForm((prev) => (prev === 'update' ? '' : 'update'))}
+                  />
+                  <Button
+                    label="Remove this size"
+                    icon="pi pi-trash"
+                    onClick={deleteGown}
+                  />
+                </div>
+              )}
               <br />
               <br />
               {eventDate == null && <div><span className="warning">you are in display mode. you have to pick a date <a className="no-background" href="../eventCalendar">pick a date here</a></span></div>}
@@ -184,20 +211,6 @@ function Gowns() {
                 value={amountToOrder}
                 onChange={(e) => setAmountToOrder(e.target.value)}
               />
-              {user && user.isManager === 1 && (
-                <div>
-                  <Button
-                    label="Update this size inventory"
-                    icon="pi pi-pen-to-square"
-                    onClick={() => setShowForm((prev) => (prev === 'update' ? '' : 'update'))}
-                  />
-                  <Button
-                    label="Remove this size"
-                    icon="pi pi-trash"
-                    onClick={() => setShowForm((prev) => (prev === 'update' ? '' : 'update'))}
-                  />
-                </div>
-              )}
               <br />
               <Button
                 label="Add to cart"
@@ -211,7 +224,7 @@ function Gowns() {
                 disabled={eventDate == null}
                 onClick={handleOrder}
               />
-              {showForm === 'update' && <UpdateGown gown={gowns[selectedGown]} formOn={setShowForm} />}
+              {showForm === 'update' && <UpdateGownsAmount gown={gowns[selectedGown]} getGowns={getGowns} index={selectedGown} formOn={setShowForm} />}
             </div>
           )}
         </Panel>
