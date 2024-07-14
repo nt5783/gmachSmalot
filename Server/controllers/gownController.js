@@ -34,7 +34,7 @@ export class GownController {
 
     async addGown(req, res, next) {
         try {
-            if (!req.body.model || !req.body.size || !req.body.amount)
+            if (!req.body.model || !req.body.sizeId || !req.body.amount)
                 throw { statusCode: 400, message: "Invalid parameters" }
             const resultItem = await gownService.addGown(req.body);
             res.json(resultItem.insertId);

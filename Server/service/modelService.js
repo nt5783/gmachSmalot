@@ -27,12 +27,17 @@ export class ModelService {
     }
 
     async addModel(newModel) {
-        console.log('newModel')
-        console.log(newModel)
-        //שיהיה אפשר להכניס בכל סדר
-        const queryModel = addModelQuery();
-        const result = await executeQuery(queryModel, Object.values(newModel));
-        return result;
+        try {
+            console.log('newModel')
+            console.log(newModel)
+            //שיהיה אפשר להכניס בכל סדר
+            const queryModel = addModelQuery(Object.keys(newModel));
+            const result = await executeQuery(queryModel, Object.values(newModel));
+            return result;
+        }
+        catch (err) {
+            throw (err.errno == 1062 ? { statusCode: 409, message: "Model already exist" } : err)
+        }
     }
 
     async deleteModel(id) {
@@ -42,6 +47,8 @@ export class ModelService {
     }
 
     async updateModel(updatedModel, model) {
+        console.log("updatedModel")
+        console.log(updatedModel)
         let data = Object.values(updatedModel);
         data.push(model)
         console.log(data)

@@ -4,6 +4,7 @@ import { fetchfunc, fetchNoParamsfunc } from "../fetch";
 import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import { InputText } from "primereact/inputtext";
+import { InputNumber } from 'primereact/inputnumber';
 import { Dropdown } from 'primereact/dropdown';
 
 import 'primereact/resources/themes/saga-blue/theme.css';
@@ -24,7 +25,6 @@ export default function AddGown({ gowns, model, formOn, getGowns }) {
         } catch (error) {
             alert('Error getting data: ', error)
         }
-
     }
 
     useEffect(() => {
@@ -57,7 +57,7 @@ export default function AddGown({ gowns, model, formOn, getGowns }) {
                 formOn('')
                 return;
             }
-        const newGown = { model: model, size: data.size, amount: data.amount }
+        const newGown = { model: model, sizeId: data.size, amount: data.amount }
         // setMessage("adding gown model" + data.model + " ,length: " + data.length + " ,in size " + data.size)
         formOn('')
         try {
@@ -108,10 +108,9 @@ export default function AddGown({ gowns, model, formOn, getGowns }) {
                 <Dialog visible={true} onHide={() => setAdditional('')}>
                     <form onSubmit={addSize} className="add-size-form">
                         <div className="field">
-                            <span className="p-float-label">
-                                <input name="size" type="text" required />
-                                <label htmlFor="size">Size</label>
-                            </span>
+                            <label htmlFor="size">Size</label>
+                            <InputNumber useGrouping={false} name="size" required />
+                            {/* <input name="size" type="text" required /> */}
                         </div>
                         <Button type="submit" label="Add" className="p-button-success" />
                     </form>

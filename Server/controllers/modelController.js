@@ -34,9 +34,11 @@ export class ModelController {
 
     async addModel(req, res, next) {
         try {
-            if (!req.body.model || !req.body.color || !req.body.season || !req.body.length)
+            if (!req.body.model || !req.body.colorId || !req.body.seasonId || !req.body.lengthId)
                 throw { statusCode: 400, message: "Invalid parameters" }
             const resultItem = await modelService.addModel(req.body);
+            if (resultItem.length == 0)
+                throw { statusCode: 409, message: "Model already exist" }
             res.json(resultItem.insertId);
         }
         catch (ex) {

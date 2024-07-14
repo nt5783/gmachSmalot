@@ -31,6 +31,7 @@ export default function UpdateGownsAmount({ gown, getGowns, index, formOn }) {
                         <label htmlFor="amount">Amount</label>
                     </span>
                 </div>
+                <p>Note: It is possible that there are future orders for gowns of this size, reducing the amount will not affect these orders.</p>
                 <Button type="submit" label="Apply changes" className="p-button-success" />
             </form>
         </Dialog>
