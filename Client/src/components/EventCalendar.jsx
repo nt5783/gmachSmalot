@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { UserContext, DateContext } from "../App";
 import Calendar from 'react-calendar';
-
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { Message } from 'primereact/message';
@@ -29,15 +28,15 @@ function InvitationCalendar() {
 
   function handleClickDay(value) {
     user
-      ? localStorage.setItem(`date${user.username}`, JSON.stringify(value))
+      ? localStorage.setItem(`date_${user.username}`, JSON.stringify(value))
       : localStorage.setItem(`date`, JSON.stringify(value));
     setDate(value);
     navigate('/models');
   }
 
   function clearDate() {
-    user && localStorage.getItem(`date${user.username}`)
-      ? localStorage.removeItem(`date${user.username}`)
+    user && localStorage.getItem(`date_${user.username}`)
+      ? localStorage.removeItem(`date_${user.username}`)
       : localStorage.removeItem('date');
     setDate(null);
   }

@@ -24,10 +24,10 @@ function App() {
   // const [isLoading, setIsLoading] = useState(true)
   const [isManager, setIsManager] = useState(false)
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
-  const [date, setDate] = useState(user && localStorage.getItem(`date${user.username}`) ? JSON.parse(localStorage.getItem(`date${user.username}`)) : JSON.parse(localStorage.getItem(`date`)))
-  const [cart, setCart] = useState(user && localStorage.getItem(`cart${user.username}`) ? JSON.parse(localStorage.getItem(`cart${user.username}`)) : { qty: 0, items: [] })
+  const [date, setDate] = useState(user && localStorage.getItem(`date_${user.username}`) ? JSON.parse(localStorage.getItem(`date_${user.username}`)) : JSON.parse(localStorage.getItem(`date`)))
+  const [cart, setCart] = useState(user && localStorage.getItem(`cart_${user.username}`) ? JSON.parse(localStorage.getItem(`cart_${user.username}`)) : { qty: 0, items: [] })
   const [favorites, setFavorites] = useState(!user ? [] :
-    JSON.parse(localStorage.getItem(`favorites${user.username}`)) ? JSON.parse(localStorage.getItem(`favorites${user.username}`)) :
+    JSON.parse(localStorage.getItem(`favorites_${user.username}`)) ? JSON.parse(localStorage.getItem(`favorites_${user.username}`)) :
       [])
 
   // const [error, setError] = useState(false)
