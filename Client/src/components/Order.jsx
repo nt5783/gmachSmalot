@@ -9,6 +9,7 @@ import { Button } from 'primereact/button';
 const Order = () => {
     const { user } = useContext(UserContext)
     const { date, setDate } = useContext(DateContext)
+    const eventDate = new Date(date);
     const { state } = useLocation();
     console.log("state")
     console.log(state)
@@ -63,9 +64,9 @@ const Order = () => {
         <PayPalScriptProvider options={{ "client-id": "ATjqmx7s7BZKVhYLfEngKieXUDvP8D7zQzw8Wz7OrDRWi8lgaKLNh3LRRyIgDu8mYH4KtROFhK5YxWMv" }}>
             <div className="order-container">
                 <h2>Gown Order</h2>
-                <h3>{new Date(date).getUTCDate.toString()}</h3>
-                {gowns.map((gown) => (<><h3>Model: {gown.model} <br /> Size: {gown.size} <br /> Amount: {gown.qty}</h3>
-                </>
+                <h2>{eventDate.getDate()}/{eventDate.getMonth() + 1}/{eventDate.getFullYear()}</h2>
+                {gowns.map((gown) => (<div><h3>Model: {gown.model} <br /> Size: {gown.size} <br /> Amount: {gown.qty}</h3>
+                </div>
                 ))}
                 <p>Price: {price} ILS</p>
                 <div className="agreement-checkbox">

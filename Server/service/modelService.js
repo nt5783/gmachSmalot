@@ -1,4 +1,3 @@
-
 import { executeQuery } from './db.js';
 import 'dotenv/config'
 import { getModelsQuery, getModelByIdQuery, addModelQuery, deleteModelQuery, updateModelQuery } from '../queries/modelQuery.js'
@@ -10,7 +9,7 @@ export class ModelService {
         const result = await executeQuery(queryModel);
         for (let i = 0; i < result.length; i++) {
             if (!result[i].image)
-                result[i].image = `http://${process.env.DB_HOST}:${process.env.DB_PORT}/img/deafult image.jpg`
+                result[i].image = `http://${process.env.DB_HOST}:${process.env.DB_PORT}/img/default image.jpg`
             else
                 result[i].image = `http://${process.env.DB_HOST}:${process.env.DB_PORT}/img/${result[i].image}`
         }
@@ -21,7 +20,7 @@ export class ModelService {
         const queryModel = getModelByIdQuery();
         const result = await executeQuery(queryModel, [id]);
         if (!result[0].image)
-            result[0].image = `http://${process.env.DB_HOST}:${process.env.DB_PORT}/img/deafult image.jpg`
+            result[0].image = `http://${process.env.DB_HOST}:${process.env.DB_PORT}/img/default image.jpg`
         result[0].image = `http://${process.env.DB_HOST}:${process.env.DB_PORT}/img/${result[0].image}`
         return result;
     }
