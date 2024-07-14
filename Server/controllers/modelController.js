@@ -6,9 +6,9 @@ export class ModelController {
         try {
             const resultItems = await modelService.getModels(req.query);
             if (resultItems.length == 0)
-                throw new Error({ statusCode: 404 })
+                throw { statusCode: 404, message: "Models not found" }
             return res.json(resultItems);
-        }//מי זורק את EX?
+        }
         catch (ex) {
             const err = {}
             err.statusCode = ex.statusCode ?? 500;
@@ -21,7 +21,7 @@ export class ModelController {
         try {
             const resultItem = await modelService.getModelById(req.params.id);
             if (resultItem.length == 0)
-                throw new Error({ statusCode: 404 })
+                throw { statusCode: 404, message: "Model not found" }
             res.json(resultItem);
         }
         catch (ex) {
@@ -34,9 +34,8 @@ export class ModelController {
 
     async addModel(req, res, next) {
         try {
-
             if (!req.body.model || !req.body.color || !req.body.season || !req.body.length)
-                throw new Error({ statusCode: 400 })
+                throw { statusCode: 400, message: "Invalid parameters" }
             const resultItem = await modelService.addModel(req.body);
             res.json(resultItem.insertId);
         }
@@ -51,9 +50,8 @@ export class ModelController {
     async deleteModel(req, res, next) {
         try {
             const result = await modelService.deleteModel(req.params.id);
-            console.log(result)
             if (result.affectedRows === 0)
-                throw new Error({ statusCode: 404 })
+                throw { statusCode: 404, message: "Not valid action" }
             res.json(req.params.id);
         }
         catch (ex) {
@@ -69,6 +67,8 @@ export class ModelController {
             const result = await modelService.updateModel(req.body, req.params.id);
             // if (result == null)
             //     throw ("this data cannot be updated")
+            if (result.affectedRows === 0)
+                throw { statusCode: 404, message: "Not valid action" }
             res.json(req.params.id);
         }
         catch (ex) {

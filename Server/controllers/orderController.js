@@ -1,12 +1,12 @@
 import { OrderService } from '../service/orderService.js'
-            const orderService = new OrderService();
+const orderService = new OrderService();
 
 export class OrderController {
     async getOrders(req, res, next) {
         try {
             const resultItems = await orderService.getOrders(req.query);
             if (resultItems.length == 0)
-                throw new Error({ statusCode: 404 })
+                throw { statusCode: 404, message: "Orders not found" }
             return res.json(resultItems);
         }
         catch (ex) {
@@ -21,7 +21,7 @@ export class OrderController {
         try {
             const resultItem = await orderService.getOrderById(req.params.id);
             if (resultItem.length == 0)
-                throw new Error({ statusCode: 404 })
+                throw { statusCode: 404, message: "Order not found" }
             res.json(resultItem);
         }
         catch (ex) {
@@ -34,7 +34,8 @@ export class OrderController {
 
     async addOrder(req, res, next) {
         try {
-            console.log(req.body)
+            if (!req.body.eventDate || !req.body.userId || !req.body.gownId)
+                throw { statusCode: 400, message: "Invalid parameters" }
             const resultItem = await orderService.addOrder(req.body);
             res.json(resultItem.insertId);
         }
@@ -48,7 +49,9 @@ export class OrderController {
 
     async deleteOrder(req, res, next) {
         try {
-            await orderService.deleteOrder(req.params.id)
+            const result = await orderService.deleteOrder(req.params.id)
+            if (result.affectedRows === 0)
+                throw { statusCode: 404, message: "Not valid action" }
             res.json(req.params.id);
         }
         catch (ex) {
@@ -64,6 +67,8 @@ export class OrderController {
             const result = await orderService.updateOrder(req.body, req.params.id);
             // if (result == null)
             //     throw ("this data cannot be updated")
+            if (result.affectedRows === 0)
+                throw { statusCode: 404, message: "Not valid action" }
             res.json(req.params.id);
         }
         catch (ex) {

@@ -9,7 +9,8 @@ export class LoginController {
         try {
             if (req.body) {
                 const resultItems = await loginService.login(req.body)
-                if (resultItems.length == 0) return res.status(409).json(resultItems[0])
+                if (resultItems.length == 0)
+                 throw { statusCode: 409, message: "User doesn't exsist" }
                 const token = jwt.sign(
                     { userId: resultItems[0].userId, admin: resultItems[0].isManager },
                     process.env.RANDOM_TOKEN_SECRET,

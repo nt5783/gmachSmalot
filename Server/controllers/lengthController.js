@@ -1,12 +1,12 @@
 import { LengthService } from '../service/lengthService.js'
-            const lengthService = new LengthService();
+const lengthService = new LengthService();
 
 export class LengthController {
     async getLengths(req, res, next) {
         try {
             const resultItems = await lengthService.getLengths(req.query);
             if (resultItems.length == 0)
-                throw new Error({ statusCode: 404 })
+                throw { statusCode: 404, message: "Lengths not found" }
             return res.json(resultItems);
         }
         catch (ex) {
@@ -21,7 +21,7 @@ export class LengthController {
         try {
             const resultItem = await lengthService.getLengthById(req.params.id);
             if (resultItem.length == 0)
-                throw new Error({ statusCode: 404 })
+                throw { statusCode: 404, message: "Length not found" }
             res.json(resultItem);
         }
         catch (ex) {
@@ -34,41 +34,13 @@ export class LengthController {
 
     async addLength(req, res, next) {
         try {
-            console.log(req.body)
+            if (!req.body.length)
+                throw { statusCode: 400, message: "Invalid parameters" }
             const resultItem = await lengthService.addLength(req.body);
             res.json(resultItem.insertId);
         }
         catch (ex) {
             const err = {}
-            err.statusCode = ex.statusCode ?? 500;
-            err.message = ex;
-            next(err)
-        }
-    }
-
-    async deleteLength(req, res, next) {
-        try {
-            await lengthService.deleteLength(req.params.id)
-            res.json(req.params.id);
-        }
-        catch (ex) {
-            const err = {}
-            err.statusCode = ex.statusCode ?? 500;
-            err.message = ex;
-            next(err)
-        }
-    }
-
-    async updateLength(req, res, next) {
-        try {
-            const result = await lengthService.updateLength(req.body, req.params.id);
-            // if (result == null)
-            //     throw ("this data cannot be updated")
-            res.json(req.params.id);
-        }
-        catch (ex) {
-            const err = {}
-            // err.statusCode = ex == "this data cannot be updated" ? 409 : 500;
             err.statusCode = ex.statusCode ?? 500;
             err.message = ex;
             next(err)

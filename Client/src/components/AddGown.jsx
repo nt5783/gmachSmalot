@@ -53,7 +53,7 @@ export default function AddGown({ gowns, model, formOn, getGowns }) {
         })
         // if (gowns.find((gown) => gown.sizeId == data.size))
         if (existingSize != null)
-            if (!confirm(`gowns from model ${model} in size ${existingSize} already exist. Do you want to add to them the amount you put in?`)) {
+            if (!confirm(`Gowns from model ${model} in size ${existingSize} already exist. Do you want to add ${data.amount} more?`)) {
                 formOn('')
                 return;
             }

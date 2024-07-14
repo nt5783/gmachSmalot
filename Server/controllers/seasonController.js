@@ -1,12 +1,12 @@
 import { SeasonService } from '../service/seasonService.js'
-            const seasonService = new SeasonService();
+const seasonService = new SeasonService();
 
 export class SeasonController {
     async getSeasons(req, res, next) {
         try {
             const resultItems = await seasonService.getSeasons(req.query);
             if (resultItems.length == 0)
-                throw new Error({ statusCode: 404 })
+                throw { statusCode: 404, message: "Seasons not found" }
             return res.json(resultItems);
         }
         catch (ex) {
@@ -21,7 +21,7 @@ export class SeasonController {
         try {
             const resultItem = await seasonService.getSeasonById(req.params.id);
             if (resultItem.length == 0)
-                throw new Error({ statusCode: 404 })
+                throw { statusCode: 404, message: "Season not found" }
             res.json(resultItem);
         }
         catch (ex) {
@@ -34,42 +34,14 @@ export class SeasonController {
 
     async addSeason(req, res, next) {
         try {
-            console.log(req.body)
+            if (!req.body.season)
+                throw { statusCode: 400, message: "Invalid parameters" }
             const resultItem = await seasonService.addSeason(req.body);
             res.json(resultItem.insertId);
         }
         catch (ex) {
             const err = {}
             err.statusCode = ex.statusCode ?? 500;
-            err.message = ex;
-            next(err)
-        }
-    }
-
-    async deleteSeason(req, res, next) {
-        try {
-            await seasonService.deleteSeason(req.params.id)
-            res.json(req.params.id);
-        }
-        catch (ex) {
-            const err = {}
-            err.statusCode = ex.statusCode ?? 500;
-            err.message = ex;
-            next(err)
-        }
-    }
-
-    async updateSeason(req, res, next) {
-        try {
-            const result = await seasonService.updateSeason(req.body, req.params.id);
-            // if (result == null)
-            //     throw ("this data cannot be updated")
-            res.json(req.params.id);
-        }
-        catch (ex) {
-            const err = {}
-            err.statusCode = ex.statusCode ?? 500;
-            // err.statusCode = ex == "this data cannot be updated" ? 409 : 500;
             err.message = ex;
             next(err)
         }

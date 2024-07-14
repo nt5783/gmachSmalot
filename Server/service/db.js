@@ -3,8 +3,6 @@ import 'dotenv/config'
 
 
 async function executeQuery(query, params) {
-
-    process.env.DB_TYPE == "mariadb" ? console.log('mariadb') : console.log('else')
     let results;
     const connection = process.env.DB_TYPE == "mariadb" ? await mysql.createConnection({
         // host: process.env.DB_HOST,

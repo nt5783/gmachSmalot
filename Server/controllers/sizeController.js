@@ -6,7 +6,7 @@ export class SizeController {
         try {
             const resultItems = await sizeService.getSizes(req.query);
             if (resultItems.length == 0)
-                throw new Error({ statusCode: 404 })
+                throw { statusCode: 404, message: "Sizes not found" }
             return res.json(resultItems);
         }
         catch (ex) {
@@ -21,7 +21,7 @@ export class SizeController {
         try {
             const resultItem = await sizeService.getSizeById(req.params.id);
             if (resultItem.length == 0)
-                throw new Error({ statusCode: 404 })
+                throw { statusCode: 404, message: "Size not found" }
             res.json(resultItem);
         }
         catch (ex) {
@@ -34,42 +34,14 @@ export class SizeController {
 
     async addSize(req, res, next) {
         try {
-            console.log(req.body)
+            if (!req.body.size)
+                throw { statusCode: 400, message: "Invalid parameters" }
             const resultItem = await sizeService.addSize(req.body);
             res.json(resultItem.insertId);
         }
         catch (ex) {
             const err = {}
             err.statusCode = ex.statusCode ?? 500;
-            err.message = ex;
-            next(err)
-        }
-    }
-
-    async deleteSize(req, res, next) {
-        try {
-            await sizeService.deleteSize(req.params.id)
-            res.json(req.params.id);
-        }
-        catch (ex) {
-            const err = {}
-            err.statusCode = ex.statusCode ?? 500;
-            err.message = ex;
-            next(err)
-        }
-    }
-
-    async updateSize(req, res, next) {
-        try {
-            const result = await sizeService.updateSize(req.body, req.params.id);
-            // if (result == null)
-            //     throw ("this data cannot be updated")
-            res.json(req.params.id);
-        }
-        catch (ex) {
-            const err = {}
-            err.statusCode = ex.statusCode ?? 500;
-            // err.statusCode = ex == "this data cannot be updated" ? 409 : 500;
             err.message = ex;
             next(err)
         }
