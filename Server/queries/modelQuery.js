@@ -7,7 +7,7 @@ function getModelsQuery(queryparams) {
         const date = new Date(queryparams.date)
         const firstDate = new Date(date);
         const secondDate = new Date(date);
-        
+
         // const addBusinessDays = (date, days) => {
         //     for (let i = 0; i < days; i++) {
         //         date.setDate(date.getDate() + 1);
@@ -23,7 +23,7 @@ function getModelsQuery(queryparams) {
         const addBusinessDays = (date, days) => {
             const isNegative = days < 0;
             days = Math.abs(days);
-        
+
             for (let i = 0; i < days; i++) {
                 if (isNegative) {
                     date.setDate(date.getDate() - 1);
@@ -42,8 +42,8 @@ function getModelsQuery(queryparams) {
                 }
             }
         };
-        
-        
+
+
         addBusinessDays(firstDate, -2);
         addBusinessDays(secondDate, 2);
         const formatDate = (date) => {
@@ -64,7 +64,7 @@ function getModelsQuery(queryparams) {
     else {
         //אם אני רוצה חורף וכל השנה?
         const fields = Object.keys(queryparams).filter(param => {
-            return param == 'color' || param == 'season'|| param == 'length';
+            return param == 'color' || param == 'season' || param == 'length';
         });
         let conditions = ""
         fields.forEach(field => conditions += "AND " + field + " = '" + queryparams[field] + "'")
@@ -85,10 +85,7 @@ function getModelByIdQuery() {
 }
 
 function addModelQuery(keys) {
-    // const query = `INSERT INTO models (${keys.map(key => key)}) VALUES (${values.map(value => `'${value}'`)})`;
-    const query = `INSERT INTO models (model,colorId,seasonId,lengthId,image) VALUES (?,?,?,?,?)`;
-    // const query = `INSERT INTO models (${keys.map(key => key)}) VALUES (?,?,?,?,?)`;
-    // const query = `INSERT INTO models VALUES (? ,? ,? ,? ,? , ?)`;
+    const query = `INSERT INTO models (${keys.map(key => key)}) VALUES (${keys.map(() => '?')})`;
     return query
 }
 

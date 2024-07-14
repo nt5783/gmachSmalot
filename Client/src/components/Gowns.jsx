@@ -115,11 +115,10 @@ function Gowns() {
   }
 
   async function deleteGown() {
-    //אם אנשים הזמינו?
-    if (confirm(`Are you sure you want to delete size ${gowns[selectedGown].size} from model ${gowns[selectedGown].model} from the database?`)) {
+    if (confirm(`Are you sure you want to delete size ${gowns[selectedGown].size} from model ${gowns[selectedGown].model} from the database?\nnote: it is possible that there are future orders for gowns of this size, the deletion is only for now on`)) {
       try {
         await fetchNoParamsfunc(`gowns/${gowns[selectedGown].gownId}`, 'DELETE');
-        alert(`Gowns from size ${gowns[selectedGown].size} deleted successfully`)
+        alert(`Gowns from size ${gowns[selectedGown].size} deleted successfully\n from now on, this size will not be ordered`)
         await getGowns();
         setSelectedGown(null)
       } catch (e) { alert(e) }

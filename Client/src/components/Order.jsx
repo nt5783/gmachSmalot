@@ -4,6 +4,7 @@ import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import { UserContext, DateContext } from '../App';
 import { fetchfunc } from '../fetch';
 import { useEffect } from 'react';
+import { Button } from 'primereact/button';
 
 const Order = () => {
     const { user } = useContext(UserContext)
@@ -95,7 +96,7 @@ const Order = () => {
                     <p>Please agree to the terms and conditions to proceed with the payment.</p>
                 )}
             </div>
-            <button onClick={orderGowns}>order</button>
+            <Button onClick={orderGowns}>order</Button>
         </PayPalScriptProvider>
     );
 };

@@ -56,7 +56,7 @@ export default function AddModel({ formOn, getModels, models, action }) {
             await getModels();
         } catch (error) { alert('Error adding model: ', error); }
     }
-    //לא עובד בגלל שכתוב צבע בלי אי די, להפוך שכן יהיה כתוב
+
     async function updateModel(data) {
         let formData;
         if (!imageData) formData = { ...data, image: null };
@@ -127,7 +127,7 @@ export default function AddModel({ formOn, getModels, models, action }) {
                             name="model"
                             control={control}
                             render={({ field }) => (
-                                <InputNumber value={field.value} onChange={(e) => field.onChange(e.value)} required />
+                                <InputNumber useGrouping={false} value={field.value} onChange={(e) => field.onChange(e.value)} required />
                             )}
                         />}
                         {action == 'update' && <Controller

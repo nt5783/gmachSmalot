@@ -48,11 +48,10 @@ function Models() {
     async function deleteModel(model) {
         if (confirm('Are you sure you want to delete this model from the database?')) {
             try {
-                //לבדוק שמשפיע בצורה נכונה
                 fetchNoParamsfunc(`models/${model}`, 'DELETE')
                 const index = models.findIndex(m => m.model === model);
                 setModels((prev) => [...prev.slice(0, index), ...prev.slice(index + 1, prev.length)])
-                alert(`model ${model} deleted successfully`)
+                alert(`model ${model} deleted successfully\n from now on, this model will not be viewed`)
             } catch (e) { alert(e) }
         }
     }

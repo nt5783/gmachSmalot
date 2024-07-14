@@ -63,13 +63,12 @@ function getGownsQuery(queryparams) {
 }
 
 function getGownByIdQuery() {
-    // const query = `SELECT * FROM gowns WHERE id = ?`;
     const query = `SELECT gownId,model,amount,size FROM gowns NATURAL JOIN sizes WHERE gownId = ?`;
     return query
 }
 
-function addGownQuery() {
-    const query = `INSERT INTO gowns (gownId, model, sizeId, amount) VALUES (null ,? ,? ,?)`;
+function addGownQuery(keys) {
+    const query = `INSERT INTO gowns (${keys.map(key => key)}) VALUES (${keys.map(() => '?')})`;
     return query
 }
 
