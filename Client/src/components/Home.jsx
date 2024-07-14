@@ -22,6 +22,8 @@ function Home() {
     console.log(cart)
     console.log('cartAmount')
     console.log(cartAmount)
+    console.log('favorites')
+    console.log(favorites)
     // let amount = 0
 
     useEffect(() => {
@@ -47,36 +49,36 @@ function Home() {
         navigate('./');
     }
 
-    return (
-        <>
-            <div className="header">
-                <img height={80} src={logo} alt="logo" className="logo" />
-                <div className="home_navigate">
-                    {/* <NavLink className="cart_link" to="./cart">{cart.length}<img height={'50px'} src={cartIcon} alt="cart icon" /></NavLink> */}
-                    {user && <span className="user-name">{user.username} {user.isManager ? 'manager' : ''}</span>}
-                    {user ? (<Button icon="pi pi-sign-out" label="Logout" className="logout-button" onClick={logout} />)
-                        : (<NavLink to="./login" className="nav-button">Login <i className="pi pi-sign-in"></i></NavLink>)}
-                    <NavLink className="cart_link" to="./cart">
-                        {/* <Badge value={cart.length} className="cart-badge"></Badge> */}
-                        <img height="50px" src={cartIcon} alt="cart icon" />
-                        <span className="cart-amount">{cartAmount}</span>
-                        {/* <span className="cart-amount">{cart.length}</span> */}
-                    </NavLink>
-                    {favorites.length > 0 ? <NavLink to="./favorites" className="nav-button, cart_link">
-                        <i className="pi pi-star-fill"></i>{favorites.length}</NavLink> :
-                        <NavLink to="./favorites" className="nav-button, cart_link"><i className="pi pi-star"></i></NavLink>}
-                    {/* ?למחוק */}
-                    <NavLink to="./manager" className="nav-button">Manager</NavLink>
-                </div>
-            </div>
+    return (<>
+        {/* <div className="header"> */}
+        <div className="header">
             <div className="home_navigate">
+                <img src={logo} alt="logo" className="logo" />
                 <NavLink to="./about" className="nav-button">About</NavLink>
                 <NavLink to="./models" className="nav-button">Models</NavLink>
                 <NavLink to="./eventCalendar" className="nav-button">Event Calendar <i className="pi pi-calendar"></i></NavLink>
             </div>
-            <Outlet />
-        </>
-    );
+            <div className="home_navigate">
+                {/* <NavLink className="cart_link" to="./cart">{cart.length}<img height={'50px'} src={cartIcon} alt="cart icon" /></NavLink> */}
+                {user && <span className="user-name">{user.username} {user.isManager ? 'manager' : ''}</span>}
+                {user ? (<Button icon="pi pi-sign-out" label="Logout" className="logout-button" onClick={logout} />)
+                    : (<NavLink to="./login" className="nav-button">Login <i className="pi pi-sign-in"></i></NavLink>)}
+                <NavLink className="cart_link" to="./cart">
+                    {/* <Badge value={cart.length} className="cart-badge"></Badge> */}
+                    <img height="50px" src={cartIcon} alt="cart icon" />
+                    {user && <span className="cart-amount">{cartAmount}</span>}
+                    {/* <span className="cart-amount">{cart.length}</span> */}
+                </NavLink>
+                {user && ( favorites.length > 0 ? <NavLink to="./favorites" className="nav-button, cart_link">
+                    <i className="pi pi-star-fill"></i>{favorites.length}</NavLink> :
+                    <NavLink to="./favorites" className="nav-button, cart_link"><i className="pi pi-star-fill">0</i></NavLink> )}
+                {/* ?למחוק */}
+                {user && user.isManager ? <NavLink to="./manager" className="nav-button">Manager</NavLink> : <></>}
+            </div>
+        </div>
+        {/* </div> */}
+        <Outlet />
+    </>);
 }
 
 export default Home;

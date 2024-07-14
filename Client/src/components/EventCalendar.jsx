@@ -59,7 +59,7 @@ function InvitationCalendar() {
       )}
       {!date && (
         <div className="calendar-container">
-          <Card className="calendar-card">
+          <Card className="calendar-card" header="Select the date of your event">
             <Calendar
               maxDate={oneYearFromNow}
               minDate={new Date()}
