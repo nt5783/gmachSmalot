@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { fetchfunc } from '../fetch';
+import { fetchfunc, loginfetchfunc } from '../fetch';
 import { UserContext } from '../App';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
@@ -23,13 +23,14 @@ const Signup = () => {
     const message = state ? 'you must sign up' : null;
 
     async function onSubmit(data) {
-        let res = fetchfunc('signup', 'POST', data);
+        let res = loginfetchfunc('signup', 'POST', data);
         const user = await res;
         if (user.status !== 200) return;
-        localStorage.setItem("user", JSON.stringify(user.data));
+        localStorage.setItem("user", JSON.stringify(user.data.data));
         setUser(user.data);
         if (model) navigate(`../models/${model}`, { state: { model: state.model, eventDate: state.eventDate ? state.eventDate : null } });
         navigate('../models');
+        location.reload();
     }
 
     return (
