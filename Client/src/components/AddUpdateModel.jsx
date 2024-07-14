@@ -29,14 +29,20 @@ export default function AddModel({ formOn, getModels, models, action }) {
 
     async function getData(table, setfunc) {
         const res = fetchNoParamsfunc(table, 'GET');
+        if (res.status == 401) throw "Permission denied";
         const data = await res;
         if (data.length > 0) setfunc(data);
     }
 
     useEffect(() => {
-        getData('colors', setColors);
-        getData('seasons', setSeasons);
-        getData('lengths', setLengths);
+        try {
+            getData('colors', setColors);
+            getData('seasons', setSeasons);
+            getData('lengths', setLengths);
+        }
+        catch (e) {
+            return
+        }
     }, []);
 
     async function addModel(data) {
