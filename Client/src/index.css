@@ -2,22 +2,24 @@
   background-color: rgb(250, 215, 215);
 } */
 
-button{
+button {
   margin: 5px;
 }
 
-Button{
+Button {
   background-color: #fdcc9d;
   border-width: 0;
 }
 
-Button:hover,button:hover,a:hover{
+Button:hover,
+button:hover,
+a:hover {
   background-color: #f2b881;
 }
 
 /* models */
 
-.models-header.p-panel-header{
+.models-header.p-panel-header {
   display: flex;
   justify-content: center;
 }
@@ -49,7 +51,8 @@ Button:hover,button:hover,a:hover{
   border-radius: 0px;
 }
 
-.event-info, .warning {
+.event-info,
+.warning {
   margin-bottom: 20px;
   padding: 10px;
   background-color: #fdcc9d;
@@ -76,14 +79,6 @@ Button:hover,button:hover,a:hover{
 .model_item:hover {
   transform: scale(1.05);
 }
-
-
-
-
-
-
-
-
 
 
 
@@ -147,13 +142,6 @@ Button:hover,button:hover,a:hover{
 
 
 
-
-
-
-
-
-
-
 /* calendar */
 .date-message {
   background-color: #e1ddd5;
@@ -183,13 +171,6 @@ Button:hover,button:hover,a:hover{
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
-
-
-
-
-
-
 
 
 /* home */
@@ -222,7 +203,7 @@ Button:hover,button:hover,a:hover{
   display: flex;
   align-items: center;
   text-decoration: none;
-  background:none;
+  background: none;
 }
 
 .cart_link:hover {
@@ -235,20 +216,13 @@ Button:hover,button:hover,a:hover{
   text-decoration: none;
 }
 
-/* .cart-badge {
-  background-color: #fdcc9d;
-  color: #fff;
-  font-size: 1.2em;
-  padding: 5px 10px;
-  border-radius: 50%;
-} */
-
 .user-name {
   font-weight: bold;
   color: #e1ddd5;
 }
 
-.logout-button, .nav-button {
+.logout-button,
+.nav-button {
   background-color: #fdcc9d;
   color: #fff;
   border: none;
@@ -258,30 +232,10 @@ Button:hover,button:hover,a:hover{
   text-align: center;
 }
 
-/* .logout-button:hover, .nav-button:hover {
-  background-color: #e1ddd5;
-  color: #d4bfcc;
-} */
-
 .nav-button {
   display: inline-block;
   margin: 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -297,7 +251,8 @@ Button:hover,button:hover,a:hover{
   color: #d4bfcc;
 }
 
-.add-model-form .p-inputtext, .p-dropdown {
+.add-model-form .p-inputtext,
+.p-dropdown {
   width: 100%;
   margin-bottom: 10px;
 }
@@ -333,12 +288,6 @@ Button:hover,button:hover,a:hover{
 
 
 
-
-
-
-
-
-
 /* signup */
 .signup-form {
   display: flex;
@@ -358,7 +307,8 @@ Button:hover,button:hover,a:hover{
   color: #d4bfcc;
 }
 
-.signup-form .p-inputtext, .p-password {
+.signup-form .p-inputtext,
+.p-password {
   width: 100%;
 }
 
@@ -400,10 +350,6 @@ Button:hover,button:hover,a:hover{
 
 
 
-
-
-
-
 /* login */
 .login-form {
   display: flex;
@@ -423,7 +369,8 @@ Button:hover,button:hover,a:hover{
   color: #d4bfcc;
 }
 
-.login-form .p-inputtext, .p-password {
+.login-form .p-inputtext,
+.p-password {
   width: 100%;
 }
 
@@ -468,26 +415,31 @@ Button:hover,button:hover,a:hover{
 
 /* AddGown */
 
-.add-gown-dialog, .add-size-form {
+.add-gown-dialog,
+.add-size-form {
   background-color: #e1ddd5;
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-.add-gown-form .field, .add-size-form .field {
+.add-gown-form .field,
+.add-size-form .field {
   margin-bottom: 20px;
 }
 
-.add-gown-form .p-float-label label, .add-size-form .p-float-label label {
+.add-gown-form .p-float-label label,
+.add-size-form .p-float-label label {
   color: #d4bfcc;
 }
 
-.add-gown-form .p-dropdown, .add-gown-form .p-inputnumber {
+.add-gown-form .p-dropdown,
+.add-gown-form .p-inputnumber {
   width: 100%;
 }
 
-.add-gown-form .p-button, .add-size-form .p-button {
+.add-gown-form .p-button,
+.add-size-form .p-button {
   background-color: #fdcc9d;
   color: #fff;
   border: none;
@@ -518,6 +470,8 @@ Button:hover,button:hover,a:hover{
 }
 
 .cart-item {
+  /* display: flex;
+  justify-content: center; */
   background-color: #fff;
   padding: 10px;
   border: 1px solid #ddd;
@@ -535,7 +489,8 @@ Button:hover,button:hover,a:hover{
   font-weight: bold;
 }
 
-.gown-size, .gown-qty {
+.gown-size,
+.gown-qty {
   display: block;
   margin-top: 5px;
   color: #555;
@@ -552,18 +507,6 @@ Button:hover,button:hover,a:hover{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 /* About */
 
 .about-container {
@@ -571,11 +514,13 @@ Button:hover,button:hover,a:hover{
   border: 20px solid #e1ddd5;
 }
 
-.contact-section, .regulations-section {
+.contact-section,
+.regulations-section {
   margin-bottom: 20px;
 }
 
-h2, h4 {
+h2,
+h4 {
   color: #ac9aa5;
 }
 
@@ -672,7 +617,8 @@ table {
   border-collapse: collapse;
 }
 
-th, td {
+th,
+td {
   border: 1px solid black;
   padding: 8px;
   text-align: left;
@@ -690,13 +636,7 @@ th {
 
 
 
-
-
-
-
-
 /* order */
-
 .order-container {
   width: 80%;
   margin: auto;
