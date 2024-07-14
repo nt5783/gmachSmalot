@@ -17,9 +17,9 @@ Button:hover,button:hover,a:hover{
 
 /* models */
 
-.models-header{
+.models-header.p-panel-header{
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .model-icons {
@@ -29,10 +29,14 @@ Button:hover,button:hover,a:hover{
   justify-self: left;
 }
 
-/* .p-panel-header{
-  display: flex;
-  justify-content: space-between;
-} */
+.manager-model-options {
+  position: relative;
+  left: 0px;
+}
+
+.p-panel {
+  border-radius: 0px;
+}
 
 .models-page {
   padding: 20px;
@@ -42,6 +46,7 @@ Button:hover,button:hover,a:hover{
 .models-panel {
   background-color: #fff7e6;
   border: none;
+  border-radius: 0px;
 }
 
 .event-info, .warning {
@@ -61,11 +66,11 @@ Button:hover,button:hover,a:hover{
   background-color: #d4bfcc;
   border: 1px solid #d4bfcc;
   margin: 10px;
-  padding: 20px;
+  /* padding: 10px; */
   border-radius: 5px;
   text-align: center;
   transition: transform 0.2s;
-  width: 450px;
+  width: 420px;
 }
 
 .model_item:hover {
@@ -190,6 +195,12 @@ Button:hover,button:hover,a:hover{
 /* home */
 
 .header {
+  z-index: 1;
+  position: sticky;
+  height: 120px;
+  top: 0;
+  left: 0;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -198,7 +209,7 @@ Button:hover,button:hover,a:hover{
 }
 
 .logo {
-  height: 80px;
+  height: 100px;
 }
 
 .home_navigate {
@@ -519,10 +530,6 @@ Button:hover,button:hover,a:hover{
   cursor: pointer;
 }
 
-.gown-details {
-  padding: 10px 0;
-}
-
 .gown-model {
   font-size: 18px;
   font-weight: bold;
@@ -561,10 +568,7 @@ Button:hover,button:hover,a:hover{
 
 .about-container {
   padding: 20px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-top: 20px;
+  border: 20px solid #e1ddd5;
 }
 
 .contact-section, .regulations-section {

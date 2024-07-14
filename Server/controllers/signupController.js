@@ -1,4 +1,6 @@
 import { UserService } from "../service/userService.js";
+import jwt from 'jsonwebtoken'
+
 const signupService = new UserService();
 
 export class SignupController {
@@ -8,8 +10,8 @@ export class SignupController {
             if (req.body) {
                 const resultItems = await signupService.signup(req.body);
                 if (resultItems.length == 0) {
-                    //  return res.status(409).json(resultItems);
-                    throw new Error({ statusCode: 409 })
+                     return res.status(409).json(resultItems);
+                    // throw new Error({ statusCode: 409 })
                 }
                 const token = jwt.sign(
                     { userId: resultItems[0].userId, admin: resultItems[0].isManager },

@@ -11,7 +11,7 @@ import Models from './components/Models'
 import Cart from './components/Cart'
 import EventCalendar from './components/EventCalendar'
 import Order from './components/Order'
-import Favorites from './components/favorites'
+import Favorites from './components/Favorites'
 import './App.css'
 
 export const UserContext = createContext()

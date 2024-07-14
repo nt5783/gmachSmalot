@@ -87,9 +87,9 @@ function Models() {
     function modelsHeader() {
         return (
             <div className='models-header'>
-                <span>Models </span>
+                <div>Models</div>
                 {user && user.isManager === 1 && (
-                    <div>
+                    <div className='manager-model-options'>
                         <Button label="Add New Model" icon="pi pi-plus" onClick={() => setAddUpdateModelForm(prev => prev === 'add' ? '' : 'add')} />
                         <Button label="Update Model" icon="pi pi-pen-to-square" onClick={() => setAddUpdateModelForm(prev => prev === 'update' ? '' : 'update')} />
                     </div>)}
