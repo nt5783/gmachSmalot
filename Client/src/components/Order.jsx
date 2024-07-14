@@ -63,6 +63,7 @@ const Order = () => {
         <PayPalScriptProvider options={{ "client-id": "ATjqmx7s7BZKVhYLfEngKieXUDvP8D7zQzw8Wz7OrDRWi8lgaKLNh3LRRyIgDu8mYH4KtROFhK5YxWMv" }}>
             <div className="order-container">
                 <h2>Gown Order</h2>
+                <h3>{new Date(date).getUTCDate.toString()}</h3>
                 {gowns.map((gown) => (<><h3>Model: {gown.model} <br /> Size: {gown.size} <br /> Amount: {gown.qty}</h3>
                 </>
                 ))}

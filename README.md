@@ -4,12 +4,13 @@ end to end project - gowns gemach
 לפי ימי עסקים
 פתוח במוצש רק בחורף
 
-change fetchfunc in Signup!!
-error not autorized in add/update model many times
+
+לשנות צבע כפתורי מנהל
+להעתיק לreadme from loginController
 
 באגים:
-on login - set cart and date!! (for cart items in header)
-message does'nt show!! like on add gown to cart
+tostring date in order
+redirect from login from orderNow? -date?
 נתן לי להיכנס להזמנה בלי שהייתי משתמש
 כשמוסיפים מידה שהמידות יעמדו לפי הסדר
 הזמנות להיום לראות כשאין
@@ -34,7 +35,6 @@ we add sizeId in gowns what about models?
 לוגיקה מהקווריס להעביר לסרביס
 בטפסים שהצבע שבחר יהיה בסלקט
 שגיאות בלוגין וסינאפ
-בבקשות POST שיהיה אפשר להכניס בכל סדר
 לתרגם את האתר לעיברית
 בוחר כמות אפס, פועל טוב, לא מתריע
 לצמצם גישות לDB

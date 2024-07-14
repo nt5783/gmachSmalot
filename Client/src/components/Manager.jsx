@@ -20,9 +20,9 @@ function Manager() {
     // let img = new img[10]
 
 
-    useEffect(() => {
-        showOrders('today');
-    }, [])
+    // useEffect(() => {
+    //     showOrders('today');
+    // }, [])
 
 
 
@@ -66,8 +66,8 @@ function Manager() {
             const res = fetchNoParamsfunc(`orders?${when}`, 'GET')
             const data = await res
             console.log('data')
-            // if (data.length > 0)
-            //     setOrders(data)
+            if (data.length > 0)
+                setOrders(data)
             console.log(data)
         }
         catch (err){
@@ -93,6 +93,7 @@ function Manager() {
                 <table>
                     <thead>
                         <tr>
+                            <th></th>
                             <th>Date</th>
                             <th>Full Name</th>
                             <th>Email</th>
@@ -103,8 +104,9 @@ function Manager() {
                         </tr>
                     </thead>
                     <tbody>
-                        {orders.map((order) => (
+                        {orders.map((order, i) => (
                             <tr className='view-order'>
+                                <td><button><i className='pi pi-edit'></i>edit</button></td>
                                 <td>{new Date(order.eventDate).toISOString().substring(0, 10)}</td>
                                 <td>{order.fullName}</td>
                                 <td>{order.email}</td>
