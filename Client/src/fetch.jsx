@@ -37,7 +37,7 @@ async function fetchfunc(url, method, body, thenfunc) {
         const json = await response.json()
         const data = await json
         if (response.status == 401){
-            alert('Permission is denied\n' + data.message)
+            throw('Permission is denied\n' + data.message)
         }
         const user = typeof data != 'undefined' ? data : null
         // לא תמיד מקבל דטה
