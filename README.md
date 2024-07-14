@@ -9,9 +9,8 @@ end to end project - gowns gemach
 cart number doubled on load!!
 on login - set cart and date!! (for cart items in header)
 message does'nt show!! like on add gown to cart
-No available options אם בחרת תאריך ואתה לא משתמש
-עשיתי לוגאאוט והוא אמר שיש לי תאריך בחור
 נתן לי להיכנס להזמנה בלי שהייתי משתמש
+כשמוסיפים מידה שהמידות יעמדו לפי הסדר
 
 הוספות- יכול לחכות:
 שהמנהל יוכל לראות את כל ההזמנות הקיימות לדגם מסויים
@@ -22,8 +21,10 @@ filters & search
 לפצל ולסדר CSS
 שהשאילתות של המאפיינים יהיו גנריות
 אבא זקס אומר שאתר צריך להיות מצחיק, לזרוק הודעות--איך זה עומד עליך
+צריך להוסיף אודיו???
 
 דברים שעוד צריך לעשות:
+change the name of gowns to size
 manager- delete: model, gown, update: gown,(model) , add: model, gown, props
 סדר בקוד סדר באתר (עברית אנגלית לדוגמה)
 לסדר את הQUERYS
@@ -43,7 +44,6 @@ we add sizeId in gowns what about models?
 
 
 ?:
-access token - cookies לפני ביצוע פעולות מנהל לבדוק (בAPP) שהתוקן תקין
 אם מוסיף מודל קיים?
 עדכון שמלה לא עובד
 טופס עדכון שמלה מוזנח
@@ -51,7 +51,7 @@ access token - cookies לפני ביצוע פעולות מנהל לבדוק (בA
 לעשות הזמנה מהעגלה
 מועדפים
 לא עובד בסמינר דברים שבבית כן
-צריך להוסיף אודיו???
+
 
 
 דברים שנעשו!:
@@ -65,6 +65,7 @@ gowns			לפי תאריך
 עדכון כמות בהוספת שמלה לא עובד
 כשעומדים על מודל שיראה פרטים
 להסתכל בדרישות הפרויקט
+access token - cookies לפני ביצוע פעולות מנהל לבדוק (בAPP) שהתוקן תקין
 
 
 
@@ -73,6 +74,39 @@ gowns			לפי תאריך
 #d4bfcc
 #fdcc9d
 #e1ddd5
+
+
+
+
+בסרביס:
+
+
+   async updateOrder(id, value) {
+        const driverQuery = getIdQuery('drivers', 'userId = ?')
+        const driverResult = await executeQuery(driverQuery, [value.driverId])
+        const queryUpdateOrder = updateQuery('orders', `driverId = ?`, 'id = ?');
+        const orderResult = await executeQuery(queryUpdateOrder, [driverResult[0].id, id]);
+        if (orderResult.affectedRows)
+            return orderResult;
+        throw { status: 404, message: "Order not found" };
+    }
+
+בקונטרולר:
+
+    async updateOrder(req, res, next) {
+        try {
+            const orderService = new OrderService();
+            await orderService.updateOrder(req.params.id, req.body);
+            res.json({ status: 200 });
+        }
+        catch (ex) {
+            const err = {}
+            err.statusCode = ex.status == undefined ? 500 : ex.status;
+            err.message = ex.message == undefined ? ex : ex.message;
+            next(err)
+        }
+    }
+
 
 
 בבקשת POST API, יכולות להיזרק מספר סוגים של שגיאות. הנה כמה מהשגיאות הנפוצות ביותר:

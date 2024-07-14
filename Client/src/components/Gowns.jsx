@@ -119,9 +119,6 @@ function Gowns() {
       {console.log("gowns")}
       {console.log(gowns)}
       {visible && <Message className="success-message" severity="success" text={message} />}
-      {user && user.isManager === 1 && (
-        <Button label="Add New Gown" icon="pi pi-plus" onClick={() => setShowForm((prev) => (prev === 'add' ? '' : 'add'))} />
-      )}
       {showForm === 'add' && <AddGown gowns={gowns} model={model.model} formOn={setShowForm} getGowns={getGowns} />}
 
       <div className="gown-container">
@@ -160,6 +157,19 @@ function Gowns() {
               <span>Size: {gowns[selectedGown].size}</span>
               <br />
               <span>Available amount: {gowns[selectedGown].available}</span>
+              {/* <br />
+              {user && user.isManager === 1 &&<form >
+                <label htmlFor="quantity">Change the number of existing gowns in this size:</label>
+                <input
+                type="number"
+                name="quantity"
+                min="1"
+                defaultValue={gowns[selectedGown].amount}
+                // value={amountToOrder}
+                // onChange={(e) => setAmountToOrder(e.target.value)}
+              />
+              <button type='submit'>Apply changes</button>
+                </form>} */}
               <br />
               <br />
               {eventDate == null && <div><span className="warning">you are in display mode. you have to pick a date <a className="no-background" href="../eventCalendar">pick a date here</a></span></div>}
@@ -174,6 +184,21 @@ function Gowns() {
                 value={amountToOrder}
                 onChange={(e) => setAmountToOrder(e.target.value)}
               />
+              {user && user.isManager === 1 && (
+                <div>
+                  <Button
+                    label="Update this size inventory"
+                    icon="pi pi-pen-to-square"
+                    onClick={() => setShowForm((prev) => (prev === 'update' ? '' : 'update'))}
+                  />
+                  <Button
+                    label="Remove this size"
+                    icon="pi pi-trash"
+                    onClick={() => setShowForm((prev) => (prev === 'update' ? '' : 'update'))}
+                  />
+                </div>
+              )}
+              <br />
               <Button
                 label="Add to cart"
                 icon="pi pi-shopping-cart"
@@ -186,13 +211,6 @@ function Gowns() {
                 disabled={eventDate == null}
                 onClick={handleOrder}
               />
-              {user && user.isManager === 1 && (
-                <Button
-                  label="Update Gown"
-                  icon="pi pi-refresh"
-                  onClick={() => setShowForm((prev) => (prev === 'update' ? '' : 'update'))}
-                />
-              )}
               {showForm === 'update' && <UpdateGown gown={gowns[selectedGown]} formOn={setShowForm} />}
             </div>
           )}
