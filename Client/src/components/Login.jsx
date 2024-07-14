@@ -29,7 +29,7 @@ function Login() {
         if (user.status !== 200) return;
         localStorage.setItem("user", JSON.stringify(user.data.data));
         console.log(cart)
-        if (model) navigate(`../models/${model}`, { state: { model: state.model, eventDate: state.eventDate ? state.eventDate : null } });
+        if (model) navigate(`../models/${model}`, { state: { model: state.model, eventDate: state.eventDate ?? null } });
         else navigate('../models');
         location.reload();
         setUser(user.data.data);

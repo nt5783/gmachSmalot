@@ -106,6 +106,7 @@ function Gowns() {
   }
 
   function handleOrder() {
+    if (!user) navigate('/login', { state: { model: model, message: 'you must log in to your account', eventDate: eventDate } });
     if (amountToOrder > 0) {
       let gownToOrder = gowns[selectedGown]
       console.log(amountToOrder)
@@ -130,7 +131,7 @@ function Gowns() {
       {console.log("gowns")}
       {console.log(gowns)}
       {console.log(selectedGown)}
-      {visible && <Message className="success-message" severity="success" text={message} />}
+      {visible && <Message className="success-message" severity="success" text={message}/>}
       {showForm === 'add' && <AddGown gowns={gowns} model={model.model} formOn={setShowForm} getGowns={getGowns} />}
 
       <div className="gown-container">
@@ -198,7 +199,7 @@ function Gowns() {
               )}
               <br />
               <br />
-              {eventDate == null && <div><span className="warning">you are in display mode. you have to pick a date <a className="no-background" href="../eventCalendar">pick a date here</a></span></div>}
+              {!eventDate && <div><span className="warning">you are in display mode. you have to pick a date <a className="no-background" href="../eventCalendar">pick a date here</a></span></div>}
               <br />
               <label htmlFor="amount">amount:</label>
               <input
@@ -211,16 +212,17 @@ function Gowns() {
                 onChange={(e) => setAmountToOrder(e.target.value)}
               />
               <br />
+              {/* {!user && <div><span className="warning">you are not a user <a className="no-background" href="../login">login here</a></span></div>} */}
               <Button
                 label="Add to cart"
                 icon="pi pi-shopping-cart"
-                disabled={eventDate == null}
+                disabled={!eventDate}
                 onClick={() => AddGownToCart(gowns[selectedGown])}
               />
               <Button
                 label="Order now"
                 icon="pi pi-shopping-bag"
-                disabled={eventDate == null}
+                disabled={!eventDate}
                 onClick={handleOrder}
               />
               {showForm === 'update' && <UpdateGownsAmount gown={gowns[selectedGown]} getGowns={getGowns} index={selectedGown} formOn={setShowForm} />}
