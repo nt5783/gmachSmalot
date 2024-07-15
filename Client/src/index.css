@@ -98,6 +98,9 @@ a:hover {
   transform: scale(1.05);
 }
 
+.pi-star,.pi-star-fill{
+  font-size: 1.5em;
+}
 
 
 /* gowns */
@@ -194,7 +197,7 @@ a:hover {
 /* home */
 
 .header {
-  z-index: 1;
+  z-index: 5;
   position: sticky;
   height: 120px;
   top: 0;
@@ -226,6 +229,7 @@ a:hover {
 
 .cart_link:hover {
   background: none;
+  opacity: 60%;
 }
 
 .cart-amount {
@@ -514,8 +518,7 @@ a:hover {
   font-weight: bold;
 }
 
-.gown-size,
-.gown-qty {
+.gown-info {
   display: block;
   margin-top: 5px;
   color: #555;
@@ -682,4 +685,9 @@ th {
 .agreement-checkbox a {
   color: #007bff;
   text-decoration: underline;
+}
+
+.paypal-buttons {
+  z-index: 0;
+  /* !important */
 }
