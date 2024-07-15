@@ -63,7 +63,7 @@ function Home() {
                 </NavLink>
                 {user ? (<Button icon="pi pi-sign-out" label="Logout" className="logout-button" onClick={logout} />)
                     : (<NavLink to="./login" className="nav-button">Login <i className="pi pi-sign-in"></i></NavLink>)}
-                {user && user.isManager ? <NavLink to="./manager" className="nav-button">Manager</NavLink> : <></>}
+                {user && user.isManager ? <NavLink to="./manager" className="manager-button nav-button">Manager</NavLink> : <></>}
             </div>
         </div>
         <Outlet />

@@ -17,7 +17,6 @@ import 'primeicons/primeicons.css';
 function Gowns() {
   const navigate = useNavigate();
   const { favorites, setFavorites } = useContext(FavoritesContext);
-  const { isManager } = useContext(ManagerContext);
   const { user } = useContext(UserContext);
   const { date } = useContext(DateContext);
   const { cart, setCart } = useContext(CartContext);
@@ -164,7 +163,7 @@ function Gowns() {
                 label='Add Size'
                 icon="pi pi-plus"
                 onClick={() => setShowForm((prev) => (prev === 'add' ? '' : 'add'))}
-                className="p-button-outlined p-button-secondary"
+                className="manager-button p-button-outlined p-button-secondary"
               />}
             </div>
           </div>
@@ -194,11 +193,13 @@ function Gowns() {
                     label="Update this size inventory"
                     icon="pi pi-pen-to-square"
                     onClick={() => setShowForm((prev) => (prev === 'update' ? '' : 'update'))}
+                    className='manager-button'
                   />
                   <Button
                     label="Remove this size"
                     icon="pi pi-trash"
                     onClick={deleteGown}
+                    className='manager-button'
                   />
                 </div>
               )}
