@@ -50,7 +50,7 @@ const Order = () => {
         try {
             await fetchfunc('orders', 'POST', orderObjs)
         } catch (err) {
-            console.log(err)
+            alert(`Error sending order: ${err.message}`)
         }
     }
     {/* {console.log("eventDate")} */ }
@@ -62,7 +62,8 @@ const Order = () => {
             <input type="date" name="eventDate" onChange={setEventDate}></input></div>} */}
     {/* {eventDate &&  */{
 
-    } }
+    }
+    }
     return (
         <PayPalScriptProvider options={{ "client-id": "ATjqmx7s7BZKVhYLfEngKieXUDvP8D7zQzw8Wz7OrDRWi8lgaKLNh3LRRyIgDu8mYH4KtROFhK5YxWMv" }}>
             <div className="order-container">
@@ -80,8 +81,8 @@ const Order = () => {
 
                 {isAgreementChecked ? (
                     <div className='pay-pal-buttons-div'>
-                    <PayPalButtons
-                        onClick={orderGowns} className='pay-pal-buttons'
+                        <PayPalButtons
+                            onClick={orderGowns} className='pay-pal-buttons'
                         // createOrder={(data, actions) => {
                         //     return actions.order.create({
                         //         purchase_units: [{ amount: { currency_code: 'ILS', value: '100.00' } }]
@@ -97,7 +98,7 @@ const Order = () => {
                         //     console.error('PayPal Checkout onError:', err);
                         //     alert('An error occurred with your payment. Please try again.');
                         // }}
-                    />
+                        />
                     </div>
                 ) : (
                     <p>Please agree to the terms and conditions to proceed with the payment.</p>
