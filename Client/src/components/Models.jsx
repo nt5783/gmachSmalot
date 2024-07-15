@@ -68,7 +68,7 @@ function Models() {
     }
 
     function removeFromFavorites(model) {
-        setFavorites((prev) => prev.filter(m => m != model))
+        setFavorites((prev) => prev.filter(m => m.model != model))
     }
 
     const itemTemplate = (model) => {
@@ -80,13 +80,13 @@ function Models() {
                     {/* {user && user.isManager === 1 && <span onClick={(event) => { event.stopPropagation(); deleteModel(model.model) }} className="pi pi-trash manager-button" />} */}
                     {user && user.isManager === 1 && <Button className='manager-button' icon="pi pi-trash" onClick={(event) => { event.stopPropagation(); deleteModel(model.model) }} />}
                     {user && user.isManager === 1 && <Button className='manager-button' icon="pi pi-pen-to-square" onClick={(event) => { event.stopPropagation(); setAddUpdateModelForm(model) }} />}
-                    {user && !favorites.includes(model.model) && <span className='pi pi-star' onClick={(event) => { event.stopPropagation(); addToFavorites(model.model) }} />}
-                    {user && favorites.includes(model.model) && <span className='pi pi-star-fill' onClick={(event) => { event.stopPropagation(); removeFromFavorites(model.model) }} />}
+                    {user && !favorites.some((m) => m.model == model.model) && <span className='pi pi-star' onClick={(event) => { event.stopPropagation(); addToFavorites(model) }} />}
+                    {user && favorites.some((m) => m.model == model.model) && <span className='pi pi-star-fill' onClick={(event) => { event.stopPropagation(); removeFromFavorites(model.model) }} />}
                 </div>
                 <h3>{model.model}</h3>
                 <img height={400} src={model.image} alt={model.model} />
                 <div>
-                    {showModelDetails == model.model && <span>color: {model.color}, season: {model.season}</span>}
+                    {showModelDetails == model.model && <span>color: {model.color}, season: {model.season}, length: {model.length}</span>}
                 </div>
             </Card>
         );

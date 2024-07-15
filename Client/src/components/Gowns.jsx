@@ -83,7 +83,7 @@ function Gowns() {
   }
 
   function removeFromFavorites() {
-    setFavorites((prev) => prev.filter(m => m != model))
+    setFavorites((prev) => prev.filter(m => m.model != model))
   }
 
   function AddGownToCart(gown) {
@@ -94,9 +94,10 @@ function Gowns() {
       setCart((prevCart) => {
         const gownIndex = prevCart.items.findIndex((item) => item.gownId === gownId);
         if (gownIndex == -1)
-          return {
+         return {
+            //יש עוד שיטה
             qty: prevCart.qty + Number(amountToOrder),
-            items: [...prevCart.items, { gownId, model: model, size: gown.size, img: modelInfo.image, qty: Number(amountToOrder) }],
+            items: [...prevCart.items, { gownId, model: gown.model, size: gown.size, img: modelInfo.image, qty: Number(amountToOrder) }],
           };
         const updatedItems = prevCart.items.map((item, index) => {
           if (index === gownIndex) return { ...item, qty: item.qty + Number(amountToOrder) };
@@ -134,7 +135,7 @@ function Gowns() {
 
   function gownHeader() {
     return (<>
-      <h2>Model {model}</h2>
+      <h2>Model: {model}</h2>
       <h4>Color: {modelInfo.color}</h4>
       <h4>Length: {modelInfo.length}</h4>
       <h4>Season: {modelInfo.season}</h4>
@@ -240,8 +241,8 @@ function Gowns() {
           )}
         </Panel>
         <div className='gown-favorite'>
-          {user && !favorites.includes(model) && <i className='pi pi-star' onClick={(event) => { event.stopPropagation(); addToFavorites(model) }} />}
-          {user && favorites.includes(model) && <i className='pi pi-star-fill' onClick={(event) => { event.stopPropagation(); removeFromFavorites(model) }} />}
+          {user && !favorites.some((m)=>m.model == model) && <i className='pi pi-star' onClick={(event) => { event.stopPropagation(); addToFavorites(modelInfo) }} />}
+          {user && favorites.some((m)=>m.model == model) && <i className='pi pi-star-fill' onClick={(event) => { event.stopPropagation(); removeFromFavorites(model) }} />}
         </div>
       </div>
     </>
