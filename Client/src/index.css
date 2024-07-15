@@ -1,3 +1,13 @@
+@font-face {
+  font-family: 'MyWebFont';
+  src: url('webfont.eot'); /* IE9 Compat Modes */
+  src: url('webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('webfont.woff2') format('woff2'), /* Super Modern Browsers */
+       url('webfont.woff') format('woff'), /* Pretty Modern Browsers */
+       url('webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('webfont.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+
 /* .warning{
   background-color: rgb(250, 215, 215);
 } */
@@ -93,9 +103,9 @@ a:hover {
 }
 
 .gown-favorite {
-  margin-left: 0px;
-  margin-top: -5px;
-
+  margin-left: 10px;
+  margin-right: -10px;
+  align-self: flex-start;
 }
 
 .gown-container {
@@ -115,7 +125,7 @@ a:hover {
 .gown-details {
   flex: 2;
   background-color: #f9f9f9;
-  padding: 20px;
+  padding: 0px 20px 20px;
   border-radius: 5px;
 }
 
@@ -423,10 +433,10 @@ a:hover {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-.add-gown-form .field,
+/* .add-gown-form .field,
 .add-size-form .field {
   margin-bottom: 20px;
-}
+} */
 
 .add-gown-form .p-float-label label,
 .add-size-form .p-float-label label {
@@ -525,7 +535,7 @@ h4 {
 }
 
 h4 {
-  margin-top: 15px;
+  margin: 5px 0px;
 }
 
 iframe {

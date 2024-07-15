@@ -6,12 +6,10 @@ end to end project - gowns gemach
 
 
 לשנות צבע כפתורי מנהל
-להעתיק לreadme from loginController
 
 באגים:
-tostring date in order
-redirect from login from orderNow? -date?
 נתן לי להיכנס להזמנה בלי שהייתי משתמש
+הוספת מידה עובדת?????-------------------------
 כשמוסיפים מידה שהמידות יעמדו לפי הסדר
 הזמנות להיום לראות כשאין
 

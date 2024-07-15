@@ -80,7 +80,9 @@ function getModelsQuery(queryparams) {
 function getModelByIdQuery() {
     //להציג לכולם את אלו שלא פעילים?
     // const query = `SELECT * FROM models WHERE model = ?`;
-    const query = `SELECT model,image,color,season FROM models NATURAL JOIN colors NATURAL JOIN seasons NATURAL JOIN lengths WHERE model = ?`
+    // only if inUse:
+    //    const query = `SELECT model,image,color,season FROM models NATURAL JOIN colors NATURAL JOIN seasons NATURAL JOIN lengths WHERE model = ? AND isInUse = 1`
+    const query = `SELECT model,image,color,season,length FROM models NATURAL JOIN colors NATURAL JOIN seasons NATURAL JOIN lengths WHERE model = ?`
     return query
 }
 

@@ -21,7 +21,7 @@ export class ModelService {
         const result = await executeQuery(queryModel, [id]);
         if (!result[0].image)
             result[0].image = `http://${process.env.DB_HOST}:${process.env.DB_PORT}/img/default image.jpg`
-        result[0].image = `http://${process.env.DB_HOST}:${process.env.DB_PORT}/img/${result[0].image}`
+        else result[0].image = `http://${process.env.DB_HOST}:${process.env.DB_PORT}/img/${result[0].image}`
         return result;
     }
 
