@@ -7,7 +7,7 @@ import AddModel from './AddUpdateModel'
 import { fetchfunc, fetchNoParamsfunc } from '../fetch';
 import AddGown from './AddGown';
 import { Button } from 'primereact/button';
-// import { AppContext } from "../App";
+import { UserContext } from "../App";
 
 
 
@@ -18,11 +18,25 @@ function Manager() {
     const [orders, setOrders] = useState([])
     // const [, setAdditional] = useState('')
     // let img = new img[10]
+    const navigate = useNavigate();
+    const { user, setUser } = useContext(UserContext);
 
 
     // useEffect(() => {
     //     showOrders('today');
     // }, [])
+
+
+
+    function logout() {
+        console.log("logout1")
+        if (!user) return;
+        console.log("logout3")
+        localStorage.removeItem('user');
+        console.log("logout2")
+        navigate('/login');
+        location.reload();
+    }
 
 
 
@@ -63,15 +77,21 @@ function Manager() {
     //לשקול להוסיף להזמנות כמות
     async function showOrders(when) {
         try {
-            const res = fetchNoParamsfunc(`orders?${when}`, 'GET')
-            const data = await res
-            console.log('data')
-            if (data.length > 0)
+            const res = await fetchNoParamsfunc(`orders?${when}`, 'GET')
+            const data = await res;
+            if (data && data.length > 0)
                 setOrders(data)
             console.log(data)
-        }
-        catch (err){
-            console.log(err)
+        } catch (err) {
+            if (err.status == 404) {
+                setOrders([])
+                return;
+            }
+            alert(`Error getting orders: ${err.message}`)
+            // if (err.status == 401)
+            //     if (confirm(`Permission is denied: ${err.message}\n you want to reconnect?`))
+            //         logout();
+            //     else
         }
     }
 
@@ -89,6 +109,8 @@ function Manager() {
             <Button onClick={() => showOrders('future')}>view all future orders</Button>
             {/* שיראה גם הזמנות ישנות */}
             {/* להוסיף אופציה של מחיקת\עדכון הזמנה- כפתור כזה בעמודה בטבלה */}
+            {/* צריך להגיד מתי אין הזמנות */}
+            {orders.length == 0 && <h2>No orders</h2>}
             {orders.length > 0 &&
                 <table>
                     <thead>

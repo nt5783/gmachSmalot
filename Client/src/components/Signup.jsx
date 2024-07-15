@@ -23,14 +23,18 @@ const Signup = () => {
     const message = state ? 'you must sign up' : null;
 
     async function onSubmit(data) {
-        let res = loginfetchfunc('signup', 'POST', data);
-        const user = await res;
-        if (user.status !== 200) return;
-        localStorage.setItem("user", JSON.stringify(user.data.data));
-        setUser(user.data);
-        if (model) navigate(`../models/${model}`);
-        navigate('../models');
-        location.reload();
+        try {
+            let res = loginfetchfunc('signup', 'POST', data);
+            const user = await res;
+            // if (user.status !== 200) return;
+            localStorage.setItem("user", JSON.stringify(user.data.data));
+            setUser(user.data);
+            if (model) navigate(`../models/${model}`);
+            navigate('../models');
+            location.reload();
+        } catch (err) {
+            alert(`Error signing up: ${err.message}`)
+        }
     }
 
     return (

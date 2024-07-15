@@ -10,11 +10,15 @@ export default function UpdateGownsAmount({ gown, getGowns, index, formOn }) {
     const { register, handleSubmit } = useForm();
 
     async function updateGown(data) {
-        await fetchfunc(`gowns/${gown.gownId}`, 'PATCH', { amount: data.amount });
-        await getGowns();
-        // await setGowns((prev) => [...prev.slice(0, index), prev[index].amount = data.amount, ...prev.slice(index + 1, prev.length)])
-        // alert(`model ${model} deleted successfully`)
-        formOn('');
+        try {
+            await fetchfunc(`gowns/${gown.gownId}`, 'PATCH', { amount: data.amount });
+            await getGowns();
+            // await setGowns((prev) => [...prev.slice(0, index), prev[index].amount = data.amount, ...prev.slice(index + 1, prev.length)])
+            // alert(`model ${model} deleted successfully`)
+            formOn('');
+        } catch (err) {
+            alert(`Error updating gown: ${err.message}`)
+        }
     }
 
     return (

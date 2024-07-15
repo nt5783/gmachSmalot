@@ -4,7 +4,7 @@ import { UserContext, CartContext, FavoritesContext } from "../App";
 import { Button } from 'primereact/button';
 import { Badge } from 'primereact/badge';
 import cartIcon from '../icons/cart.png';
-import logo from '../icons/gown logo.png';
+import logo from '../icons/logo.png';
 
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';

@@ -20,10 +20,10 @@ export default function AddGown({ gowns, model, formOn, getGowns }) {
         try {
             const res = fetchNoParamsfunc(table, 'GET');
             const data = await res;
-            if (data.length > 0)
+            if (data&&data.length > 0)
                 setfunc(data);
-        } catch (error) {
-            alert('Error getting data: ', error)
+        } catch (err) {
+            alert(`Error getting data: ${err.message}`)
         }
     }
 
@@ -38,8 +38,10 @@ export default function AddGown({ gowns, model, formOn, getGowns }) {
             try {
                 await fetchfunc('sizes', 'POST', { size: newSize });
                 await getData('sizes', setSizes);
-            } catch (error) { alert('Error adding size: ', error); }
-        }        //להוסיף בדיקה שעבד)
+            } catch (err) {
+                alert(`Error adding size: ${err.message}`)
+            }
+        }
         setAdditional('');
     }
 
@@ -63,11 +65,10 @@ export default function AddGown({ gowns, model, formOn, getGowns }) {
         try {
             await fetchfunc('gowns', 'POST', newGown)
             await getGowns();
-        } catch (error) {
-            alert('Error adding gown: ', error)
+        } catch (err) {
+            alert(`Error adding gown: ${err.message}`)
         }
     }
-
     const onSizeChange = (e) => {
         setValue('size', e.value);
     };

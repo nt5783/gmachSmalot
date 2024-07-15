@@ -8,20 +8,22 @@ async function loginfetchfunc(url, method, body, thenfunc) {
             body: JSON.stringify(body),
             headers: { 'content-Type': 'application/json; charset=UTF-8' },
         })
+        if (!response.ok)
+            throw { status: response.status, message: response.statusText };
         if (response) {
             const json = await response.json()
             const token = json.token
             document.cookie = `token=${token} ;path=/;`
             const data = await json
             const user = typeof data != 'undefined' ? data : null
-            if (!data) {
-                throw "data does'nt exist!"
-            }
+            // if (!data) {
+            //     throw "data does'nt exist!"
+            // }
             return { status: response.status, data: user }
         }
     }
-    catch (e) {
-        throw(e)
+    catch (err) {
+        throw (err)
     }
 }
 
@@ -36,18 +38,24 @@ async function fetchfunc(url, method, body, thenfunc) {
         })
         const json = await response.json()
         const data = await json
-        if (response.status == 401){
-            throw('Permission is denied\n' + data.message)
-        }
-        const user = typeof data != 'undefined' ? data : null
+        if (!response.ok)
+            throw { status: response.status, message: response.statusText };
+        // if (response.status == 401) {
+        //     throw ('Permission is denied\n' + data.message)
+        // }
         // לא תמיד מקבל דטה
         // if (!data) {
         //     throw "data does'nt exist!"
         // }
-        return { status: response.status, data: user }
+        return { status: response.status, data: data ?? null }
     }
-    catch (e) {
-        throw(e)
+    catch (err) {
+        if (!err.hasOwnProperty('status'))//promise failed
+            alert("Connection to server failed")
+        else if (err.status == 401)
+            alert('Permission is denied\n' + err.message)
+        else
+            throw (err)
     }
 }
 
@@ -59,16 +67,27 @@ async function fetchNoParamsfunc(url, method) {
             headers: { 'Authorization': `Bearer ${token}`, 'content-Type': 'application/json; charset=UTF-8' },
         })
         const data = await response.json()
-        if (response.status == 401){
-            alert('Permission is denied\n' + data.message)
-        }
+        // if (response.status == 401) {
+        //     alert('Permission is denied\n' + data.message)
+        // }
+        // if(!response.ok)
+        //     throw response
+        if (!response.ok)
+            throw { status: response.status, message: response.statusText };
+        // throw 'Error' + response.status + ': ' + response.statusText;
+        // console.log(response)
         if (!data) {
             throw "data does'nt exist!"
         }
         return data;
     }
-    catch (e) {
-        throw(e)
+    catch (err) {
+        if (!err.hasOwnProperty('status'))
+            alert("Connection to server failed")
+        else if (err.status == 401)
+            alert('Permission is denied\n' + err.message)
+        else
+            throw (err)
     }
 }
 

@@ -24,15 +24,18 @@ function Login() {
     const [value, setValue] = useState('');
 
     async function loginUser(data) {
+        try{
         let res = loginfetchfunc('login', 'POST', data);
         const user = await res;
-        if (user.status !== 200) return;
+        // if (user.status !== 200) return;
         localStorage.setItem("user", JSON.stringify(user.data.data));
         console.log(cart)
         if (model) navigate(`../models/${model}`);
         else navigate('../models');
         location.reload();
-        setUser(user.data.data);
+        setUser(user.data.data);} catch (err) {
+            alert(`Error login: ${err.message}`)
+        }
     }
 
     return (

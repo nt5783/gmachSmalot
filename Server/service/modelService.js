@@ -19,6 +19,8 @@ export class ModelService {
     async getModelById(id) {
         const queryModel = getModelByIdQuery();
         const result = await executeQuery(queryModel, [id]);
+        if (result.length == 0)
+            throw { statusCode: 404, message: "Model not found" }
         if (!result[0].image)
             result[0].image = `http://${process.env.DB_HOST}:${process.env.DB_PORT}/img/default image.jpg`
         else result[0].image = `http://${process.env.DB_HOST}:${process.env.DB_PORT}/img/${result[0].image}`

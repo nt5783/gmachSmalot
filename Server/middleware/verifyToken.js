@@ -2,17 +2,21 @@ import jwt from 'jsonwebtoken'
 
 export function verifyToken(req, res, next) {
     const authorizationHeader = req.header('Authorization')
+    if(authorizationHeader=='Bearer')
+        throw { statusCode: 401, message: "Authorization token is missing" }
     const token = authorizationHeader.split(' ')[1].split('=')[1]
-    if (!token) {
-        return res.status(401).json({ message: 'Authorization token is missing' })
-    }
+    if (!token)
+        throw { statusCode: 401, message: "Authorization token is missing" }
     try {
         jwt.verify(token, process.env.RANDOM_TOKEN_SECRET)
         console.log('verified!!')
         next()
-    } catch (error) {
+    } catch (ex) {
         console.log('not verified:(')
-        return res.status(401).json({ message: 'Invalid token' })
+        const err = {}
+        err.statusCode = ex.statusCode ?? 500;
+        err.message = ex;
+        next(err)
     }
 }
 

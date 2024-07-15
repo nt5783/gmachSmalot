@@ -29,9 +29,14 @@ function Models() {
     console.log("favorites", favorites)
 
     async function getModels() {
-        const res = date ? fetchNoParamsfunc(`models?date=${eventDate}`, 'GET') : fetchNoParamsfunc(`models`, 'GET');
-        const data = await res;
-        if (data.length > 0) setModels(data);
+        try {
+            const res = date ? fetchNoParamsfunc(`models?date=${eventDate}`, 'GET') : fetchNoParamsfunc(`models`, 'GET');
+            const data = await res;
+            if (data && data.length > 0) setModels(data);
+        } catch (err) {
+            if (err.status != 404)
+                alert(`Error getting models: ${err.message}`)
+        }
     }
 
     useEffect(() => {
@@ -52,7 +57,9 @@ function Models() {
                 const index = models.findIndex(m => m.model === model);
                 setModels((prev) => [...prev.slice(0, index), ...prev.slice(index + 1, prev.length)])
                 alert(`model ${model} deleted successfully\n from now on, this model will not be viewed`)
-            } catch (e) { alert(e) }
+            } catch (err) {
+                alert(`Error deleting model: ${err.message}`)
+            }
         }
     }
 
@@ -68,7 +75,7 @@ function Models() {
         const [showModelDetails, setShowModelDetails] = useState(null);
 
         return (
-            <Card className='model_item' onMouseOut={() => setShowModelDetails(null)} onMouseOver={() => setShowModelDetails(model.model)} onClick={() => navigate(`./${model.model}`, { state: { model: model } })}>
+            <Card className='model_item' onMouseOut={() => setShowModelDetails(null)} onMouseOver={() => setShowModelDetails(model.model)} onClick={() => navigate(`./${model.model}`)}>
                 <div className='model-icons'>
                     {/* {user && user.isManager === 1 && <span onClick={(event) => { event.stopPropagation(); deleteModel(model.model) }} className="pi pi-trash manager-button" />} */}
                     {user && user.isManager === 1 && <Button className='manager-button' icon="pi pi-trash" onClick={(event) => { event.stopPropagation(); deleteModel(model.model) }} />}
