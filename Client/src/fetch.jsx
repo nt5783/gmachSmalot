@@ -39,6 +39,7 @@ async function fetchfunc(url, method, body, thenfunc) {
         if (response.status == 401){
             throw('Permission is denied\n' + data.message)
         }
+        //מה קוראים לזה user
         const user = typeof data != 'undefined' ? data : null
         // לא תמיד מקבל דטה
         // if (!data) {
@@ -47,7 +48,8 @@ async function fetchfunc(url, method, body, thenfunc) {
         return { status: response.status, data: user }
     }
     catch (e) {
-        throw(e)
+        // throw(e)
+        alert(e)
     }
 }
 
@@ -62,13 +64,19 @@ async function fetchNoParamsfunc(url, method) {
         if (response.status == 401){
             alert('Permission is denied\n' + data.message)
         }
+        // if(!response.ok)
+        //     throw response
+        if (!response.ok)
+            throw 'Error' + response.status + ': ' + response.statusText;
+        console.log(response)
         if (!data) {
             throw "data does'nt exist!"
         }
         return data;
     }
     catch (e) {
-        throw(e)
+              // throw(e)
+              alert(e)
     }
 }
 

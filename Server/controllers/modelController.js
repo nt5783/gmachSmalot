@@ -20,8 +20,8 @@ export class ModelController {
     async getModelById(req, res, next) {
         try {
             const resultItem = await modelService.getModelById(req.params.id);
-            if (resultItem.length == 0)
-                throw { statusCode: 404, message: "Model not found" }
+            // if (resultItem.length == 0)
+            //     throw { statusCode: 404, message: "Model not found" }
             res.json(resultItem);
         }
         catch (ex) {
