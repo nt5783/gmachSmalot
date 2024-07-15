@@ -34,10 +34,10 @@ export class OrderController {
 
     async addOrder(req, res, next) {
         try {
-            if (!req.body.eventDate || !req.body.userId || !req.body.gownId)
+            if (!req.body[0].eventDate || !req.body[0].userId || !req.body[0].gownId)
                 throw { statusCode: 400, message: "Invalid parameters" }
             const resultItem = await orderService.addOrder(req.body);
-            res.json(resultItem.insertId);
+            // res.json(resultItem.insertId);
         }
         catch (ex) {
             const err = {}

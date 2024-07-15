@@ -34,21 +34,24 @@ const Order = () => {
         setIsAgreementChecked(e.target.checked);
     };
 
-    function orderGowns(){
-        gowns.map((gown) => createGownOrder(gown))
+    function orderGowns() {
+        const orderObjs = gowns.flatMap((gown) => {
+            const orders = [];
+            for (let i = 0; i < gown.qty; i++) {
+                orders.push({ eventDate: date, userId: user.userId, gownId: gown.gownId });
+            }
+            return orders;
+        })
+        createGownOrder(orderObjs)
     }
 
 
-    async function createGownOrder(gown) {
-        console.log("state /\/")
-        console.log(state)
-        console.log({ eventDate: date, userId: user.userId, gownId: gown.gownId })
+    async function createGownOrder(orderObjs) {
         try {
-            //אמרו שאפשר לעשות בבקשה אחת
-            for (let i = 0; i < gown.qty; i++) {
-                await fetchfunc('orders', 'POST', { eventDate: date, userId: user.userId, gownId: gown.gownId })
-            }
-        } catch { }
+            await fetchfunc('orders', 'POST', orderObjs)
+        } catch (err) {
+            console.log(err)
+        }
     }
     {/* {console.log("eventDate")} */ }
     {/* {console.log(eventDate)} */ }
@@ -76,24 +79,26 @@ const Order = () => {
                 </div>
 
                 {isAgreementChecked ? (
+                    <div className='pay-pal-buttons-div'>
                     <PayPalButtons
-                        // onClick={createGownOrder}
-                        createOrder={(data, actions) => {
-                            return actions.order.create({
-                                purchase_units: [{ amount: { currency_code: 'ILS', value: '100.00' } }]
-                            });
-                        }}
-                        onApprove={(data, actions) => {
-                            return actions.order.capture().then((details) => {
-                                alert('Transaction completed by ' + details.payer.name.given_name);
-                                // Handle the successful transaction here
-                            });
-                        }}
-                        onError={(err) => {
-                            console.error('PayPal Checkout onError:', err);
-                            alert('An error occurred with your payment. Please try again.');
-                        }}
+                        onClick={orderGowns} className='pay-pal-buttons'
+                        // createOrder={(data, actions) => {
+                        //     return actions.order.create({
+                        //         purchase_units: [{ amount: { currency_code: 'ILS', value: '100.00' } }]
+                        //     });
+                        // }}
+                        // onApprove={(data, actions) => {
+                        //     return actions.order.capture().then((details) => {
+                        //         alert('Transaction completed by ' + details.payer.name.given_name);
+                        //         // Handle the successful transaction here
+                        //     });
+                        // }}
+                        // onError={(err) => {
+                        //     console.error('PayPal Checkout onError:', err);
+                        //     alert('An error occurred with your payment. Please try again.');
+                        // }}
                     />
+                    </div>
                 ) : (
                     <p>Please agree to the terms and conditions to proceed with the payment.</p>
                 )}

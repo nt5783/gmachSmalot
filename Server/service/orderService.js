@@ -13,19 +13,24 @@ export class OrderService {
     async getOrderById(id) {
         const queryOrder = getOrderByIdQuery();
         const result = await executeQuery(queryOrder, [id]);
-        // console.log(result)
         return result;
     }
 
     async addOrder(newOrder) {
-        const formatDate = (date) => {
+        const formatDate = (orderDate) => {
+            const date = new Date(orderDate)
             return date.toISOString().slice(0, 10);
         };
-        const date=new Date(newOrder.eventDate)
-        newOrder.eventDate = formatDate(date)
-        console.log(newOrder)
-        const queryOrder = addOrderQuery();
-        const result = await executeQuery(queryOrder, Object.values(newOrder));
+        let params = []
+        let eventDate = null
+        for (let i = 0; i < newOrder.length; i++){
+            eventDate = formatDate(newOrder[i].eventDate)
+            params.push(eventDate)
+            params.push(newOrder[i].userId)
+            params.push(newOrder[i].gownId)
+        }
+        const queryOrder = addOrderQuery(newOrder.length);
+        const result = await executeQuery(queryOrder, params);
         return result;
     }
 

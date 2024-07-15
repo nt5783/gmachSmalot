@@ -37,8 +37,11 @@ function getOrderByIdQuery() {
     return query
 }
 
-function addOrderQuery() {
-    const query = `INSERT INTO orders VALUES (null ,? ,? ,?)`;
+function addOrderQuery(itemsNum) {
+    let query = `INSERT INTO orders VALUES (null ,? ,? ,?) `;
+    for (let i = 0; i < itemsNum - 1; i++) {
+        query = query += ',(null ,? ,? ,?)'
+    }
     return query
 }
 
