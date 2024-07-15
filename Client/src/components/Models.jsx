@@ -3,7 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import 'react-calendar/dist/Calendar.css';
 import { fetchNoParamsfunc } from '../fetch';
 import { UserContext, DateContext, FavoritesContext } from '../App';
-import AddUpdateModel from './AddUpdateModel';
+import AddModel from './AddModel';
+import UpdateModel from './UpdateModel';
 
 import { Button } from 'primereact/button';
 import { DataView, DataViewLayoutOptions } from 'primereact/dataview';
@@ -21,7 +22,6 @@ function Models() {
     const { favorites, setFavorites } = useContext(FavoritesContext);
     const { date, setDate } = useContext(DateContext);
     const [models, setModels] = useState([]);
-    //לאחד את השניים הבאים
     const [addUpdateModelForm, setAddUpdateModelForm] = useState(null);
     const newDate = date ? new Date(date) : null;
     const [eventDate, setEventDate] = useState(newDate);
@@ -70,7 +70,9 @@ function Models() {
         return (
             <Card className='model_item' onMouseOut={() => setShowModelDetails(null)} onMouseOver={() => setShowModelDetails(model.model)} onClick={() => navigate(`./${model.model}`, { state: { model: model } })}>
                 <div className='model-icons'>
-                    {user && user.isManager === 1 && <span onClick={(event) => { event.stopPropagation(); deleteModel(model.model) }} className="pi pi-trash" />}
+                    {/* {user && user.isManager === 1 && <span onClick={(event) => { event.stopPropagation(); deleteModel(model.model) }} className="pi pi-trash manager-button" />} */}
+                    {user && user.isManager === 1 && <Button className='manager-button' icon="pi pi-trash" onClick={(event) => { event.stopPropagation(); deleteModel(model.model) }} />}
+                    {user && user.isManager === 1 && <Button className='manager-button' icon="pi pi-pen-to-square" onClick={(event) => { event.stopPropagation(); setAddUpdateModelForm(model) }} />}
                     {user && !favorites.includes(model.model) && <span className='pi pi-star' onClick={(event) => { event.stopPropagation(); addToFavorites(model.model) }} />}
                     {user && favorites.includes(model.model) && <span className='pi pi-star-fill' onClick={(event) => { event.stopPropagation(); removeFromFavorites(model.model) }} />}
                 </div>
@@ -89,8 +91,7 @@ function Models() {
                 <div>Models</div>
                 {user && user.isManager === 1 && (
                     <div className='manager-model-options'>
-                        <Button label="Add New Model" icon="pi pi-plus" onClick={() => setAddUpdateModelForm(prev => prev === 'add' ? '' : 'add')} />
-                        <Button label="Update Model" icon="pi pi-pen-to-square" onClick={() => setAddUpdateModelForm(prev => prev === 'update' ? '' : 'update')} />
+                        <Button className='manager-button' label="Add New Model" icon="pi pi-plus" onClick={() => setAddUpdateModelForm(0)} />
                     </div>)}
             </div>
         )
@@ -100,7 +101,8 @@ function Models() {
         <div className="models-page">
             {console.log("models")}
             {console.log(models)}
-            {addUpdateModelForm && <AddUpdateModel formOn={setAddUpdateModelForm} getModels={getModels} models={models} action={addUpdateModelForm} />}
+            {(addUpdateModelForm && addUpdateModelForm != 0) && <UpdateModel formOn={setAddUpdateModelForm} getModels={getModels} selectedModel={addUpdateModelForm} />}
+            {addUpdateModelForm === 0 && <AddModel formOn={setAddUpdateModelForm} getModels={getModels} />}
             <Panel header={modelsHeader}
                 className="models-panel">
                 {date != null ? (
