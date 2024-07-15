@@ -19,7 +19,7 @@ function Login() {
     const navigate = useNavigate();
     const { register, handleSubmit } = useForm();
     const { state } = useLocation();
-    const model = state ? state.model.model : null;
+    const model = state ? state.model : null;
     const message = state ? state.message : null;
     const [value, setValue] = useState('');
 
@@ -29,7 +29,7 @@ function Login() {
         if (user.status !== 200) return;
         localStorage.setItem("user", JSON.stringify(user.data.data));
         console.log(cart)
-        if (model) navigate(`../models/${model}`, { state: { model: state.model, eventDate: state.eventDate ?? null } });
+        if (model) navigate(`../models/${model}`);
         else navigate('../models');
         location.reload();
         setUser(user.data.data);
@@ -73,7 +73,7 @@ function Login() {
 
                     <Button type="submit" label="Submit" className="p-button-success" />
                 </form>
-                <Button label="New user? Sign up" className="navigate-link" onClick={() => navigate('../signup', { state: state })} />
+                <Button label="New user? Sign up" className="navigate-link" onClick={() => navigate('../signup', { state })} />
             </Dialog>
         </>
     );

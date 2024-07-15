@@ -120,7 +120,7 @@ export default function AddModel({ formOn, getModels, models, action }) {
 
     return (
         <>
-            <Dialog visible={true} onHide={() => formOn(false)} header={action == 'add' ? 'Add New Model' : 'Update Model'}>
+            <Dialog blockScroll={true} visible={true} onHide={() => formOn(false)} header={action == 'add' ? 'Add New Model' : 'Update Model'}>
                 <form onSubmit={handleSubmit((data) => action == 'add' ? addModel(data) : updateModel(data))} className="add-model-form">
                     <label>Model:
                         {action == 'add' && <Controller

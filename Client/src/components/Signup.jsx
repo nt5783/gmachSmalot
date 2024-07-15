@@ -28,7 +28,7 @@ const Signup = () => {
         if (user.status !== 200) return;
         localStorage.setItem("user", JSON.stringify(user.data.data));
         setUser(user.data);
-        if (model) navigate(`../models/${model}`, { state: { model: state.model, eventDate: state.eventDate ? state.eventDate : null } });
+        if (model) navigate(`../models/${model}`);
         navigate('../models');
         location.reload();
     }

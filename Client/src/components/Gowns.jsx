@@ -21,18 +21,22 @@ function Gowns() {
   const { user } = useContext(UserContext);
   const { date } = useContext(DateContext);
   const { cart, setCart } = useContext(CartContext);
+  const [modelInfo, setModelInfo] = useState({});
   const [gowns, setGowns] = useState([]);
   const [selectedGown, setSelectedGown] = useState(null);
-  const { state } = useLocation();
-  const model = state.model;
   const [message, setMessage] = useState('');
   const [visible, setVisible] = useState(false);
   const [showForm, setShowForm] = useState('');
   const [amountToOrder, setAmountToOrder] = useState(1);
   const eventDate = date ? new Date(date) : null;
+  const model = window.location.href.split('/')[4];
 
-  // const newDate = date? new Date(date): null;
-  // const [ eventDate, setEventDate] = useState(newDate);
+
+
+  useEffect(() => {
+    getGowns();
+    getModelInfo();
+  }, []);
 
   useEffect(() => {
     if (!message) {
@@ -47,17 +51,25 @@ function Gowns() {
     return () => clearTimeout(timer);
   }, [message]);
 
+  async function getModelInfo() {
+    try {
+      const res = fetchNoParamsfunc(`models/${model}`, 'GET')
+      const data = await res;
+      if (data.length > 0) setModelInfo(data[0]);
+      else throw 'error getting model info'
+    }
+    catch (err) {
+      alert(err)
+    }
+  }
+
   async function getGowns() {
     const res = eventDate
-      ? fetchNoParamsfunc(`gowns?model=${model.model}&date=${eventDate}`, 'GET')
-      : fetchNoParamsfunc(`gowns?model=${model.model}`, 'GET');
+      ? fetchNoParamsfunc(`gowns?model=${model}&date=${eventDate}`, 'GET')
+      : fetchNoParamsfunc(`gowns?model=${model}`, 'GET');
     const data = await res;
     if (data.length > 0) setGowns(data);
   }
-
-  useEffect(() => {
-    getGowns();
-  }, []);
 
   function gownSelected(i) {
     setAmountToOrder(1)
@@ -73,13 +85,9 @@ function Gowns() {
   }
 
   function AddGownToCart(gown) {
-    console.log('amountToOrder')
-    console.log(amountToOrder)
     const qty = amountToOrder.valueOf();
-    console.log('qty')
-    console.log(Number(qty))
     const gownId = gown.gownId;
-    if (!user) navigate('/login', { state: { model: model, message: 'you must log in to your account', eventDate: eventDate } });
+    if (!user) navigate('/login', { state: { model: model, message: 'you must log in to your account' } });
     else
       setCart((prevCart) => {
         const gownIndex = prevCart.items.findIndex((item) => item.gownId === gownId);
@@ -97,17 +105,12 @@ function Gowns() {
       });
     if (amountToOrder > 1) setMessage(`${amountToOrder} Gowns Model: ${gown.model}, Size: ${gown.size} were added to cart successfully`);
     else setMessage(`Gown Model: ${gown.model}, Size: ${gown.size} was added to cart successfully`);
-    // const updatedGowns = gowns.map((gownItem) => {
-    //   if (gownItem === gown) return { ...gownItem, available: gownItem.available - 1 };
-    //   return gownItem;
-    // });
-    // setGowns(updatedGowns);
     setSelectedGown(null);
   }
 
   function handleOrder() {
-    if (!user) navigate('/login', { state: { model: model, message: 'you must log in to your account', eventDate: eventDate } });
-    if (amountToOrder > 0) {
+    if (!user) navigate('/login', { state: { model: model, message: 'you must log in to your account' } });
+    else if (amountToOrder > 0) {
       let gownToOrder = gowns[selectedGown]
       console.log(amountToOrder)
       gownToOrder.qty = amountToOrder - 1 + 1
@@ -126,21 +129,23 @@ function Gowns() {
     }
   }
 
+  function gownHeader() {
+    return (<>
+      <h2>Model {modelInfo.model}</h2>
+      <h4>Color: {modelInfo.color}</h4>
+      <h4>Length: {modelInfo.length}</h4>
+      <h4>Season: {modelInfo.season}</h4>
+    </>)
+  }
+
   return (
     <>
-      {console.log("gowns")}
-      {console.log(gowns)}
-      {console.log(selectedGown)}
-      {visible && <Message className="success-message" severity="success" text={message}/>}
+      {visible && <Message className="success-message" severity="success" text={message} />}
       {showForm === 'add' && <AddGown gowns={gowns} model={model.model} formOn={setShowForm} getGowns={getGowns} />}
 
       <div className="gown-container">
-        <img className="gown-image" src={model.image} alt={model.model} />
-        <Panel header={model.model} className="gown-details">
-          <div className='gown-favorite'>
-            {user && !favorites.includes(model.model) && <i className='pi pi-star' onClick={(event) => { event.stopPropagation(); addToFavorites(model.model) }} />}
-            {user && favorites.includes(model.model) && <i className='pi pi-star-fill' onClick={(event) => { event.stopPropagation(); removeFromFavorites(model.model) }} />}
-          </div>
+        <img className="gown-image" src={modelInfo.image} alt={model} />
+        <Panel header={gownHeader} className="gown-details">
           <div>
             <span>Size: </span>
             {/* sizes */}
@@ -229,6 +234,10 @@ function Gowns() {
             </div>
           )}
         </Panel>
+        <div className='gown-favorite'>
+          {user && !favorites.includes(model) && <i className='pi pi-star' onClick={(event) => { event.stopPropagation(); addToFavorites(model) }} />}
+          {user && favorites.includes(model) && <i className='pi pi-star-fill' onClick={(event) => { event.stopPropagation(); removeFromFavorites(model) }} />}
+        </div>
       </div>
     </>
   );
