@@ -52,20 +52,25 @@ function Gowns() {
     try {
       const res = fetchNoParamsfunc(`models/${model}`, 'GET')
       const data = await res;
-      if (data.length > 0) setModelInfo(data[0]);
+      if (data&&data.length > 0) setModelInfo(data[0]);
       // else throw 'error getting model info'
     }
     catch (err) {
-      alert(err)
+      alert(`Error getting model info: ${err.message}`)
     }
   }
 
   async function getGowns() {
-    const res = eventDate
-      ? fetchNoParamsfunc(`gowns?model=${model}&date=${eventDate}`, 'GET')
-      : fetchNoParamsfunc(`gowns?model=${model}`, 'GET');
-    const data = await res;
-    if (data.length > 0) setGowns(data);
+    try {
+      const res = eventDate
+        ? fetchNoParamsfunc(`gowns?model=${model}&date=${eventDate}`, 'GET')
+        : fetchNoParamsfunc(`gowns?model=${model}`, 'GET');
+      const data = await res;
+      if (data&&data.length > 0) setGowns(data);
+    } catch (err) {
+      if (err.status != 404)
+        alert(`Error getting gowns: ${err.message}`)
+    }
   }
 
   function gownSelected(i) {
@@ -121,7 +126,9 @@ function Gowns() {
         alert(`Gowns from size ${gowns[selectedGown].size} deleted successfully\n from now on, this size will not be ordered`)
         await getGowns();
         setSelectedGown(null)
-      } catch (e) { alert(e) }
+      } catch (err) {
+        alert(`Error deleting gown: ${err.message}`)
+      }
     }
   }
 
@@ -145,7 +152,7 @@ function Gowns() {
           <div>
             <span>Size: </span>
             {/* sizes */}
-            {/* {gowns.length > 0 && ( */}
+            {gowns.length == 0 && <h3>No sizes available</h3>}
             <div className="size-buttons">
               {gowns.map((gown, i) => (
                 <Button

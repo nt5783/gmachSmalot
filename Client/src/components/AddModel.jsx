@@ -28,10 +28,14 @@ export default function AddModel({ formOn, getModels }) {
     };
 
     async function getData(table, setfunc) {
-        const res = fetchNoParamsfunc(table, 'GET');
-        if (res.status == 401) throw "Permission denied";
-        const data = await res;
-        if (data.length > 0) setfunc(data);
+        try {
+            const res = fetchNoParamsfunc(table, 'GET');
+            // if (res.status == 401) throw "Permission denied";
+            const data = await res;
+            if (data&&data.length > 0) setfunc(data);
+        } catch (err) {
+            alert(`Error getting data: ${err.message}`)
+        }
     }
 
     useEffect(() => {
@@ -54,7 +58,7 @@ export default function AddModel({ formOn, getModels }) {
         try {
             await fetchfunc('models', 'POST', formData);
             await getModels();
-        } catch (error) { alert('Error adding model: ', error); }
+        } catch (err) { alert(`Error adding model: ${err.message}`); }
     }
 
     async function addItem(event, itemType) {
@@ -72,7 +76,7 @@ export default function AddModel({ formOn, getModels }) {
             try {
                 await fetchfunc(itemType, 'POST', { [itemTypeKey]: newItem });
                 await getData(itemType, setItems);
-            } catch (error) { alert(`Error adding ${itemType}: `, error); }
+            } catch (err) { alert(`Error adding ${itemType}: `, err.message); }
         }
         setAdditional('');
     }
