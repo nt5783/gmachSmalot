@@ -54,6 +54,7 @@ export default function UpdateModel({ formOn, getModels, selectedModel }) {
         formOn(null);
         try {
             await fetchfunc(`models/${model}`, 'PATCH', notNullFormData);
+            alert(`model updated successfully`)
             await getModels();
         } catch (err) {
             alert(`Error updating model: ${err.message}`);
@@ -68,6 +69,7 @@ export default function UpdateModel({ formOn, getModels, selectedModel }) {
         if (newItem && !items.find((item) => item[itemTypeKey] === newItem)) {
             try {
                 await fetchfunc(itemType, 'POST', { [itemTypeKey]: newItem });
+                alert(`${itemTypeKey} added successfully`)
                 await getData(itemType, setItems);
             } catch (err) { alert(`Error adding ${itemType}: `, err.message); }
         }

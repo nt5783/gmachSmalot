@@ -48,6 +48,7 @@ export default function AddModel({ formOn, getModels }) {
         formOn(null);
         try {
             await fetchfunc('models', 'POST', formData);
+            alert ('model added successfully')
             await getModels();
         } catch (err) {
             alert(`Error adding model: ${err.message}`);
@@ -62,6 +63,7 @@ export default function AddModel({ formOn, getModels }) {
         if (newItem && !items.find((item) => item[itemTypeKey] === newItem)) {
             try {
                 await fetchfunc(itemType, 'POST', { [itemTypeKey]: newItem });
+                alert(`${itemTypeKey} added successfully`)
                 await getData(itemType, setItems);
             } catch (err) {
                 alert(`Error adding ${itemType}: `, err.message);

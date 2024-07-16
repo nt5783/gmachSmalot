@@ -36,6 +36,7 @@ export default function AddGown({ gowns, model, formOn, getGowns }) {
         if (newSize && !sizes.find((size) => size.size === newSize)) {
             try {
                 await fetchfunc('sizes', 'POST', { size: newSize });
+                alert(`size added successfully`)
                 await getData('sizes', setSizes);
             } catch (err) {
                 alert(`Error adding size: ${err.message}`)
@@ -61,6 +62,7 @@ export default function AddGown({ gowns, model, formOn, getGowns }) {
         formOn('')
         try {
             await fetchfunc('gowns', 'POST', newGown)
+            alert(`gown added successfully`)
             await getGowns();
         } catch (err) {
             alert(`Error adding gown: ${err.message}`)

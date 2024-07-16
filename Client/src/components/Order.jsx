@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import { UserContext, DateContext } from '../App';
 import { fetchfunc } from '../fetch';
@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { Button } from 'primereact/button';
 
 const Order = () => {
+    const navigate = useNavigate();
     const { user } = useContext(UserContext)
     const { date } = useContext(DateContext)
     const eventDate = new Date(date);
@@ -42,6 +43,7 @@ const Order = () => {
         try {
             await fetchfunc('orders', 'POST', orderObjs)
             alert('order completed with success')
+            navigate('../models')
         } catch (err) {
             alert(`Error sending order: ${err.message}`)
         }
