@@ -51,7 +51,8 @@ async function fetchfunc(url, method, body, thenfunc) {
     }
     catch (err) {
         if (!err.hasOwnProperty('status'))//promise failed
-            alert("Connection to server failed")
+            // alert("Connection to server failed")
+            return;
         else if (err.status == 401)
             alert('Permission is denied\n' + err.message)
         else
@@ -83,7 +84,8 @@ async function fetchNoParamsfunc(url, method) {
     }
     catch (err) {
         if (!err.hasOwnProperty('status'))
-            alert("Connection to server failed")
+            // alert("Connection to server failed")
+            return;
         else if (err.status == 401)
             alert('Permission is denied\n' + err.message)
         else
