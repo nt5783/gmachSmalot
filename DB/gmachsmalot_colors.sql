@@ -28,7 +28,7 @@ CREATE TABLE `colors` (
   PRIMARY KEY (`colorId`),
   UNIQUE KEY `id_UNIQUE` (`colorId`),
   UNIQUE KEY `color_UNIQUE` (`color`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,7 @@ CREATE TABLE `colors` (
 
 LOCK TABLES `colors` WRITE;
 /*!40000 ALTER TABLE `colors` DISABLE KEYS */;
-INSERT INTO `colors` VALUES (12,'beige'),(2,'black'),(9,'blue'),(4,'brown'),(1,'colorful'),(6,'cream'),(15,'gold'),(16,'gray'),(5,'green'),(13,'lightBlue'),(8,'orange'),(10,'pink'),(11,'purple'),(14,'silver'),(3,'white'),(7,'yellow');
+INSERT INTO `colors` VALUES (12,'beige'),(2,'black'),(9,'blue'),(4,'brown'),(1,'colorful'),(6,'cream'),(15,'gold'),(16,'gray'),(5,'green'),(13,'light blue'),(8,'orange'),(23,'peach'),(10,'pink'),(11,'purple'),(14,'silver'),(3,'white'),(7,'yellow');
 /*!40000 ALTER TABLE `colors` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-02 19:39:40
+-- Dump completed on 2024-07-16 18:39:03

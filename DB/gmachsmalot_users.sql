@@ -33,7 +33,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`userId`),
   UNIQUE KEY `username_UNIQUE` (`username`),
   CONSTRAINT `username` FOREIGN KEY (`username`) REFERENCES `passwords` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'feigi','feigi zaks','0583270933','','yerushalaim','pz@pz'),(2,'nechama','nechama taurog','0583243609','','yerushalaim','nt5783@mailbox.org'),(3,'123','123fullname','1111111','','',''),(4,'111','111fullname','1111111','','','');
+INSERT INTO `users` VALUES (1,'feigi','feigi zaks','0583270933','','yerushalaim','pz@pz'),(2,'nechama','nechama taurog','0583243609','','yerushalaim','nt5783@mailbox.org'),(3,'123','123fullname','1111111','','',''),(4,'111','111fullname','1111111','','',''),(5,'man','manager','123456789','','Jerusalem','manager@gmail.com');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-02 19:39:40
+-- Dump completed on 2024-07-16 18:39:03
