@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { UserContext, CartContext, DateContext } from '../App';
 import { Button } from 'primereact/button';
 
@@ -8,8 +8,6 @@ const Cart = () => {
     const { user } = useContext(UserContext);
     const { cart } = useContext(CartContext);
     const { date } = useContext(DateContext);
-
-    console.log(cart.items)
 
     return (<div className="cart-container">
         {user && (cart.qty > 0 ?
@@ -33,12 +31,13 @@ const Cart = () => {
         {!user && (
             <h3><a className='login-link' href='./login'>Log in</a> so you can manage your cart</h3>
         )}
-        {cart.qty > 0 && <Button
-            label="Purchase now"
-            icon="pi pi-credit-card"
-            disabled={date == null}
-            onClick={() => navigate('/order', { state: { gowns: cart.items } })}
-        />}
+        {cart.qty > 0 &&
+            <Button
+                label="Purchase now"
+                icon="pi pi-credit-card"
+                disabled={date == null}
+                onClick={() => navigate('/order', { state: { gowns: cart.items } })}
+            />}
     </div>
     );
 };

@@ -1,25 +1,23 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { CartContext, ManagerContext, UserContext, DateContext, FavoritesContext } from '../App';
-import 'react-calendar/dist/Calendar.css';
+import { useNavigate } from 'react-router-dom';
+import { CartContext, UserContext, DateContext, FavoritesContext } from '../App';
 import { fetchNoParamsfunc } from '../fetch';
 import AddGown from './AddGown';
 import UpdateGownsAmount from './UpdateGownsAmount';
-
 import { Button } from 'primereact/button';
 import { Panel } from 'primereact/panel';
 import { Message } from 'primereact/message';
-
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
+import 'react-calendar/dist/Calendar.css';
 
 function Gowns() {
   const navigate = useNavigate();
   const { favorites, setFavorites } = useContext(FavoritesContext);
   const { user } = useContext(UserContext);
   const { date } = useContext(DateContext);
-  const { cart, setCart } = useContext(CartContext);
+  const { setCart } = useContext(CartContext);
   const [modelInfo, setModelInfo] = useState({});
   const [gowns, setGowns] = useState([]);
   const [selectedGown, setSelectedGown] = useState(null);
@@ -52,8 +50,7 @@ function Gowns() {
     try {
       const res = fetchNoParamsfunc(`models/${model}`, 'GET')
       const data = await res;
-      if (data&&data.length > 0) setModelInfo(data[0]);
-      // else throw 'error getting model info'
+      if (data && data.length > 0) setModelInfo(data[0]);
     }
     catch (err) {
       alert(`Error getting model info: ${err.message}`)
@@ -66,7 +63,7 @@ function Gowns() {
         ? fetchNoParamsfunc(`gowns?model=${model}&date=${eventDate}`, 'GET')
         : fetchNoParamsfunc(`gowns?model=${model}`, 'GET');
       const data = await res;
-      if (data&&data.length > 0) setGowns(data);
+      if (data && data.length > 0) setGowns(data);
     } catch (err) {
       if (err.status != 404)
         alert(`Error getting gowns: ${err.message}`)
@@ -75,27 +72,17 @@ function Gowns() {
 
   function gownSelected(i) {
     setAmountToOrder(1)
-    setSelectedGown((prev) => (prev === i ? i : i)); // Toggle selected gown
-  }
-
-  function addToFavorites() {
-    setFavorites((prev) => [...prev, model])
-  }
-
-  function removeFromFavorites() {
-    setFavorites((prev) => prev.filter(m => m.model != model))
+    setSelectedGown((prev) => (prev === i ? i : i));
   }
 
   function AddGownToCart(gown) {
-    const qty = amountToOrder.valueOf();
     const gownId = gown.gownId;
     if (!user) navigate('/login', { state: { model: model, message: 'you must log in to your account' } });
     else
       setCart((prevCart) => {
         const gownIndex = prevCart.items.findIndex((item) => item.gownId === gownId);
         if (gownIndex == -1)
-         return {
-            //יש עוד שיטה
+          return {
             qty: prevCart.qty + Number(amountToOrder),
             items: [...prevCart.items, { gownId, model: gown.model, size: gown.size, img: modelInfo.image, qty: Number(amountToOrder) }],
           };
@@ -114,7 +101,6 @@ function Gowns() {
     if (!user) navigate('/login', { state: { model: model, message: 'you must log in to your account' } });
     else if (amountToOrder > 0) {
       let gownToOrder = gowns[selectedGown]
-      console.log(amountToOrder)
       gownToOrder.qty = amountToOrder - 1 + 1
       navigate('/order', { state: { gowns: [gownToOrder] } })
     }
@@ -146,7 +132,6 @@ function Gowns() {
     <>
       {visible && <Message className="success-message" severity="success" text={message} />}
       {showForm === 'add' && <AddGown gowns={gowns} model={model} formOn={setShowForm} getGowns={getGowns} />}
-
       <div className="gown-container">
         <img className="gown-image" src={modelInfo.image} alt={model} />
         <Panel header={gownHeader} className="gown-details">
@@ -156,93 +141,35 @@ function Gowns() {
             {gowns.length == 0 && <h3>No sizes available</h3>}
             <div className="size-buttons">
               {gowns.map((gown, i) => (
-                <Button
-                  key={i}
-                  label={gown.size}
-                  disabled={gown.available < 1}
-                  onClick={() => gownSelected(i)}
-                  className="p-button-outlined p-button-secondary"
-                />
+                <Button key={i} label={gown.size} disabled={gown.available < 1} onClick={() => gownSelected(i)} className="p-button-outlined p-button-secondary" />
               ))}
-              {user && user.isManager === 1 && <Button
-                label='Add Size'
-                icon="pi pi-plus"
-                onClick={() => setShowForm((prev) => (prev === 'add' ? '' : 'add'))}
-                className="manager-button p-button-outlined p-button-secondary"
-              />}
+              {user && user.isManager === 1 && <Button label='Add Size' icon="pi pi-plus" onClick={() => setShowForm((prev) => (prev === 'add' ? '' : 'add'))}
+                className="manager-button p-button-outlined p-button-secondary" />}
             </div>
           </div>
-          {/* )} */}
           {/*specific size gown */}
           {selectedGown !== null && (
             <div>
-              <span><b>Size: {gowns[selectedGown].size}</b></span>
-              <br />
+              <span><b>Size: {gowns[selectedGown].size}</b></span><br />
               <span>Available amount: {gowns[selectedGown].available}</span>
-              {/* <br />
-              {user && user.isManager === 1 &&<form >
-                <label htmlFor="quantity">Change the number of existing gowns in this size:</label>
-                <input
-                type="number"
-                name="quantity"
-                min="1"
-                defaultValue={gowns[selectedGown].amount}
-                // value={amountToOrder}
-                // onChange={(e) => setAmountToOrder(e.target.value)}
-              />
-              <button type='submit'>Apply changes</button>
-                </form>} */}
               {user && user.isManager === 1 && (
                 <div>
-                  <Button
-                    label="Update this size inventory"
-                    icon="pi pi-pen-to-square"
-                    onClick={() => setShowForm((prev) => (prev === 'update' ? '' : 'update'))}
-                    className='manager-button'
-                  />
-                  <Button
-                    label="Remove this size"
-                    icon="pi pi-trash"
-                    onClick={deleteGown}
-                    className='manager-button'
-                  />
+                  <Button label="Update this size inventory" icon="pi pi-pen-to-square" onClick={() => setShowForm((prev) => (prev === 'update' ? '' : 'update'))} className='manager-button' />
+                  <Button label="Remove this size" icon="pi pi-trash" onClick={deleteGown} className='manager-button' />
                 </div>
-              )}
-              <br />
-              <br />
-              {!eventDate && <div><span className="warning">you are in display mode. you have to pick a date <a className="no-background" href="../eventCalendar">pick a date here</a></span></div>}
-              <br />
+              )}<br /><br />
+              {!eventDate && <div><span className="warning">you are in display mode. you have to pick a date <a className="no-background" href="../eventCalendar">pick a date here</a></span></div>}<br />
               <label htmlFor="amount">amount:</label>
-              <input
-                disabled={eventDate == null}
-                type="number"
-                name="amount"
-                min="1"
-                max={gowns[selectedGown].available}
-                value={amountToOrder}
-                onChange={(e) => setAmountToOrder(e.target.value)}
-              />
-              <br />
-              {/* {!user && <div><span className="warning">you are not a user <a className="no-background" href="../login">login here</a></span></div>} */}
-              <Button
-                label="Add to cart"
-                icon="pi pi-shopping-cart"
-                disabled={!eventDate}
-                onClick={() => AddGownToCart(gowns[selectedGown])}
-              />
-              <Button
-                label="Order now"
-                icon="pi pi-shopping-bag"
-                disabled={!eventDate}
-                onClick={handleOrder}
-              />
+              <input disabled={eventDate == null} type="number" name="amount" min="1" max={gowns[selectedGown].available} value={amountToOrder} onChange={(e) => setAmountToOrder(e.target.value)} /><br />
+              <Button label="Add to cart" icon="pi pi-shopping-cart" disabled={!eventDate} onClick={() => AddGownToCart(gowns[selectedGown])} />
+              <Button label="Order now" icon="pi pi-shopping-bag" disabled={!eventDate} onClick={handleOrder} />
               {showForm === 'update' && <UpdateGownsAmount gown={gowns[selectedGown]} getGowns={getGowns} index={selectedGown} formOn={setShowForm} />}
             </div>
           )}
         </Panel>
         <div className='gown-favorite'>
-          {user && !favorites.some((m)=>m.model == model) && <i className='pi pi-star' onClick={(event) => { event.stopPropagation(); addToFavorites(modelInfo) }} />}
-          {user && favorites.some((m)=>m.model == model) && <i className='pi pi-star-fill' onClick={(event) => { event.stopPropagation(); removeFromFavorites(model) }} />}
+          {user && !favorites.some((m) => m.model == model) && <i className='pi pi-star' onClick={() => { setFavorites((prev) => [...prev, modelInfo]) }} />}
+          {user && favorites.some((m) => m.model == model) && <i className='pi pi-star-fill' onClick={() => { setFavorites((prev) => prev.filter(m => m.model != model)) }} />}
         </div>
       </div>
     </>
@@ -250,3 +177,5 @@ function Gowns() {
 }
 
 export default Gowns;
+
+

@@ -15,58 +15,45 @@ import Favorites from './components/Favorites'
 import './App.css'
 
 export const UserContext = createContext()
-export const ManagerContext = createContext()
 export const CartContext = createContext()
 export const FavoritesContext = createContext()
 export const DateContext = createContext()
 
 function App() {
-  // const [isLoading, setIsLoading] = useState(true)
-  const [isManager, setIsManager] = useState(false)
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
-  const [date, setDate] = useState(user && localStorage.getItem(`date_${user.username}`) ? JSON.parse(localStorage.getItem(`date_${user.username}`)) : JSON.parse(localStorage.getItem(`date`)))
-  const [cart, setCart] = useState(user && localStorage.getItem(`cart_${user.username}`) ? JSON.parse(localStorage.getItem(`cart_${user.username}`)) : { qty: 0, items: [] })
-  const [favorites, setFavorites] = useState(!user ? [] :
-    JSON.parse(localStorage.getItem(`favorites_${user.username}`)) ? JSON.parse(localStorage.getItem(`favorites_${user.username}`)) :
-      [])
-
-  // const [error, setError] = useState(false)
-
-  console.log('date')
-  console.log(date)
-  console.log('cart')
-  console.log(cart)
-
+  const [date, setDate] = useState(user && localStorage.getItem(`date_${user.username}`) ? JSON.parse(localStorage.getItem(`date_${user.username}`))
+    : JSON.parse(localStorage.getItem(`date`)))
+  const [cart, setCart] = useState(user && localStorage.getItem(`cart_${user.username}`) ? JSON.parse(localStorage.getItem(`cart_${user.username}`))
+    : { qty: 0, items: [] })
+  const [favorites, setFavorites] = useState(!user ? [] : (JSON.parse(localStorage.getItem(`favorites_${user.username}`)) ?? []))
 
   return (
     <div className='App'>
       <UserContext.Provider value={{ user, setUser }}>
-        <ManagerContext.Provider value={{ isManager, setIsManager }}>
-          <CartContext.Provider value={{ cart, setCart }}>
-            <FavoritesContext.Provider value={{ favorites, setFavorites }}>
-              <DateContext.Provider value={{ date, setDate }}>
-                <Router>
-                  <Routes>
-                    <Route path="/" element={<Home />}>
-                      <Route path="cart" element={<Cart />} />
-                      <Route path="favorites" element={<Favorites />} />
-                      <Route path="order" element={<Order />} />
-                      <Route path="about" element={<About />} />
-                      <Route path="login" element={<Login />} />
-                      <Route path="signup" element={<Signup />} />
-                      <Route path="manager" element={<Manager />} />
-                      <Route path="eventCalendar" element={<EventCalendar />} />
-                      <Route path="models">
-                        <Route index element={<Models />} />
-                        <Route path=":id" element={<Gowns />} />
-                      </Route>
+        <CartContext.Provider value={{ cart, setCart }}>
+          <FavoritesContext.Provider value={{ favorites, setFavorites }}>
+            <DateContext.Provider value={{ date, setDate }}>
+              <Router>
+                <Routes>
+                  <Route path="/" element={<Home />}>
+                    <Route path="cart" element={<Cart />} />
+                    <Route path="favorites" element={<Favorites />} />
+                    <Route path="order" element={<Order />} />
+                    <Route path="about" element={<About />} />
+                    <Route path="login" element={<Login />} />
+                    <Route path="signup" element={<Signup />} />
+                    <Route path="manager" element={<Manager />} />
+                    <Route path="eventCalendar" element={<EventCalendar />} />
+                    <Route path="models">
+                      <Route index element={<Models />} />
+                      <Route path=":id" element={<Gowns />} />
                     </Route>
-                  </Routes>
-                </Router>
-              </DateContext.Provider>
-            </FavoritesContext.Provider>
-          </CartContext.Provider>
-        </ManagerContext.Provider>
+                  </Route>
+                </Routes>
+              </Router>
+            </DateContext.Provider>
+          </FavoritesContext.Provider>
+        </CartContext.Provider>
       </UserContext.Provider>
     </div>
   )

@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { UserContext, CartContext, FavoritesContext } from "../App";
 import { Button } from 'primereact/button';
-import { Badge } from 'primereact/badge';
 import cartIcon from '../icons/cart.png';
 import logo from '../icons/logo.png';
 
@@ -15,16 +14,6 @@ function Home() {
     const { user, setUser } = useContext(UserContext);
     const { cart } = useContext(CartContext);
     const { favorites } = useContext(FavoritesContext);
-    // const [cartAmount, setCartAmount] = useState(cart.qty);
-
-
-    console.log('cart')
-    console.log(cart)
-    console.log('cartAmount')
-    console.log(cart.qty)
-    console.log('favorites')
-    console.log(favorites)
-    // let amount = 0
 
     useEffect(() => {
         if (!user) return;
@@ -34,12 +23,12 @@ function Home() {
     useEffect(() => {
         if (!user) return;
         localStorage.setItem(`favorites_${user.username}`, JSON.stringify(favorites));
-        console.log("favorites", favorites)
     }, [favorites]);
 
     function logout() {
         if (!user) return;
         localStorage.removeItem('user');
+        localStorage.removeItem('date');
         navigate('./');
         location.reload();
     }
@@ -54,9 +43,9 @@ function Home() {
             </div>
             <div className="home_navigate">
                 {user && <span className="user-name">{user.username} {user.isManager ? 'manager' : ''}</span>}
-                {user && ( favorites.length > 0 ? <NavLink to="./favorites" className="nav-button, cart_link">
+                {user && (favorites.length > 0 ? <NavLink to="./favorites" className="nav-button, cart_link">
                     <i className="pi pi-star-fill"></i>{favorites.length}</NavLink> :
-                    <NavLink to="./favorites" className="nav-button, cart_link"><i className="pi pi-star-fill">0</i></NavLink> )}
+                    <NavLink to="./favorites" className="nav-button, cart_link"><i className="pi pi-star">0</i></NavLink>)}
                 <NavLink className="cart_link" to="./cart">
                     <img height="50px" src={cartIcon} alt="cart icon" />
                     {user && <span className="cart-amount">{cart.qty}</span>}

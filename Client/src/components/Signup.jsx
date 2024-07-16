@@ -1,21 +1,19 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { fetchfunc, loginfetchfunc } from '../fetch';
+import {  loginfetchfunc } from '../fetch';
 import { UserContext } from '../App';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
-import { Password } from 'primereact/password';
 import { Message } from 'primereact/message';
 import { Dialog } from 'primereact/dialog';
-
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 
 
 const Signup = () => {
-    const { user, setUser } = useContext(UserContext);
+    const { setUser } = useContext(UserContext);
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
     const { state } = useLocation();
@@ -26,7 +24,6 @@ const Signup = () => {
         try {
             let res = loginfetchfunc('signup', 'POST', data);
             const user = await res;
-            // if (user.status !== 200) return;
             localStorage.setItem("user", JSON.stringify(user.data.data));
             setUser(user.data);
             if (model) navigate(`../models/${model}`);
@@ -55,9 +52,6 @@ const Signup = () => {
                     </div>
                     <div className="field">
                         <span className="p-float-label">
-                            {/* <Password id="password" {...register("password", { required: true })} toggleMask />
-                        <label htmlFor="password">Password</label> */}
-                            {/* <input type="password" {...register("password")} placeholder="Password" /><br /><br /> */}
                             <InputText id="password" type='password' {...register('password', { required: true })} />
                             <label htmlFor='password' >password</label>
                         </span>

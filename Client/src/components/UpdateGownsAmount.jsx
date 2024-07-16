@@ -1,7 +1,7 @@
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import { fetchfunc, fetchNoParamsfunc } from "../fetch";
+import { fetchfunc } from "../fetch";
 import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import { InputText } from "primereact/inputtext";
@@ -13,8 +13,7 @@ export default function UpdateGownsAmount({ gown, getGowns, index, formOn }) {
         try {
             await fetchfunc(`gowns/${gown.gownId}`, 'PATCH', { amount: data.amount });
             await getGowns();
-            // await setGowns((prev) => [...prev.slice(0, index), prev[index].amount = data.amount, ...prev.slice(index + 1, prev.length)])
-            // alert(`model ${model} deleted successfully`)
+            alert(`amount updated successfully`)
             formOn('');
         } catch (err) {
             alert(`Error updating gown: ${err.message}`)

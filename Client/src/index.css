@@ -12,12 +12,12 @@
   background-color: rgb(250, 215, 215);
 } */
 .manager-button{
-  background-color: #333;
+  background-color: #333 !important;
   color: #ffffff;
 }
 
 .manager-button:hover{
-  background-color: #000000;
+  background-color: #000000 !important;
 }
 
 button {
@@ -168,12 +168,13 @@ a:hover {
   background-color: #e1ddd5;
   color: #d4bfcc;
   border-color: #d4bfcc;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
+  margin-top: 5px;
 }
 
 .clear-date-button {
   margin-bottom: 20px;
-  color: #fdcc9d;
+  color: #ffffff;
 }
 
 .calendar-container {

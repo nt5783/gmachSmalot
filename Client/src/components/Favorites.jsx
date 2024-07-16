@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const Favorites = () => {
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
-    const { favorites, setFavorites } = useContext(FavoritesContext);
+    const { favorites } = useContext(FavoritesContext);
     return (<div className='cart-container'>
         {user && (favorites.length > 0 ?
             <>
