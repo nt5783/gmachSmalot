@@ -29,6 +29,7 @@ function Home() {
         if (!user) return;
         localStorage.removeItem('user');
         localStorage.removeItem('date');
+        localStorage.removeItem(`date_${user.username}`);
         navigate('./');
         location.reload();
     }
