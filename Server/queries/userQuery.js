@@ -15,7 +15,6 @@ function getPasswordQuery() {
 }
 
 function setPasswordQuery() {
-    // const query = `INSERT INTO passwords (${keys.map(key => key)}) VALUES (${keys.map(() => `?`)})`
     const query = `INSERT INTO passwords VALUES (?,?,?)`
     return query
 }

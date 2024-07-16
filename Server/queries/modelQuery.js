@@ -1,24 +1,10 @@
 
 function getModelsQuery(queryparams) {
-    console.log(queryparams)
     let query;
     if (queryparams.hasOwnProperty('date')) {
-        console.log(queryparams.date)
         const date = new Date(queryparams.date)
         const firstDate = new Date(date);
         const secondDate = new Date(date);
-
-        // const addBusinessDays = (date, days) => {
-        //     for (let i = 0; i < days; i++) {
-        //         date.setDate(date.getDate() + 1);
-        //         // Skip Fridays (day 5) and Saturdays (day 6)
-        //         if (date.getDay() === 5) {
-        //             date.setDate(date.getDate() + 2); // Skip to Monday
-        //         } else if (date.getDay() === 6) {
-        //             date.setDate(date.getDate() + 1); // Skip to Sunday
-        //         }
-        //     }
-        // };
 
         const addBusinessDays = (date, days) => {
             const isNegative = days < 0;
@@ -59,16 +45,13 @@ function getModelsQuery(queryparams) {
                 where eventDate BETWEEN '${formatDate(firstDate)}' AND '${formatDate(secondDate)}'
                 group by gownId) OG
                 where QuantityOccupied=OG.amount);`
-        // query = `select distinct model from gowns where gownId not in (select OG.gownId from( select *,COUNT(*) as QuantityOccupied from gowns g NATURAL JOIN orders o where eventDate='${queryparams.date}' group by gownId) OG where QuantityOccupied=OG.amount);`
     }
     else {
-        //אם אני רוצה חורף וכל השנה?
         const fields = Object.keys(queryparams).filter(param => {
             return param == 'color' || param == 'season' || param == 'length';
         });
         let conditions = ""
         fields.forEach(field => conditions += "AND " + field + " = '" + queryparams[field] + "'")
-        // const query = `SELECT * FROM models WHERE isInUse = 1 ${fields.length > 0 ? conditions : ""} 
         query = `SELECT model,image,color,season,length FROM models NATURAL JOIN colors NATURAL JOIN seasons NATURAL JOIN lengths WHERE isInUse = 1 ${fields.length > 0 ? conditions : ""} 
     ${queryparams._sort ? "ORDER BY " + queryparams._sort : ""} 
     ${queryparams._limit ? "LIMIT " + queryparams._limit : ""}`
@@ -78,10 +61,6 @@ function getModelsQuery(queryparams) {
 }
 
 function getModelByIdQuery() {
-    //להציג לכולם את אלו שלא פעילים?
-    // const query = `SELECT * FROM models WHERE model = ?`;
-    // only if inUse:
-    //    const query = `SELECT model,image,color,season FROM models NATURAL JOIN colors NATURAL JOIN seasons NATURAL JOIN lengths WHERE model = ? AND isInUse = 1`
     const query = `SELECT model,image,color,season,length FROM models NATURAL JOIN colors NATURAL JOIN seasons NATURAL JOIN lengths WHERE model = ?`
     return query
 }

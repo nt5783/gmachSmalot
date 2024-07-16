@@ -11,14 +11,12 @@ export class GownService {
             if (result[i].available == null)
                 result[i].available = result[i].amount;
         }
-        console.log(result);
         return result;
     }
 
     async getGownById(id) {
         const queryGown = getGownByIdQuery();
         const result = await executeQuery(queryGown, [id]);
-        console.log(result)
         return result;
     }
 

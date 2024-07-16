@@ -32,7 +32,6 @@ app.use('/orders',orderRouter)
 app.use("/img", express.static(__dirname + '/img'));
 app.use(logErrors);
 
-
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'img');

@@ -4,6 +4,8 @@ end to end project - gowns gemach
 לפי ימי עסקים
 פתוח במוצש רק בחורף
 
+paypal: // secret: EBmxh8uI1KFwfFNMZEatL0bMSlcTeo0uB0mjqG7Mqf42EeM007iTfH0nVGCTF5KOJ9kU-GYiYK5JqgGi
+
 
 באגים:
 כשמוסיפים מידה שהמידות יעמדו לפי הסדר

@@ -29,9 +29,6 @@ export class ModelService {
 
     async addModel(newModel) {
         try {
-            console.log('newModel')
-            console.log(newModel)
-            //שיהיה אפשר להכניס בכל סדר
             const queryModel = addModelQuery(Object.keys(newModel));
             const result = await executeQuery(queryModel, Object.values(newModel));
             return result;
@@ -48,11 +45,8 @@ export class ModelService {
     }
 
     async updateModel(updatedModel, model) {
-        console.log("updatedModel")
-        console.log(updatedModel)
         let data = Object.values(updatedModel);
         data.push(model)
-        console.log(data)
         const queryModel = updateModelQuery(Object.keys(updatedModel), model);
         const result = await executeQuery(queryModel, data);
         return result;

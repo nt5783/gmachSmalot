@@ -1,6 +1,5 @@
 import { GownService } from '../service/gownService.js'
 const gownService = new GownService();
-//שולח שגיאה אם אין מידות אבל מבחינתי זה לא בעיה
 export class GownController {
     async getGowns(req, res, next) {
         try {
@@ -65,15 +64,12 @@ export class GownController {
     async updateGown(req, res, next) {
         try {
             const result = await gownService.updateGown(req.body, req.params.id);
-            // if (result == null)
-            //     throw ("this data cannot be updated")
             if (result.affectedRows === 0)
                 throw { statusCode: 404, message: "Not valid action" }
             res.json(req.params.id);
         }
         catch (ex) {
             const err = {}
-            // err.statusCode = ex == "this data cannot be updated" ? 409 : 500;
             err.statusCode = ex.statusCode ?? 500;
             err.message = ex;
             next(err)

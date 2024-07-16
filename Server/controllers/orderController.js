@@ -37,7 +37,7 @@ export class OrderController {
             if (!req.body[0].eventDate || !req.body[0].userId || !req.body[0].gownId)
                 throw { statusCode: 400, message: "Invalid parameters" }
             const resultItem = await orderService.addOrder(req.body);
-            // res.json(resultItem.insertId);
+            res.json(resultItem.insertId);
         }
         catch (ex) {
             const err = {}
@@ -65,15 +65,12 @@ export class OrderController {
     async updateOrder(req, res, next) {
         try {
             const result = await orderService.updateOrder(req.body, req.params.id);
-            // if (result == null)
-            //     throw ("this data cannot be updated")
             if (result.affectedRows === 0)
                 throw { statusCode: 404, message: "Not valid action" }
             res.json(req.params.id);
         }
         catch (ex) {
             const err = {}
-            // err.statusCode = ex == "this data cannot be updated" ? 409 : 500;
             err.statusCode = ex.statusCode ?? 500;
             err.message = ex;
             next(err)

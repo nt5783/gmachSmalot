@@ -15,7 +15,6 @@ export class LoginController {
                     { userId: resultItems[0].userId, admin: resultItems[0].isManager },
                     process.env.RANDOM_TOKEN_SECRET,
                     { expiresIn: process.env.TOKEN_EXP })
-                    //in env: TOKEN_EXP = '24h'
                 return res.json({ token, data: resultItems[0] })
             }
         }

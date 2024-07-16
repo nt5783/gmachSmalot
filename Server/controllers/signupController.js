@@ -10,8 +10,7 @@ export class SignupController {
             if (req.body) {
                 const resultItems = await signupService.signup(req.body);
                 if (resultItems.length == 0) {
-                     return res.status(409).json(resultItems);
-                    // throw new Error({ statusCode: 409 })
+                    throw { statusCode: 409, message: "User already exsist" }
                 }
                 const token = jwt.sign(
                     { userId: resultItems[0].userId, admin: resultItems[0].isManager },

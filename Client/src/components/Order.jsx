@@ -41,6 +41,7 @@ const Order = () => {
     async function createGownOrder(orderObjs) {
         try {
             await fetchfunc('orders', 'POST', orderObjs)
+            alert('order completed with success')
         } catch (err) {
             alert(`Error sending order: ${err.message}`)
         }

@@ -28,19 +28,11 @@ function getGownsQuery(queryparams) {
                 }
             }
         };
-
-
         addBusinessDays(firstDate, -2);
         addBusinessDays(secondDate, 2);
-
         const formatDate = (date) => {
             return date.toISOString().slice(0, 10);
         };
-
-        const formattedFirstDate = formatDate(firstDate);
-        const formattedSecondDate = formatDate(secondDate);
-
-        console.log(formattedFirstDate, formattedSecondDate);
 
         firstPartOfQuery = `select gownId, model, size, sizeId, amount, X.amount - QuantityOccupied as available
         from sizes NATURAL JOIN gowns g1 NATURAL LEFT OUTER JOIN
@@ -54,7 +46,6 @@ function getGownsQuery(queryparams) {
     });
     let conditions = "WHERE "
     fields.forEach(field => conditions += field + " = '" + queryparams[field] + "' AND ")
-    //query = `SELECT * FROM gowns ${fields.length > 0 ? conditions.substring(0, conditions.length - 5) : ""} 
     const query = `${firstPartOfQuery} ${fields.length > 0 ? conditions.substring(0, conditions.length - 5) : ""} 
     ${queryparams._sort ? "ORDER BY " + queryparams._sort : ""} 
     ${queryparams._limit ? "LIMIT " + queryparams._limit : ""};`

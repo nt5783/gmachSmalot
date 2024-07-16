@@ -5,12 +5,6 @@ import { getUserQuery, setUserQuery, getPasswordQuery, setPasswordQuery } from '
 
 export class UserService {
 
-    async addUser(newUser) {
-        const queryUser = addModelQuery(Object.keys(newUser))
-        const result = await executeQuery(queryUser, Object.values(queryUser))
-        return result
-    }
-
     async login(newUser) {
         const hashPsw = sha256(newUser.password)
         const queryPwd = getPasswordQuery()
@@ -34,7 +28,7 @@ export class UserService {
         delete newUser.password;
         if (!pwdResult) return []
         const addUser = setUserQuery(Object.keys(newUser))
-        const userResult = await executeQuery(addUser, Object.values(newUser))
+        await executeQuery(addUser, Object.values(newUser))
         const user = { username: newUser.username, fullName: newUser.fullName }
         return [user]
     }

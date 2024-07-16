@@ -20,8 +20,6 @@ export class ModelController {
     async getModelById(req, res, next) {
         try {
             const resultItem = await modelService.getModelById(req.params.id);
-            // if (resultItem.length == 0)
-            //     throw { statusCode: 404, message: "Model not found" }
             res.json(resultItem);
         }
         catch (ex) {
@@ -67,15 +65,12 @@ export class ModelController {
     async updateModel(req, res, next) {
         try {
             const result = await modelService.updateModel(req.body, req.params.id);
-            // if (result == null)
-            //     throw ("this data cannot be updated")
             if (result.affectedRows === 0)
                 throw { statusCode: 404, message: "Not valid action" }
             res.json(req.params.id);
         }
         catch (ex) {
             const err = {}
-            // err.statusCode = ex == "this data cannot be updated" ? 409 : 500;
             err.statusCode = ex.statusCode ?? 500;
             err.message = ex;
             next(err)
