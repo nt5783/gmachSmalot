@@ -103,3 +103,108 @@
 // };
 
 // export default Signup;
+
+
+
+
+import React, { useEffect, useContext } from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { fetchfunc, loginfetchfunc } from '../fetch';
+import { UserContext } from '../App';
+import { Button } from 'primereact/button';
+import { InputText } from 'primereact/inputtext';
+import { Password } from 'primereact/password';
+import { Message } from 'primereact/message';
+import { Dialog } from 'primereact/dialog';
+
+import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+
+
+const Signup = () => {
+    const { user, setUser } = useContext(UserContext);
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const navigate = useNavigate();
+    const { state } = useLocation();
+    const model = state ? state.model.model : null;
+    const message = state ? 'עליך להירשם' : null;
+
+    async function onSubmit(data) {
+        try {
+            let res = loginfetchfunc('signup', 'POST', data);
+            const user = await res;
+            localStorage.setItem("user", JSON.stringify(user.data.data));
+            setUser(user.data);
+            if (model) navigate(`../models/${model}`);
+            navigate('../models');
+            location.reload();
+        } catch (err) {
+            alert(`שגיאה בהרשמה: ${err.message}`)
+        }
+    }
+
+    return (
+        <>
+            <Dialog visible={true} onHide={() => navigate('../')} header="הרשמה">
+                <form onSubmit={handleSubmit(onSubmit)} className="signup-form">
+                    {message && (
+                        <div className="signup-message">
+                            <Message severity="warn" text={message} />
+                            <div>ולאחר מכן תועבר לדף השמלה</div>
+                        </div>
+                    )}
+                    <div className="field">
+                        <span className="p-float-label">
+                            <InputText id="username" {...register("username", { required: true })} />
+                            <label htmlFor="username">שם משתמש</label>
+                        </span>
+                    </div>
+                    <div className="field">
+                        <span className="p-float-label">
+                            <InputText id="password" type='password' {...register('password', { required: true })} />
+                            <label htmlFor='password' >סיסמה</label>
+                        </span>
+                    </div>
+                    <div className="field">
+                        <span className="p-float-label">
+                            <InputText id="fullName" {...register("fullName")} />
+                            <label htmlFor="fullName">שם מלא</label>
+                        </span>
+                    </div>
+                    <div className="field">
+                        <span className="p-float-label">
+                            <InputText id="phone" {...register("phone", { pattern: /^[0-9\-\+\s]{7,14}$/ })} />
+                            <label htmlFor="phone">טלפון</label>
+                        </span>
+                        {errors.phone && <Message severity="error" text="מספר הטלפון חייב להכיל בין 7 ל-14 ספרות ולכלול רק מספרים." />}
+                    </div>
+                    <div className="field">
+                        <span className="p-float-label">
+                            <InputText id="phone2" {...register("phone2", { pattern: /^[0-9\-\+\s]{7,14}$/ })} />
+                            <label htmlFor="phone2">טלפון נוסף</label>
+                        </span>
+                        {errors.phone2 && <Message severity="error" text="מספר הטלפון חייב להכיל בין 7 ל-14 ספרות ולכלול רק מספרים." />}
+                    </div>
+                    <div className="field">
+                        <span className="p-float-label">
+                            <InputText id="city" {...register("city")} />
+                            <label htmlFor="city">עיר</label>
+                        </span>
+                    </div>
+                    <div className="field">
+                        <span className="p-float-label">
+                            <InputText id="email" {...register("email")} />
+                            <label htmlFor="email">אימייל</label>
+                        </span>
+                    </div>
+                    <Button type="submit" label="שלח" className="p-button-success" />
+                </form>
+                <Button label="כבר יש לך חשבון? התחבר" className="navigate-link" onClick={() => navigate('../login', { state: state })} />
+            </Dialog>
+        </>
+    );
+};
+
+export default Signup;

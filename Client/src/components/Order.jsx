@@ -111,3 +111,88 @@
 
 // export default Order;
 // // secret: EBmxh8uI1KFwfFNMZEatL0bMSlcTeo0uB0mjqG7Mqf42EeM007iTfH0nVGCTF5KOJ9kU-GYiYK5JqgGi
+
+
+
+
+
+
+import React, { useState, useContext, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
+import { UserContext, DateContext } from '../App';
+import { fetchfunc } from '../fetch';
+import { Button } from 'primereact/button';
+
+const Order = () => {
+    const { user } = useContext(UserContext);
+    const { date } = useContext(DateContext);
+    const eventDate = new Date(date);
+    const { state } = useLocation();
+    const { gowns } = state;
+    const [price, setPrice] = useState(0);
+    const GOWN_PRICE = 100;
+
+    const [isAgreementChecked, setIsAgreementChecked] = useState(false);
+
+    useEffect(() => {
+        let p = 0;
+        gowns.map((gown) => p += gown.qty * GOWN_PRICE);
+        setPrice(p);
+    }, [gowns]);
+
+    const handleAgreementChange = (e) => {
+        setIsAgreementChecked(e.target.checked);
+    };
+
+    const orderGowns = async () => {
+        const orderObjs = gowns.flatMap((gown) => {
+            const orders = [];
+            for (let i = 0; i < gown.qty; i++) {
+                orders.push({ eventDate: date, userId: user.userId, gownId: gown.gownId });
+            }
+            return orders;
+        });
+        createGownOrder(orderObjs);
+    };
+
+    const createGownOrder = async (orderObjs) => {
+        try {
+            await fetchfunc('orders', 'POST', orderObjs);
+        } catch (err) {
+            alert(`שגיאה בשליחת ההזמנה: ${err.message}`);
+        }
+    };
+
+    return (
+        <PayPalScriptProvider options={{ "client-id": "ATjqmx7s7BZKVhYLfEngKieXUDvP8D7zQzw8Wz7OrDRWi8lgaKLNh3LRRyIgDu8mYH4KtROFhK5YxWMv" }}>
+            <div className="order-container">
+                <h2>הזמנת שמלות</h2>
+                <h2>{eventDate.getDate()}/{eventDate.getMonth() + 1}/{eventDate.getFullYear()}</h2>
+                {gowns.map((gown) => (
+                    <div key={gown.gownId}>
+                        <h3>דגם: {gown.model} <br /> מידה: {gown.size} <br /> כמות: {gown.qty}</h3>
+                    </div>
+                ))}
+                <p>מחיר: {price} ש"ח</p>
+                <div className="agreement-checkbox">
+                    <input type="checkbox" id="agreement" checked={isAgreementChecked} onChange={handleAgreementChange} />
+                    <label htmlFor="agreement">אני מסכים לתנאי השימוש <a href="/about">בתנאים וההגבלות</a></label>
+                </div>
+
+                {isAgreementChecked ? (
+                    <div className='pay-pal-buttons-div'>
+                        <PayPalButtons
+                            onClick={orderGowns} className='pay-pal-buttons'
+                        />
+                    </div>
+                ) : (
+                    <p>נא להסכים לתנאי השימוש כדי להמשיך לתשלום.</p>
+                )}
+            </div>
+            <Button onClick={orderGowns}>הזמן</Button>
+        </PayPalScriptProvider>
+    );
+};
+
+export default Order;
