@@ -1,26 +1,26 @@
-# 👗 gmachSmalot - Gown Rental App for "Rinat Lev"
+# gmachSmalot – Gown Rental App for "Rinat Lev"
 
-A full-stack web application designed for the gown rental business "Rinat Lev". The app enables customers to browse gowns, book an available dress for their event date, and pay online — while providing admin capabilities for managing inventory and reservations.
-
----
-
-## ✨ Features
-
-### 🧍 For Customers
-- 📷 **Browse Collection** – View photos and details of all available gowns.
-- 📅 **Select Event Date** – Choose a date for your event and check gown availability.
-- 🛒 **Reserve a Gown** – Secure a gown for your selected date.
-- 💳 **Pay via PayPal** – Complete your rental with a secure online payment.
-
-### 👩‍💼 For Admin
-- 📋 **View Reservations** – See all upcoming and past bookings.
-- ➕ **Add New Gowns** – Easily upload new dresses to the collection.
-- 🗑️ **Delete Gowns** – Remove outdated or unavailable gowns.
-- ✏️ **Update Details** – Edit gown info such as sizes, images, availability, and price.
+gmachSmalot is a full-stack web application for managing the gown rental business "Rinat Lev". The app allows customers to browse available gowns, reserve a dress for a specific date, and pay securely via PayPal. Administrators can manage inventory and view reservations through a dedicated admin interface.
 
 ---
 
-## 🧱 Tech Stack
+## Features
+
+### Customer Functionality
+- Browse the gown collection with photos and details.
+- Choose an event date and check gown availability.
+- Reserve a gown for the selected date.
+- Complete payment securely via PayPal.
+
+### Admin Functionality
+- View customer reservations.
+- Add new gowns to the collection.
+- Remove gowns from inventory.
+- Edit gown details (size, image, availability, price).
+
+---
+
+## Tech Stack
 
 - **Frontend:** React
 - **Backend:** Node.js (Express)
@@ -29,28 +29,21 @@ A full-stack web application designed for the gown rental business "Rinat Lev". 
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 gmachSmalot/
-│
 ├── client/              # React frontend
-│   ├── public/
 │   └── src/
 │       ├── components/
 │       ├── pages/
-│       ├── App.js
-│       └── ...
-│
+│       └── App.js
 ├── server/              # Node.js backend
 │   ├── controllers/
 │   ├── models/
 │   ├── routes/
-│   ├── server.js
-│   └── ...
-│
-├── db/                  # SQL scripts / config
-│
+│   └── server.js
+├── db/                  # SQL scripts/config
 ├── .env                 # Environment variables
 ├── package.json
 └── README.md
@@ -58,20 +51,22 @@ gmachSmalot/
 
 ---
 
-## ⚙️ Installation & Setup
+## Installation & Setup
 
-### 1. Clone the repo
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/nt5783/gmachSmalot.git
 cd gmachSmalot
 ```
 
-### 2. Environment Variables
+### 2. Configure Environment Variables
 
-Create a `.env` file in both the `server/` and `client/` directories. Example for the server:
+Create a `.env` file in both the `server/` and `client/` directories.
 
-```env
+Example `.env` for the server:
+
+```
 PORT=5000
 DB_HOST=localhost
 DB_USER=root
@@ -83,29 +78,33 @@ PAYPAL_SECRET=your_paypal_secret
 
 ### 3. Install Dependencies
 
-#### Backend:
+**Backend:**
+
 ```bash
 cd server
 npm install
 ```
 
-#### Frontend:
+**Frontend:**
+
 ```bash
 cd ../client
 npm install
 ```
 
-### 4. Run the App
+### 4. Run the Application
 
-Open two terminals:
+Open two terminal windows:
 
-**Terminal 1 (backend):**
+**Backend:**
+
 ```bash
 cd server
 npm run dev
 ```
 
-**Terminal 2 (frontend):**
+**Frontend:**
+
 ```bash
 cd client
 npm start
@@ -113,34 +112,35 @@ npm start
 
 ---
 
-## 🧪 Features in Development / To-Do
+## Roadmap / Planned Features
 
-- 📱 Mobile responsiveness improvements
-- 📤 Upload images directly from admin panel
-- 🗓️ Calendar view for admin reservations
-- ✉️ Email notifications on booking confirmation
-- 🧾 Invoice download for customers
-
----
-
-## 🧑‍💻 Project Highlights
-
-- 🎯 Full end-to-end design, specification, and implementation
-- 👥 Differentiated UX for customer vs. admin
-- 💡 Focus on intuitive, minimal, and user-friendly UI
-- 🔐 Secure data handling and PayPal integration
-- 🧰 Easily maintainable and scalable codebase
+- Improved mobile responsiveness
+- Admin image upload interface
+- Calendar view for admin reservations
+- Email confirmation for bookings
+- Customer invoice downloads
 
 ---
 
-## 🙋‍♀️ About the Authors
+## Project Highlights
 
-**Nechama Taurog**
-Full Stack Developer  
-📧 nt243609@gmail.com  
-🔗 [GitHub Profile](https://github.com/nt5783)
+- End-to-end design, specification, and development
+- Separate user interfaces for customer and admin
+- Focus on simple, intuitive UI/UX
+- Secure PayPal integration
+- Scalable, maintainable codebase
 
-**Feigi Bass**  
-Full Stack Developer  
-📧 PZ0933@gmail.com  
-🔗 [GitHub Profile](https://github.com/feigiz)
+---
+
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+## Author
+
+Feigi Zaks  
+Junior Full Stack Developer  
+Email: PZ0933@gmail.com  
+GitHub: [feigiz](https://github.com/feigiz)
