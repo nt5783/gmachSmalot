@@ -2,6 +2,8 @@
 
 gmachSmalot is a full-stack web application for managing the gown rental business "Rinat Lev". The app allows customers to browse available gowns, reserve a dress for a specific date, and pay securely via PayPal. Administrators can manage inventory and view reservations through a dedicated admin interface.
 
+![Gmach Smalot dashboard](/assets/images/Screenshot 2025-07-31 013952.png "San Juan Mountains")
+
 ---
 
 ## Features
@@ -29,27 +31,6 @@ gmachSmalot is a full-stack web application for managing the gown rental busines
 
 ---
 
-## Project Structure
-
-```
-gmachSmalot/
-├── client/              # React frontend
-│   └── src/
-│       ├── components/
-│       ├── pages/
-│       └── App.js
-├── server/              # Node.js backend
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   └── server.js
-├── db/                  # SQL scripts/config
-├── .env                 # Environment variables
-├── package.json
-└── README.md
-```
-
----
 
 ## Installation & Setup
 
