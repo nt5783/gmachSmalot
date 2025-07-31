@@ -1,7 +1,7 @@
 
 async function loginfetchfunc(url, method, body) {
     try {
-        const response = await fetch(`http://localhost:8080/${url}`, {
+        const response = await fetch(`http://localhost:3000/${url}`, {
             method: method,
             body: JSON.stringify(body),
             headers: { 'content-Type': 'application/json; charset=UTF-8' },
@@ -25,7 +25,7 @@ async function loginfetchfunc(url, method, body) {
 async function fetchfunc(url, method, body) {
     const token = document.cookie;
     try {
-        const response = await fetch(`http://localhost:8080/${url}`, {
+        const response = await fetch(`http://localhost:3000/${url}`, {
             method: method,
             body: JSON.stringify(body),
             headers: { 'Authorization': `Bearer ${token}`, 'content-Type': 'application/json; charset=UTF-8' },
@@ -49,7 +49,7 @@ async function fetchfunc(url, method, body) {
 async function fetchNoParamsfunc(url, method) {
     const token = document.cookie;
     try {
-        const response = await fetch(`http://localhost:8080/${url}`, {
+        const response = await fetch(`http://localhost:3000/${url}`, {
             method: method,
             headers: { 'Authorization': `Bearer ${token}`, 'content-Type': 'application/json; charset=UTF-8' },
         })

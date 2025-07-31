@@ -41,7 +41,7 @@ const Signup = () => {
                     {message && (
                         <div className="signup-message">
                             <Message severity="warn" text={message} />
-                            <div>and then you will be redirected to the gown</div>
+                            <div>You will be redirected to the gown</div>
                         </div>
                     )}
                     <div className="field">

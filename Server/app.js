@@ -14,6 +14,8 @@ import { lengthRouter } from './router/lengthRouter.js';
 import { orderRouter } from './router/orderRouter.js';
 import multer from 'multer';
 
+const PORT = process.env.DB_PORT || 3000;
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -47,7 +49,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
     res.status(200).json({ message: 'File uploaded successfully', file: req.file });
 });
 
-app.listen(8080, (err) => {
+app.listen(PORT, (err) => {
     if (err) console.error(`server error: ${err}`);
-    console.log("Server listening on PORT", 8080);
+    console.log(`Server listening on PORT ${PORT}`);
 });
