@@ -126,6 +126,6 @@ GitHub: [feigiz](https://github.com/feigiz)
 
 
 Nechama Taurog
-Junior Full Stack Developer  
+Junior Full Stack Developer
 Email: nt243609@gmail.com
 GitHub: https://github.com/nt5783
