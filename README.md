@@ -1,3 +1,9 @@
+<img width="1875" height="1013" alt="Screenshot 2025-07-31 013952" src="https://github.com/user-attachments/assets/17a4ae15-d1c0-4c3a-aab7-40e72b09922d" />
+<img width="1919" height="836" alt="Screenshot 2025-07-31 014058" src="https://github.com/user-attachments/assets/ab6d25ab-2b2d-447c-bebf-c1916a1207be" />
+<img width="1110" height="718" alt="Designer (23) (1)" src="https://github.com/user-attachments/assets/979695ea-dffc-45df-ba53-30d2d77df966" />
+
+
+
 # gmachSmalot – Gown Rental App for "Rinat Lev"
 
 gmachSmalot is a full-stack web application for managing the gown rental business "Rinat Lev". The app allows customers to browse available gowns, reserve a dress for a specific date, and pay securely via PayPal. Administrators can manage inventory and view reservations through a dedicated admin interface.
