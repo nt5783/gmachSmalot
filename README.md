@@ -102,7 +102,6 @@ npm start
 ## Roadmap / Planned Features
 
 - Improved mobile responsiveness
-- Admin image upload interface
 - Calendar view for admin reservations
 - Email confirmation for bookings
 - Customer invoice downloads
@@ -116,18 +115,17 @@ npm start
 - Focus on simple, intuitive UI/UX
 - Secure PayPal integration
 - Scalable, maintainable codebase
-
 ---
 
-## License
+## Authors
 
-This project is licensed under the MIT License.
-
----
-
-## Author
-
-Feigi Zaks  
+Feigi Bass  
 Junior Full Stack Developer  
 Email: PZ0933@gmail.com  
 GitHub: [feigiz](https://github.com/feigiz)
+
+
+Nechama Taurog
+Junior Full Stack Developer  
+Email: nt243609@gmail.com
+GitHub: https://github.com/nt5783
