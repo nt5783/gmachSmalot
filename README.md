@@ -81,14 +81,14 @@ Open two terminal windows:
 
 ```bash
 cd server
-npm run dev
+npm run server
 ```
 
 **Frontend:**
 
 ```bash
 cd client
-npm start
+npm run dev
 ```
 
 ---
@@ -119,9 +119,14 @@ This project is licensed under the MIT License.
 
 ---
 
-## Author
+## Authors
 
 Feigi Zaks  
-Junior Full Stack Developer  
+Full Stack Developer  
 Email: PZ0933@gmail.com  
 GitHub: [feigiz](https://github.com/feigiz)
+
+Nechama Taurog  
+Software Developer  
+Email: NT243609@gmail.com 
+GitHub: [nt5783](https://github.com/nt5783)

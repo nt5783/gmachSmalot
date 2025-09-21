@@ -3,14 +3,14 @@ import React from 'react';
 function About() {
     return (
         <div className="about-container">
-            <h2>GMAH Event Dresses Neve Ya'akov Jerusalem</h2>
-            <p>The GMAH is constantly updated with the latest and newest models!<br /><b>Approximately 80 dresses in each set!</b></p>
-            <p>Important to note! Ordering dresses on the website does not replace coming to the GMAH. You must come and measure the dress before ordering.</p>
+            <h2>Rinat-Lev Event Dresses Neve Ya'akov Jerusalem</h2>
+            <p>The GMACH is constantly updated with the latest and newest models!<br /><b>Approximately 80 dresses in each set!</b></p>
+            <p>Important to note! Ordering dresses on the website does not replace coming to the GMACH. You must come and measure the dress before ordering.</p>
             <div className="contact-section">
                 <h4>Contact:</h4>
                 <p>
                     It is not possible to cancel an order or make changes via email.<br />
-                    To order dresses at GMAH, make an appointment by calling: <br />
+                    To order dresses at GMACH, make an appointment by calling: <br />
                     <strong>03-3065480</strong><br />
                     For urgent inquiries, call: <strong>1-800-55-20-20 ext. 8</strong><br />
                     Email: <a href="mailto:gsmalot@gmail.com">gsmalot@gmail.com</a>
@@ -21,7 +21,7 @@ function About() {
                 <h4>Ordering Dresses:</h4>
                 <p>
                     Payment for renting a dress: NIS 50 for a girl's dress, NIS 100 for a woman's dress.<br />
-                    Payment at registration. Full payment and signature of GMAH's procedures required to place an order.<br />
+                    Payment at registration. Full payment and signature of GMACH's procedures required to place an order.<br />
                     Orders cannot be made via email.
                 </p>
                 <h4>Receiving Dresses:</h4>
@@ -42,7 +42,7 @@ function About() {
                     Unauthorized repairs will incur fees.<br />
                     Hold full responsibility for dress condition and damages.
                 </p>
-                <h4>Arriving at GMAH:</h4>
+                <h4>Arriving at GMACH:</h4>
                 <p>
                     Address: 1 Zuckerman St., Neve Ya'akov, Jerusalem.<br />
                     Accessible by bus lines: 59, 69, 85, 25 (Pardes Zuckerman stop).<br />
